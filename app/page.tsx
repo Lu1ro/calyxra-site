@@ -1,27 +1,24 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import { 
-  BarChart3, Database, Zap, Calendar
+  Send, Loader2, Sparkles, BarChart3, Database, Zap, X, Mail, 
+  ArrowRight, CheckCircle2, TrendingUp, FileSpreadsheet, ArrowRightLeft, Calendar
 } from 'lucide-react';
-// Імпортуємо компоненти для графіків
 import { 
-  ResponsiveContainer, ComposedChart, Bar, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Area, BarChart 
+  ResponsiveContainer, ComposedChart, Bar, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, BarChart 
 } from 'recharts';
 
-// --- DUMMY DATA FOR CHARTS ---
-
-// Дані для воронки (Funnel)
+// --- DATA FOR CHARTS ---
 const funnelData = [
   { name: 'Visitors', value: 15000, rate: 100 },
   { name: 'Leads', value: 6500, rate: 43 },
   { name: 'MQL', value: 3200, rate: 49 },
-  { name: 'SQL', value: 980, rate: 30 }, // Тут найбільший провал
+  { name: 'SQL', value: 980, rate: 30 },
   { name: 'Closed', value: 450, rate: 45 },
 ];
 
-// Дані для сегментації доходу
 const revenueData = [
   { month: 'Jan', New: 4000, Loyal: 12000, VIP: 18000 },
   { month: 'Feb', New: 3500, Loyal: 13000, VIP: 21000 },
@@ -30,7 +27,6 @@ const revenueData = [
   { month: 'May', New: 6000, Loyal: 16000, VIP: 32000 },
 ];
 
-// Налаштування стилів для темної теми графіків
 const darkTooltipStyle = {
     backgroundColor: '#171717',
     border: '1px solid #333',
@@ -39,36 +35,7 @@ const darkTooltipStyle = {
     fontSize: '12px'
 };
 
-// --- Types ---
-interface Service {
-  id: string;
-  title: string;
-  icon: React.ReactNode;
-  shortDesc: string;
-}
-
-const SERVICES: Service[] = [
-  {
-    id: 'power-bi',
-    title: 'Power BI KPI Dashboards',
-    icon: <BarChart3 className="w-6 h-6 text-blue-400" />,
-    shortDesc: 'Automated tracking of revenue, growth, and operations.'
-  },
-  {
-    id: 'data-cleaning',
-    title: 'Data Cleaning & Modeling',
-    icon: <Database className="w-6 h-6 text-purple-400" />,
-    shortDesc: 'SQL-based transformations to ensure your numbers are consistent.'
-  },
-  {
-    id: 'automation',
-    title: 'Reporting Automation',
-    icon: <Zap className="w-6 h-6 text-yellow-400" />,
-    shortDesc: 'Reduce manual work by connecting your SQL and Excel data directly.'
-  }
-];
-
-// --- Components ---
+// --- COMPONENTS ---
 
 const Navbar = () => (
   <nav className="fixed top-0 w-full z-50 bg-black/50 backdrop-blur-md border-b border-white/10">
@@ -84,7 +51,7 @@ const Navbar = () => (
         <a href="#examples" className="hover:text-white transition-colors">Examples</a>
         <a href="#pricing" className="hover:text-white transition-colors">Pricing</a>
       </div>
-      <a href="https://calendly.com/calyxra-team/30min" target="_blank" className="px-5 py-2 bg-white text-black text-xs font-bold rounded-full hover:bg-neutral-200 transition-colors">
+      <a href="https://calendly.com/calyxra-team/30min" target="_blank" rel="noopener noreferrer" className="px-5 py-2 bg-white text-black text-xs font-bold rounded-full hover:bg-neutral-200 transition-colors">
         Book a call
       </a>
     </div>
@@ -102,7 +69,7 @@ const Hero = () => (
         We turn messy Excel sheets and SQL databases into a single source of truth — Power BI dashboards built for founders who need to trust their numbers.
       </p>
       <div className="flex flex-col md:flex-row items-center justify-center gap-4 mb-8">
-        <a href="https://calendly.com/calyxra-team/30min" target="_blank" className="px-8 py-4 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-500 transition-all flex items-center gap-2 shadow-lg shadow-blue-600/20">
+        <a href="https://calendly.com/calyxra-team/30min" target="_blank" rel="noopener noreferrer" className="px-8 py-4 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-500 transition-all flex items-center gap-2 shadow-lg shadow-blue-600/20">
           <Calendar className="w-5 h-5" /> Book a free 30-min KPI review
         </a>
         <a href="#examples" className="px-8 py-4 bg-transparent border border-white/20 text-white font-bold rounded-lg hover:bg-white/5 transition-colors">
@@ -110,7 +77,7 @@ const Hero = () => (
         </a>
       </div>
       <div className="flex flex-wrap justify-center gap-6 text-sm text-neutral-500">
-        <span className="flex items-center gap-2">✓ Typically delivered in 1–3 weeks</span>
+        <span className="flex items-center gap-2">✓ Typically 1–3 weeks delivery</span>
         <span className="flex items-center gap-2">✓ Starter packages from €750</span>
         <span className="flex items-center gap-2">✓ Direct contact with Lukian & Oleh</span>
       </div>
@@ -118,17 +85,67 @@ const Hero = () => (
   </section>
 );
 
-const Problem = () => (
-  <section id="problem" className="py-24 px-6 bg-neutral-950">
-    <div className="max-w-4xl mx-auto text-center">
-      <h2 className="text-3xl md:text-4xl font-bold mb-6">Excel is slowing you down.</h2>
-      <p className="text-neutral-400 text-lg leading-relaxed">
-        Manual reporting creates inconsistent KPIs, slow decisions, and "multiple versions of truth." 
-        We help you consolidate data and build dashboards your team can actually rely on.
-      </p>
+const AiAssistant = () => {
+  const [query, setQuery] = useState('');
+  const [response, setResponse] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!query.trim()) return;
+    setIsLoading(true);
+    setResponse(null);
+    try {
+      const res = await fetch('/api/ai', {
+        method: 'POST',
+        body: JSON.stringify({ message: query }),
+        headers: { 'Content-Type': 'application/json' }
+      });
+      const data = await res.json();
+      setResponse(data.reply);
+    } catch (err) {
+      setResponse("System offline. Please check your connection.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <div id="ai-demo" className="w-full max-w-4xl mx-auto my-24 px-6">
+      <div className="relative rounded-2xl border border-white/10 bg-neutral-900/50 p-8 md:p-12 text-center shadow-2xl overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500"></div>
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 text-blue-400 text-xs font-bold uppercase tracking-widest mb-6">
+          <Sparkles className="w-3 h-3" /> Calyxra AI Demo
+        </div>
+        <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Ask our AI Assistant</h2>
+        <p className="text-neutral-400 mb-8 max-w-lg mx-auto">
+          Test our knowledge. Ask about our process, founders (Lukian & Oleh), or data analytics.
+        </p>
+
+        <form onSubmit={handleSubmit} className="max-w-xl mx-auto relative group">
+          <div className="flex items-center bg-black rounded-lg border border-neutral-800 p-1">
+            <input 
+              type="text" 
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="e.g., How long is the delivery?" 
+              className="flex-1 bg-transparent text-white px-4 py-3 outline-none"
+            />
+            <button disabled={isLoading} className="p-3 bg-neutral-800 hover:bg-neutral-700 rounded-md text-white disabled:opacity-50">
+              {isLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Send className="w-5 h-5" />}
+            </button>
+          </div>
+        </form>
+
+        {response && (
+          <div className="mt-6 text-left bg-neutral-800/50 border border-white/5 rounded-xl p-6 animate-in fade-in slide-in-from-bottom-2">
+            <p className="text-neutral-200 leading-relaxed text-sm">{response}</p>
+          </div>
+        )}
+      </div>
     </div>
-  </section>
-);
+  );
+};
 
 const Process = () => (
   <section id="process" className="py-24 px-6 border-y border-white/5">
@@ -203,82 +220,77 @@ export default function Home() {
          </div>
       </div>
 
-      <Problem />
-
       <section id="services" className="py-24 px-6">
-        <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-8">
-          {SERVICES.map((s) => (
-            <div key={s.id} className="p-8 bg-neutral-900 border border-white/5 rounded-2xl">
-              <div className="mb-4">{s.icon}</div>
-              <h3 className="font-bold mb-2">{s.title}</h3>
-              <p className="text-sm text-neutral-400">{s.shortDesc}</p>
+        <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-8 text-center">
+            <div className="p-8 bg-neutral-900 border border-white/5 rounded-2xl">
+                <BarChart3 className="w-10 h-10 text-blue-400 mx-auto mb-4" />
+                <h3 className="font-bold mb-2">Power BI Dashboards</h3>
+                <p className="text-sm text-neutral-400">Automated KPI tracking for revenue and ops.</p>
             </div>
-          ))}
+            <div className="p-8 bg-neutral-900 border border-white/5 rounded-2xl">
+                <Database className="w-10 h-10 text-purple-400 mx-auto mb-4" />
+                <h3 className="font-bold mb-2">Data Cleaning</h3>
+                <p className="text-sm text-neutral-400">SQL modeling to ensure your numbers match.</p>
+            </div>
+            <div className="p-8 bg-neutral-900 border border-white/5 rounded-2xl">
+                <Zap className="w-10 h-10 text-yellow-400 mx-auto mb-4" />
+                <h3 className="font-bold mb-2">Reporting Automation</h3>
+                <p className="text-sm text-neutral-400">Eliminate manual Excel work forever.</p>
+            </div>
         </div>
       </section>
 
       <Process />
+      
+      {/* AI ASSISTANT SECTION */}
+      <AiAssistant />
 
-      {/* EXAMPLES (Real Code Visualizations) */}
       <section id="examples" className="py-24 px-6 bg-neutral-950">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-3xl font-bold mb-16 text-center">Decision-ready examples</h2>
           <div className="grid md:grid-cols-2 gap-12">
-            
-            {/* CHART 1: Funnel Analysis */}
             <div className="space-y-4">
-              <div className="aspect-[4/3] bg-neutral-900/50 rounded-xl border border-white/10 relative overflow-hidden p-4">
-                {/* Анотація */}
+              <div className="aspect-[4/3] bg-neutral-900/50 rounded-xl border border-white/10 relative p-4">
                 <div className="absolute top-[40%] right-[15%] z-10">
                     <div className="px-3 py-1.5 bg-red-500/20 border border-red-500/50 text-red-300 text-xs font-bold rounded shadow-lg backdrop-blur-md flex items-center gap-2">
                         <ArrowRight className="w-3 h-3" /> 30% Conversion Drop!
                     </div>
-                    <div className="w-0.5 h-8 bg-red-500/50 mx-auto mt-1"></div>
                 </div>
-                
                 <ResponsiveContainer width="100%" height="100%">
                   <ComposedChart data={funnelData} margin={{ top: 20, right: 20, bottom: 20, left: 0 }}>
                     <CartesianGrid stroke="#333" vertical={false} strokeDasharray="3 3" />
-                    <XAxis dataKey="name" stroke="#666" tick={{fontSize: 12}} axisLine={false} tickLine={false} />
-                    <YAxis yAxisId="left" stroke="#666" tick={{fontSize: 12}} axisLine={false} tickLine={false} tickFormatter={(value) => `${value/1000}k`} />
-                    <YAxis yAxisId="right" orientation="right" stroke="#3b82f6" tick={{fontSize: 12}} axisLine={false} tickLine={false} tickFormatter={(value) => `${value}%`} domain={[0, 100]} hide />
-                    <Tooltip contentStyle={darkTooltipStyle} cursor={{fill: 'rgba(255,255,255,0.05)'}} />
-                    <Bar yAxisId="left" dataKey="value" name="Volume" fill="#3b82f6" radius={[4, 4, 0, 0]} barSize={40} fillOpacity={0.8} />
-                    <Line yAxisId="right" type="monotone" dataKey="rate" name="Conversion Rate" stroke="#a855f7" strokeWidth={3} dot={{r: 4, fill: '#a855f7'}} />
+                    <XAxis dataKey="name" stroke="#666" tick={{fontSize: 10}} axisLine={false} tickLine={false} />
+                    <YAxis stroke="#666" tick={{fontSize: 10}} axisLine={false} tickLine={false} />
+                    <Tooltip contentStyle={darkTooltipStyle} />
+                    <Bar dataKey="value" fill="#3b82f6" radius={[4, 4, 0, 0]} barSize={40} />
+                    <Line type="monotone" dataKey="rate" stroke="#a855f7" strokeWidth={2} dot={{r: 3}} />
                   </ComposedChart>
                 </ResponsiveContainer>
               </div>
-              <p className="font-bold text-lg">Where the funnel leaks</p>
-              <p className="text-sm text-neutral-500 leading-relaxed">We combine volume data (bars) with conversion rates (line) to instantly spot the biggest drop-offs in your sales process.</p>
+              <p className="font-bold">Funnel Analysis</p>
+              <p className="text-sm text-neutral-500">Spotting drop-offs across sales steps instantly.</p>
             </div>
-
-            {/* CHART 2: Revenue Segmentation */}
             <div className="space-y-4">
-              <div className="aspect-[4/3] bg-neutral-900/50 rounded-xl border border-white/10 relative overflow-hidden p-4">
-                 {/* Анотація */}
+              <div className="aspect-[4/3] bg-neutral-900/50 rounded-xl border border-white/10 relative p-4">
                  <div className="absolute top-[15%] left-[35%] z-10">
                     <div className="px-3 py-1.5 bg-blue-500/20 border border-blue-500/50 text-blue-300 text-xs font-bold rounded shadow-lg backdrop-blur-md">
                         VIP Segment = 60% Revenue
                     </div>
                 </div>
-
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={revenueData} margin={{ top: 20, right: 20, bottom: 20, left: 0 }}>
                     <CartesianGrid stroke="#333" vertical={false} strokeDasharray="3 3" />
-                    <XAxis dataKey="month" stroke="#666" tick={{fontSize: 12}} axisLine={false} tickLine={false} />
-                    <YAxis stroke="#666" tick={{fontSize: 12}} axisLine={false} tickLine={false} tickFormatter={(value) => `${value/1000}k`} />
-                    <Tooltip contentStyle={darkTooltipStyle} cursor={{fill: 'rgba(255,255,255,0.05)'}} />
-                    <Legend wrapperStyle={{fontSize: '12px', paddingTop: '10px'}} />
-                    <Bar dataKey="New" stackId="a" fill="#64748b" fillOpacity={0.7} />
-                    <Bar dataKey="Loyal" stackId="a" fill="#3b82f6" fillOpacity={0.8} />
+                    <XAxis dataKey="month" stroke="#666" tick={{fontSize: 10}} axisLine={false} tickLine={false} />
+                    <YAxis stroke="#666" tick={{fontSize: 10}} axisLine={false} tickLine={false} />
+                    <Tooltip contentStyle={darkTooltipStyle} />
+                    <Bar dataKey="Loyal" stackId="a" fill="#3b82f6" />
                     <Bar dataKey="VIP" stackId="a" fill="#a855f7" radius={[4, 4, 0, 0]} />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
-              <p className="font-bold text-lg">Revenue Drivers</p>
-              <p className="text-sm text-neutral-500 leading-relaxed">Stacked segmentation clearly shows which customer cohorts drive real growth, helping you focus your efforts on high-value segments.</p>
+              <p className="font-bold">Revenue Drivers</p>
+              <p className="text-sm text-neutral-500">Seeing exactly which customer cohorts drive growth.</p>
             </div>
-
           </div>
         </div>
       </section>
@@ -291,7 +303,7 @@ export default function Home() {
           <p className="text-blue-100 text-lg mb-10">
             Book a free 30-minute KPI review — we’ll map what to track and the fastest path to a reliable dashboard.
           </p>
-          <a href="https://calendly.com/calyxra-team/30min" target="_blank" className="px-10 py-5 bg-white text-blue-600 font-bold rounded-xl hover:shadow-2xl transition-all inline-block">
+          <a href="https://calendly.com/calyxra-team/30min" target="_blank" rel="noopener noreferrer" className="px-10 py-5 bg-white text-blue-600 font-bold rounded-xl hover:shadow-2xl transition-all inline-block">
             Book my free review call
           </a>
         </div>
