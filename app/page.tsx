@@ -1,11 +1,43 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import Image from 'next/image';
 import { 
-  Send, Loader2, Sparkles, BarChart3, Database, Zap, X, Mail, 
-  ArrowRight, CheckCircle2, TrendingUp, FileSpreadsheet, ArrowRightLeft, Calendar
+  BarChart3, Database, Zap, Calendar
 } from 'lucide-react';
+// Імпортуємо компоненти для графіків
+import { 
+  ResponsiveContainer, ComposedChart, Bar, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Area, BarChart 
+} from 'recharts';
+
+// --- DUMMY DATA FOR CHARTS ---
+
+// Дані для воронки (Funnel)
+const funnelData = [
+  { name: 'Visitors', value: 15000, rate: 100 },
+  { name: 'Leads', value: 6500, rate: 43 },
+  { name: 'MQL', value: 3200, rate: 49 },
+  { name: 'SQL', value: 980, rate: 30 }, // Тут найбільший провал
+  { name: 'Closed', value: 450, rate: 45 },
+];
+
+// Дані для сегментації доходу
+const revenueData = [
+  { month: 'Jan', New: 4000, Loyal: 12000, VIP: 18000 },
+  { month: 'Feb', New: 3500, Loyal: 13000, VIP: 21000 },
+  { month: 'Mar', New: 5000, Loyal: 14000, VIP: 24000 },
+  { month: 'Apr', New: 4800, Loyal: 15500, VIP: 28000 },
+  { month: 'May', New: 6000, Loyal: 16000, VIP: 32000 },
+];
+
+// Налаштування стилів для темної теми графіків
+const darkTooltipStyle = {
+    backgroundColor: '#171717',
+    border: '1px solid #333',
+    borderRadius: '8px',
+    color: '#fff',
+    fontSize: '12px'
+};
 
 // --- Types ---
 interface Service {
@@ -164,7 +196,6 @@ export default function Home() {
       <Navbar />
       <Hero />
       
-      {/* Tool Bar */}
       <div className="py-10 border-y border-white/5 bg-neutral-900/20 text-center">
          <p className="text-xs font-bold text-neutral-500 uppercase tracking-widest mb-4">Tools we work with</p>
          <div className="flex flex-wrap justify-center gap-8 text-neutral-400 font-medium">
@@ -174,7 +205,6 @@ export default function Home() {
 
       <Problem />
 
-      {/* SERVICES */}
       <section id="services" className="py-24 px-6">
         <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-8">
           {SERVICES.map((s) => (
@@ -189,33 +219,72 @@ export default function Home() {
 
       <Process />
 
-      {/* EXAMPLES (Annotated Proof) */}
+      {/* EXAMPLES (Real Code Visualizations) */}
       <section id="examples" className="py-24 px-6 bg-neutral-950">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-3xl font-bold mb-16 text-center">Decision-ready examples</h2>
           <div className="grid md:grid-cols-2 gap-12">
+            
+            {/* CHART 1: Funnel Analysis */}
             <div className="space-y-4">
-              <div className="aspect-video bg-neutral-800 rounded-xl border border-white/10 relative overflow-hidden group">
-                 <div className="absolute inset-0 bg-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-                 <div className="absolute top-1/4 right-1/4 px-2 py-1 bg-blue-600 text-[10px] rounded shadow-lg">Drop-off detected</div>
+              <div className="aspect-[4/3] bg-neutral-900/50 rounded-xl border border-white/10 relative overflow-hidden p-4">
+                {/* Анотація */}
+                <div className="absolute top-[40%] right-[15%] z-10">
+                    <div className="px-3 py-1.5 bg-red-500/20 border border-red-500/50 text-red-300 text-xs font-bold rounded shadow-lg backdrop-blur-md flex items-center gap-2">
+                        <ArrowRight className="w-3 h-3" /> 30% Conversion Drop!
+                    </div>
+                    <div className="w-0.5 h-8 bg-red-500/50 mx-auto mt-1"></div>
+                </div>
+                
+                <ResponsiveContainer width="100%" height="100%">
+                  <ComposedChart data={funnelData} margin={{ top: 20, right: 20, bottom: 20, left: 0 }}>
+                    <CartesianGrid stroke="#333" vertical={false} strokeDasharray="3 3" />
+                    <XAxis dataKey="name" stroke="#666" tick={{fontSize: 12}} axisLine={false} tickLine={false} />
+                    <YAxis yAxisId="left" stroke="#666" tick={{fontSize: 12}} axisLine={false} tickLine={false} tickFormatter={(value) => `${value/1000}k`} />
+                    <YAxis yAxisId="right" orientation="right" stroke="#3b82f6" tick={{fontSize: 12}} axisLine={false} tickLine={false} tickFormatter={(value) => `${value}%`} domain={[0, 100]} hide />
+                    <Tooltip contentStyle={darkTooltipStyle} cursor={{fill: 'rgba(255,255,255,0.05)'}} />
+                    <Bar yAxisId="left" dataKey="value" name="Volume" fill="#3b82f6" radius={[4, 4, 0, 0]} barSize={40} fillOpacity={0.8} />
+                    <Line yAxisId="right" type="monotone" dataKey="rate" name="Conversion Rate" stroke="#a855f7" strokeWidth={3} dot={{r: 4, fill: '#a855f7'}} />
+                  </ComposedChart>
+                </ResponsiveContainer>
               </div>
-              <p className="font-bold">Where the funnel leaks</p>
-              <p className="text-sm text-neutral-500">Identifying drop-offs by step and channel to optimize marketing spend.</p>
+              <p className="font-bold text-lg">Where the funnel leaks</p>
+              <p className="text-sm text-neutral-500 leading-relaxed">We combine volume data (bars) with conversion rates (line) to instantly spot the biggest drop-offs in your sales process.</p>
             </div>
+
+            {/* CHART 2: Revenue Segmentation */}
             <div className="space-y-4">
-              <div className="aspect-video bg-neutral-800 rounded-xl border border-white/10 relative overflow-hidden">
-                 <div className="absolute bottom-1/4 left-1/3 px-2 py-1 bg-purple-600 text-[10px] rounded shadow-lg">Top revenue segment</div>
+              <div className="aspect-[4/3] bg-neutral-900/50 rounded-xl border border-white/10 relative overflow-hidden p-4">
+                 {/* Анотація */}
+                 <div className="absolute top-[15%] left-[35%] z-10">
+                    <div className="px-3 py-1.5 bg-blue-500/20 border border-blue-500/50 text-blue-300 text-xs font-bold rounded shadow-lg backdrop-blur-md">
+                        VIP Segment = 60% Revenue
+                    </div>
+                </div>
+
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={revenueData} margin={{ top: 20, right: 20, bottom: 20, left: 0 }}>
+                    <CartesianGrid stroke="#333" vertical={false} strokeDasharray="3 3" />
+                    <XAxis dataKey="month" stroke="#666" tick={{fontSize: 12}} axisLine={false} tickLine={false} />
+                    <YAxis stroke="#666" tick={{fontSize: 12}} axisLine={false} tickLine={false} tickFormatter={(value) => `${value/1000}k`} />
+                    <Tooltip contentStyle={darkTooltipStyle} cursor={{fill: 'rgba(255,255,255,0.05)'}} />
+                    <Legend wrapperStyle={{fontSize: '12px', paddingTop: '10px'}} />
+                    <Bar dataKey="New" stackId="a" fill="#64748b" fillOpacity={0.7} />
+                    <Bar dataKey="Loyal" stackId="a" fill="#3b82f6" fillOpacity={0.8} />
+                    <Bar dataKey="VIP" stackId="a" fill="#a855f7" radius={[4, 4, 0, 0]} />
+                  </BarChart>
+                </ResponsiveContainer>
               </div>
-              <p className="font-bold">Revenue Drivers</p>
-              <p className="text-sm text-neutral-500">RFM and cohort views to see which customer segments drive real growth.</p>
+              <p className="font-bold text-lg">Revenue Drivers</p>
+              <p className="text-sm text-neutral-500 leading-relaxed">Stacked segmentation clearly shows which customer cohorts drive real growth, helping you focus your efforts on high-value segments.</p>
             </div>
+
           </div>
         </div>
       </section>
 
       <Pricing />
 
-      {/* FINAL CTA */}
       <section className="py-24 px-6 bg-blue-600">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-4xl font-bold mb-6">Ready to trust your numbers?</h2>
