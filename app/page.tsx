@@ -10,7 +10,7 @@ import {
   ResponsiveContainer, ComposedChart, Bar, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, BarChart 
 } from 'recharts';
 
-// --- DATA FOR CHARTS ---
+// --- DATA FOR VISUALIZATIONS ---
 const funnelData = [
   { name: 'Visitors', value: 15000, rate: 100 },
   { name: 'Leads', value: 6500, rate: 43 },
@@ -40,7 +40,7 @@ const darkTooltipStyle = {
 const Navbar = () => (
   <nav className="fixed top-0 w-full z-50 bg-black/50 backdrop-blur-md border-b border-white/10">
     <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-      <div className="flex items-center gap-3 font-bold text-xl text-white cursor-pointer" onClick={() => window.scrollTo(0,0)}>
+      <div className="flex items-center gap-3 font-bold text-xl text-white cursor-pointer" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
         <Image src="/logo.png" alt="Calyxra" width={40} height={40} className="w-10 h-10 object-contain" />
         <span>Calyxra</span>
       </div>
@@ -79,7 +79,7 @@ const Hero = () => (
       <div className="flex flex-wrap justify-center gap-6 text-sm text-neutral-500">
         <span className="flex items-center gap-2">✓ Typically 1–3 weeks delivery</span>
         <span className="flex items-center gap-2">✓ Starter packages from €750</span>
-        <span className="flex items-center gap-2">✓ Direct contact with Lukian & Oleh</span>
+        <span className="flex items-center gap-2">✓ Direct communication with Lukian & Oleh</span>
       </div>
     </div>
   </section>
@@ -119,7 +119,7 @@ const AiAssistant = () => {
         </div>
         <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Ask our AI Assistant</h2>
         <p className="text-neutral-400 mb-8 max-w-lg mx-auto">
-          Test our knowledge. Ask about our process, founders (Lukian & Oleh), or data analytics.
+          Test our knowledge. Ask about our process, tools, or founders (Lukian & Oleh).
         </p>
 
         <form onSubmit={handleSubmit} className="max-w-xl mx-auto relative group">
@@ -128,7 +128,7 @@ const AiAssistant = () => {
               type="text" 
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="e.g., How long is the delivery?" 
+              placeholder="e.g., What is your delivery timeline?" 
               className="flex-1 bg-transparent text-white px-4 py-3 outline-none"
             />
             <button disabled={isLoading} className="p-3 bg-neutral-800 hover:bg-neutral-700 rounded-md text-white disabled:opacity-50">
@@ -147,72 +147,13 @@ const AiAssistant = () => {
   );
 };
 
-const Process = () => (
-  <section id="process" className="py-24 px-6 border-y border-white/5">
-    <div className="max-w-5xl mx-auto">
-      <h2 className="text-3xl font-bold mb-16 text-center">From chaos to clarity in 4 steps</h2>
-      <div className="grid md:grid-cols-4 gap-8">
-        {[
-          { n: '1', t: 'KPI review call', d: 'Mapping what to track.' },
-          { n: '2', t: 'Data audit', d: 'Identifying gaps in your data.' },
-          { n: '3', t: 'Prototype → Build', d: 'Developing the dashboard.' },
-          { n: '4', t: 'Handover', d: 'Training & documentation.' }
-        ].map((s, i) => (
-          <div key={i} className="relative p-6 bg-neutral-900 rounded-xl border border-white/5">
-            <span className="text-blue-500 font-bold text-lg mb-4 block">0{s.n}</span>
-            <h3 className="font-bold mb-2">{s.t}</h3>
-            <p className="text-sm text-neutral-500">{s.d}</p>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-);
-
-const Pricing = () => (
-  <section id="pricing" className="py-24 px-6">
-    <div className="max-w-5xl mx-auto">
-      <h2 className="text-3xl font-bold mb-16 text-center">Transparent engagement</h2>
-      <div className="grid md:grid-cols-3 gap-8">
-        <div className="p-8 bg-neutral-900 rounded-2xl border border-white/5">
-          <h3 className="text-xl font-bold mb-2">Starter</h3>
-          <div className="text-2xl font-bold mb-4">from €750</div>
-          <ul className="text-sm text-neutral-400 space-y-3 mb-8">
-            <li>• 1 KPI dashboard</li>
-            <li>• Basic data model</li>
-            <li>• Handover & Training</li>
-          </ul>
-        </div>
-        <div className="p-8 bg-blue-900/20 rounded-2xl border border-blue-500/30 relative">
-          <div className="absolute -top-3 left-6 px-3 py-1 bg-blue-600 text-[10px] font-bold uppercase rounded-full">Most Popular</div>
-          <h3 className="text-xl font-bold mb-2">Growth</h3>
-          <div className="text-2xl font-bold mb-4">from €2,400</div>
-          <ul className="text-sm text-neutral-400 space-y-3 mb-8">
-            <li>• 2-3 dashboards</li>
-            <li>• Advanced modeling</li>
-            <li>• Auto-refresh setup</li>
-          </ul>
-        </div>
-        <div className="p-8 bg-neutral-900 rounded-2xl border border-white/5">
-          <h3 className="text-xl font-bold mb-2">Custom</h3>
-          <div className="text-2xl font-bold mb-4">Scoped</div>
-          <ul className="text-sm text-neutral-400 space-y-3 mb-8">
-            <li>• Multi-source integration</li>
-            <li>• Full automation</li>
-            <li>• Ongoing support</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-);
-
 export default function Home() {
   return (
-    <main className="min-h-screen bg-black text-white selection:bg-blue-500/30">
+    <main className="min-h-screen bg-black text-white selection:bg-blue-500/30 scroll-smooth">
       <Navbar />
       <Hero />
       
+      {/* Tool Bar */}
       <div className="py-10 border-y border-white/5 bg-neutral-900/20 text-center">
          <p className="text-xs font-bold text-neutral-500 uppercase tracking-widest mb-4">Tools we work with</p>
          <div className="flex flex-wrap justify-center gap-8 text-neutral-400 font-medium">
@@ -220,55 +161,87 @@ export default function Home() {
          </div>
       </div>
 
-      <section id="services" className="py-24 px-6">
+      {/* PROBLEM SECTION */}
+      <section id="problem" className="py-32 px-6 bg-neutral-950 scroll-mt-20">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6">Excel is slowing you down.</h2>
+          <p className="text-neutral-400 text-lg leading-relaxed">
+            Manual reporting creates inconsistent KPIs, slow decisions, and "multiple versions of truth." 
+            We help you consolidate data and build dashboards your team can actually rely on.
+          </p>
+        </div>
+      </section>
+
+      {/* SERVICES */}
+      <section id="services" className="py-24 px-6 scroll-mt-20">
         <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-8 text-center">
             <div className="p-8 bg-neutral-900 border border-white/5 rounded-2xl">
                 <BarChart3 className="w-10 h-10 text-blue-400 mx-auto mb-4" />
                 <h3 className="font-bold mb-2">Power BI Dashboards</h3>
-                <p className="text-sm text-neutral-400">Automated KPI tracking for revenue and ops.</p>
+                <p className="text-sm text-neutral-400">Automated KPI tracking for revenue and growth.</p>
             </div>
             <div className="p-8 bg-neutral-900 border border-white/5 rounded-2xl">
                 <Database className="w-10 h-10 text-purple-400 mx-auto mb-4" />
                 <h3 className="font-bold mb-2">Data Cleaning</h3>
-                <p className="text-sm text-neutral-400">SQL modeling to ensure your numbers match.</p>
+                <p className="text-sm text-neutral-400">SQL modeling to ensure your numbers are consistent.</p>
             </div>
             <div className="p-8 bg-neutral-900 border border-white/5 rounded-2xl">
                 <Zap className="w-10 h-10 text-yellow-400 mx-auto mb-4" />
                 <h3 className="font-bold mb-2">Reporting Automation</h3>
-                <p className="text-sm text-neutral-400">Eliminate manual Excel work forever.</p>
+                <p className="text-sm text-neutral-400">Eliminate manual data entry work forever.</p>
             </div>
         </div>
       </section>
 
-      <Process />
-      
+      {/* PROCESS */}
+      <section id="process" className="py-24 px-6 border-y border-white/5 scroll-mt-20">
+        <div className="max-w-5xl mx-auto">
+          <h2 className="text-3xl font-bold mb-16 text-center">From chaos to clarity in 4 steps</h2>
+          <div className="grid md:grid-cols-4 gap-8">
+            {[
+              { n: '1', t: 'KPI review call', d: 'Mapping what to track.' },
+              { n: '2', t: 'Data audit', d: 'Identifying gaps in your data.' },
+              { n: '3', t: 'Prototype → Build', d: 'Developing the dashboard.' },
+              { n: '4', t: 'Handover', d: 'Training & documentation.' }
+            ].map((s, i) => (
+              <div key={i} className="relative p-6 bg-neutral-900 rounded-xl border border-white/5">
+                <span className="text-blue-500 font-bold text-lg mb-4 block">0{s.n}</span>
+                <h3 className="font-bold mb-2">{s.t}</h3>
+                <p className="text-sm text-neutral-500">{s.d}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* AI ASSISTANT SECTION */}
       <AiAssistant />
 
-      <section id="examples" className="py-24 px-6 bg-neutral-950">
+      {/* EXAMPLES (Visualizations) */}
+      <section id="examples" className="py-24 px-6 bg-neutral-950 scroll-mt-20">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-3xl font-bold mb-16 text-center">Decision-ready examples</h2>
           <div className="grid md:grid-cols-2 gap-12">
             <div className="space-y-4">
               <div className="aspect-[4/3] bg-neutral-900/50 rounded-xl border border-white/10 relative p-4">
-                <div className="absolute top-[40%] right-[15%] z-10">
+                <div className="absolute top-[40%] right-[10%] z-10">
                     <div className="px-3 py-1.5 bg-red-500/20 border border-red-500/50 text-red-300 text-xs font-bold rounded shadow-lg backdrop-blur-md flex items-center gap-2">
                         <ArrowRight className="w-3 h-3" /> 30% Conversion Drop!
                     </div>
                 </div>
                 <ResponsiveContainer width="100%" height="100%">
-                  <ComposedChart data={funnelData} margin={{ top: 20, right: 20, bottom: 20, left: 0 }}>
-                    <CartesianGrid stroke="#333" vertical={false} strokeDasharray="3 3" />
-                    <XAxis dataKey="name" stroke="#666" tick={{fontSize: 10}} axisLine={false} tickLine={false} />
-                    <YAxis stroke="#666" tick={{fontSize: 10}} axisLine={false} tickLine={false} />
+                  <ComposedChart data={funnelData}>
+                    <CartesianGrid stroke="#333" vertical={false} />
+                    <XAxis dataKey="name" stroke="#666" tick={{fontSize: 10}} axisLine={false} />
+                    <YAxis stroke="#666" tick={{fontSize: 10}} axisLine={false} />
                     <Tooltip contentStyle={darkTooltipStyle} />
                     <Bar dataKey="value" fill="#3b82f6" radius={[4, 4, 0, 0]} barSize={40} />
                     <Line type="monotone" dataKey="rate" stroke="#a855f7" strokeWidth={2} dot={{r: 3}} />
                   </ComposedChart>
                 </ResponsiveContainer>
               </div>
-              <p className="font-bold">Funnel Analysis</p>
-              <p className="text-sm text-neutral-500">Spotting drop-offs across sales steps instantly.</p>
+              <p className="font-bold">Funnel Performance</p>
+              <p className="text-sm text-neutral-500">Spotting drop-offs across sales stages instantly.</p>
             </div>
             <div className="space-y-4">
               <div className="aspect-[4/3] bg-neutral-900/50 rounded-xl border border-white/10 relative p-4">
@@ -278,10 +251,10 @@ export default function Home() {
                     </div>
                 </div>
                 <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={revenueData} margin={{ top: 20, right: 20, bottom: 20, left: 0 }}>
-                    <CartesianGrid stroke="#333" vertical={false} strokeDasharray="3 3" />
-                    <XAxis dataKey="month" stroke="#666" tick={{fontSize: 10}} axisLine={false} tickLine={false} />
-                    <YAxis stroke="#666" tick={{fontSize: 10}} axisLine={false} tickLine={false} />
+                  <BarChart data={revenueData}>
+                    <CartesianGrid stroke="#333" vertical={false} />
+                    <XAxis dataKey="month" stroke="#666" tick={{fontSize: 10}} axisLine={false} />
+                    <YAxis stroke="#666" tick={{fontSize: 10}} axisLine={false} />
                     <Tooltip contentStyle={darkTooltipStyle} />
                     <Bar dataKey="Loyal" stackId="a" fill="#3b82f6" />
                     <Bar dataKey="VIP" stackId="a" fill="#a855f7" radius={[4, 4, 0, 0]} />
@@ -289,14 +262,50 @@ export default function Home() {
                 </ResponsiveContainer>
               </div>
               <p className="font-bold">Revenue Drivers</p>
-              <p className="text-sm text-neutral-500">Seeing exactly which customer cohorts drive growth.</p>
+              <p className="text-sm text-neutral-500">Analyzing which customer segments drive your growth.</p>
             </div>
           </div>
         </div>
       </section>
 
-      <Pricing />
+      {/* PRICING */}
+      <section id="pricing" className="py-24 px-6 scroll-mt-20">
+        <div className="max-w-5xl mx-auto">
+          <h2 className="text-3xl font-bold mb-16 text-center">Transparent engagement</h2>
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="p-8 bg-neutral-900 rounded-2xl border border-white/5">
+              <h3 className="text-xl font-bold mb-2">Starter</h3>
+              <div className="text-2xl font-bold mb-4">from €750</div>
+              <ul className="text-sm text-neutral-400 space-y-3">
+                <li>• 1 KPI dashboard</li>
+                <li>• Basic data model</li>
+                <li>• Handover & Training</li>
+              </ul>
+            </div>
+            <div className="p-8 bg-blue-900/20 rounded-2xl border border-blue-500/30 relative">
+              <div className="absolute -top-3 left-6 px-3 py-1 bg-blue-600 text-[10px] font-bold uppercase rounded-full">Most Popular</div>
+              <h3 className="text-xl font-bold mb-2">Growth</h3>
+              <div className="text-2xl font-bold mb-4">from €2,400</div>
+              <ul className="text-sm text-neutral-400 space-y-3">
+                <li>• 2-3 dashboards</li>
+                <li>• Advanced modeling</li>
+                <li>• Auto-refresh setup</li>
+              </ul>
+            </div>
+            <div className="p-8 bg-neutral-900 rounded-2xl border border-white/5">
+              <h3 className="text-xl font-bold mb-2">Custom</h3>
+              <div className="text-2xl font-bold mb-4">Bespoke</div>
+              <ul className="text-sm text-neutral-400 space-y-3">
+                <li>• Multi-source integration</li>
+                <li>• Full automation</li>
+                <li>• Ongoing support</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
 
+      {/* FINAL CTA */}
       <section className="py-24 px-6 bg-blue-600">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-4xl font-bold mb-6">Ready to trust your numbers?</h2>
