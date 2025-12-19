@@ -1,14 +1,12 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  eslint: {
-    // Це дозволить Vercel ігнорувати помилки стилю при збірці
-    ignoreDuringBuilds: true,
-  },
+  /* Новий формат для Next.js 16 */
   typescript: {
-    // Це дозволить ігнорувати технічні помилки типів
+    // Дозволяє завершити збірку, навіть якщо є дрібні помилки в типах
     ignoreBuildErrors: true,
   },
+  // Ми прибрали блок eslint, щоб не було помилки "Unrecognized key"
 };
 
 export default nextConfig;
