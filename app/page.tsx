@@ -36,16 +36,26 @@ export default function Home() {
         <div className="absolute bottom-[10%] right-[-5%] w-[30%] h-[30%] bg-blue-900/10 blur-[120px] rounded-full"></div>
       </div>
 
-      {/* 1. NAVIGATION */}
+      {/* 1. NAVIGATION - ВИПРАВЛЕНО ЛОГО ТА ПІДСВІТКУ */}
       <nav className="fixed w-full z-50 bg-black/60 backdrop-blur-xl border-b border-white/5">
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center font-black text-xs text-white">C</div>
-            <div className="text-lg font-black tracking-tighter uppercase leading-none italic">CALYXRA</div>
+          <div className="flex items-center gap-3 group">
+            {/* ТЕПЕР ТУТ ВАШЕ ЛОГО logo.png ЗАМІСТЬ ЛІТЕРИ C */}
+            <div className="relative w-8 h-8 overflow-hidden rounded-lg">
+              <Image 
+                src="/logo.png" 
+                alt="Calyxra Logo" 
+                fill 
+                sizes="32px"
+                className="object-cover" 
+              />
+            </div>
+            <div className="text-lg font-black tracking-tighter uppercase leading-none italic text-white">CALYXRA</div>
           </div>
           <div className="hidden md:flex gap-10 text-[11px] uppercase tracking-[0.2em] text-gray-400 font-bold">
             <a href="#process" className="hover:text-blue-500 transition">Process</a>
-            <a href="/dashboards" className="hover:text-blue-500 transition text-blue-400">Portfolio</a> 
+            {/* ПРИБРАНО text-blue-400, ЩОБ НЕ СВІТИЛОСЬ СИНІМ НА HOME */}
+            <a href="/dashboards" className="hover:text-blue-500 transition">Portfolio</a> 
             <a href="#pricing" className="hover:text-blue-500 transition">Pricing</a>
           </div>
           <a href={calendlyUrl} className="bg-white text-black hover:bg-blue-600 hover:text-white px-6 py-2.5 rounded-full text-[10px] font-black uppercase tracking-wider transition-all shadow-xl active:scale-95">
@@ -69,10 +79,10 @@ export default function Home() {
               We deliver interactive Power BI dashboard assets. Know your **real margin** after ads, logistics, and returns.
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center items-center not-italic">
-              <a href={calendlyUrl} className="w-full sm:w-auto bg-blue-600 hover:bg-blue-500 text-white px-10 py-5 rounded-2xl font-black text-sm uppercase tracking-widest transition-all shadow-[0_20px_40px_rgba(37,99,235,0.25)] hover:-translate-y-1">
+              <a href={calendlyUrl} className="w-full sm:auto bg-blue-600 hover:bg-blue-500 text-white px-10 py-5 rounded-2xl font-black text-sm uppercase tracking-widest transition-all shadow-[0_20px_40px_rgba(37,99,235,0.25)] hover:-translate-y-1">
                 Start Free Audit
               </a>
-              <a href="/dashboards" className="w-full sm:w-auto bg-white/5 border border-white/10 hover:bg-white/10 text-white px-10 py-5 rounded-2xl font-black text-sm uppercase tracking-widest transition-all">
+              <a href="/dashboards" className="w-full sm:auto bg-white/5 border border-white/10 hover:bg-white/10 text-white px-10 py-5 rounded-2xl font-black text-sm uppercase tracking-widest transition-all">
                 View Portfolio
               </a>
             </div>
@@ -155,7 +165,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 7. PRICING SECTION - ВИПРАВЛЕНО */}
+        {/* 7. PRICING SECTION */}
         <section id="pricing" className="py-32 px-6 bg-white/[0.01] border-t border-white/5">
           <div className="max-w-5xl mx-auto">
             <h2 className="text-4xl font-black mb-20 text-center uppercase tracking-[0.2em] text-white italic">The Investment</h2>
@@ -167,7 +177,7 @@ export default function Home() {
                   <span className="text-[10px] font-black uppercase tracking-[0.3em] text-gray-500">Starter Asset</span>
                   <div className="text-5xl font-black mt-4 text-white italic">€699</div>
                 </div>
-                <div className="space-y-6 text-sm text-gray-400 mb-12 flex-grow font-medium italic">
+                <div className="space-y-6 text-sm text-gray-400 mb-12 flex-grow font-medium italic text-left">
                   <p className="flex items-center gap-3"><span className="w-1.5 h-1.5 rounded-full bg-blue-600"></span> 1 Executive Dashboard Asset</p>
                   <p className="flex items-center gap-3"><span className="w-1.5 h-1.5 rounded-full bg-blue-600"></span> Shopify Connector Setup</p>
                   <p className="flex items-center gap-3"><span className="w-1.5 h-1.5 rounded-full bg-blue-600"></span> 7-Day Digital Delivery</p>
@@ -178,11 +188,11 @@ export default function Home() {
               {/* GROWTH CARD */}
               <div className="p-12 rounded-[2.5rem] bg-blue-600 shadow-[0_0_80px_rgba(37,99,235,0.25)] flex flex-col relative overflow-hidden group">
                 <div className="absolute top-0 right-0 bg-white text-blue-600 px-8 py-2 text-[10px] font-black uppercase tracking-widest rounded-bl-3xl shadow-2xl">Growth Focus</div>
-                <div className="mb-10 relative z-10">
+                <div className="mb-10 relative z-10 text-left">
                   <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white/70">Full Analytics Suite</span>
                   <div className="text-5xl font-black mt-4 text-white italic">€2,400</div>
                 </div>
-                <div className="space-y-6 text-sm text-white mb-12 flex-grow relative z-10 font-bold italic">
+                <div className="space-y-6 text-sm text-white mb-12 flex-grow relative z-10 font-bold italic text-left">
                   <p className="flex items-center gap-3"><span className="w-2 h-2 rounded-full bg-white"></span> 3–4 Dashboard Assets</p>
                   <p className="flex items-center gap-3"><span className="w-2 h-2 rounded-full bg-white"></span> Marketing & Cohort Modeling</p>
                   <p className="flex items-center gap-3"><span className="w-2 h-2 rounded-full bg-white"></span> Priority Implementation</p>
@@ -197,15 +207,15 @@ export default function Home() {
         {/* 8. FAQ SECTION */}
         <section className="py-32 px-6 max-w-4xl mx-auto">
           <h2 className="text-3xl font-black mb-16 text-center text-white uppercase tracking-widest italic">FAQ</h2>
-          <div className="space-y-12">
+          <div className="space-y-12 text-left">
             {[
               { q: "Is my data secure?", a: "Official API connections only. Your raw data flows directly to your private Power BI." },
               { q: "What is the delivery format?", a: "You receive a digital software asset (PBIX file) or a cloud-access link." },
               { q: "Do you offer refunds?", a: "Due to the custom digital nature, no refunds are available once setup begins." }
             ].map((faq, i) => (
               <div key={i} className="border-b border-white/5 pb-8">
-                <h3 className="text-blue-400 font-bold mb-3 text-lg">{faq.q}</h3>
-                <p className="text-gray-400 text-sm leading-relaxed font-medium">{faq.a}</p>
+                <h3 className="text-blue-400 font-bold mb-3 text-lg italic">{faq.q}</h3>
+                <p className="text-gray-400 text-sm leading-relaxed font-medium italic">{faq.a}</p>
               </div>
             ))}
           </div>
@@ -227,7 +237,7 @@ export default function Home() {
       <footer className="py-24 bg-black border-t border-white/5 px-6 relative z-10 text-center md:text-left">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-center gap-12 border-b border-white/5 pb-16 mb-12">
-            <div>
+            <div className="text-left">
               <div className="text-2xl font-black uppercase tracking-tighter mb-4 text-white italic">CALYXRA</div>
               <p className="text-gray-600 text-[10px] uppercase tracking-[0.3em] font-bold">Premium BI Solutions for Shopify</p>
             </div>
@@ -238,7 +248,7 @@ export default function Home() {
           </div>
           
           <div className="flex flex-col md:flex-row justify-between items-center gap-10">
-            <div className="text-[9px] text-gray-800 uppercase tracking-[0.4em] font-black max-w-lg leading-relaxed">
+            <div className="text-[9px] text-gray-800 uppercase tracking-[0.4em] font-black max-w-lg leading-relaxed text-left italic">
               Payments processed by Paddle. Service provided by Sole Trader Kononchuk Oleksandr Yaroslavovych.
             </div>
             <div className="flex gap-10 text-[9px] text-gray-500 uppercase tracking-[0.3em] font-bold">

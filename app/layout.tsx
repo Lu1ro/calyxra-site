@@ -1,7 +1,11 @@
-import Navbar from "@/components/Navbar";
+import Navbar from "@/components/Navbar"; // Перевірте, чи шлях до компонента правильний
 import "./globals.css";
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en">
       <body>
