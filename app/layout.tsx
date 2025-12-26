@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
-import "./globals.css"; // Переконайтеся, що цей імпорт у вас є, якщо використовуєте стилі
+import "./globals.css";
 
+// Налаштування метаданих для Google та браузера
 export const metadata: Metadata = {
   title: "Calyxra | Power BI Dashboards for Shopify",
   description: "Premium Shopify Analytics Solutions. Know your real margin after ads, logistics, and returns.",
   icons: {
-    icon: "/logo.png",
+    // Шлях до файлу logo.png, який лежить у вашій папці public
+    icon: "/logo.png",       
     shortcut: "/logo.png",
     apple: "/logo.png",
   },
@@ -19,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* Додатковий лінк для кращої підтримки браузерами */}
+        {/* Пряме посилання на іконку для надійності */}
         <link rel="icon" href="/logo.png" />
       </head>
       <body>{children}</body>
