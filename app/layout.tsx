@@ -2,26 +2,33 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  // Основне SEO
-  title: "Calyxra | Power BI Dashboards & Data Analytics for Shopify",
-  description: "Stop guessing. Start deciding. We turn messy Shopify data into reliable Power BI dashboards. 1–3 weeks delivery.",
+  // Те, що відображається в пошуку та на вкладці
+  title: "Calyxra | Power BI Dashboards & Data Analytics",
+  description: "Stop guessing. Start deciding. We turn messy Shopify data into reliable Power BI dashboards.",
   
-  // Налаштування іконок для Google та пристроїв
-  icons: {
-    icon: [
-      { url: "/logo.png", sizes: "32x32", type: "image/png" },
-      { url: "/logo.png", sizes: "192x192", type: "image/png" },
-      { url: "/logo.png", sizes: "512x512", type: "image/png" }, // Рекомендовано Google
+  // Налаштування для месенджерів (Telegram, WhatsApp, Facebook)
+  openGraph: {
+    title: "Calyxra | Power BI Dashboards for Founders",
+    description: "Premium Shopify Analytics Solutions. Know your real margin after ads and logistics.",
+    url: "https://www.calyxra.com",
+    siteName: "Calyxra",
+    images: [
+      {
+        url: "/logo.png", // Шлях до вашого логотипу в папці public
+        width: 800,
+        height: 600,
+        alt: "Calyxra Logo",
+      },
     ],
-    shortcut: "/logo.png",
-    apple: "/logo.png", // Для іконок на iPhone/iPad
+    locale: "en_US",
+    type: "website",
   },
 
-  // Налаштування для відображення в соцмережах (Telegram/LinkedIn)
-  openGraph: {
-    title: "Calyxra | Power BI Dashboards for Shopify",
-    description: "Premium Shopify Analytics Solutions. Know your real margin.",
-    images: ["/logo.png"], 
+  // Іконки для браузера
+  icons: {
+    icon: "/logo.png",
+    shortcut: "/logo.png",
+    apple: "/logo.png",
   },
 };
 
@@ -31,11 +38,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="scroll-smooth">
-      <head>
-        {/* Додатковий лінк для пошукових роботів */}
-        <link rel="icon" href="/logo.png" sizes="any" />
-      </head>
+    <html lang="en">
       <body>{children}</body>
     </html>
   );
