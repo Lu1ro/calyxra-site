@@ -1,91 +1,87 @@
-export default function TermsOfService() {
+'use client';
+
+function Section({ title, children }) {
   return (
-    <div className="bg-[#050505] text-[#ededed] min-h-screen p-8 md:p-24 font-sans italic selection:bg-blue-500/30">
-      <div className="max-w-4xl mx-auto">
-        <a href="/" className="text-blue-500 hover:text-blue-400 mb-12 inline-block font-black uppercase tracking-widest text-xs not-italic transition-colors">
-          ← Back to Home
-        </a>
-        
-        <h1 className="text-5xl font-black mb-16 text-white uppercase italic tracking-tighter">
-          Terms of <span className="text-blue-500">Service.</span>
-        </h1>
-
-        <div className="space-y-12 text-gray-400 leading-relaxed text-base not-italic">
-          
-          {/* Section 1: Agreement */}
-          <section className="space-y-4">
-            <h2 className="text-white font-black uppercase tracking-widest text-sm italic">1. Acceptance of Terms</h2>
-            <p className="font-medium italic">
-              By accessing calyxra.com or purchasing our digital assets, you agree to be bound by these Terms of Service. 
-              Calyxra is a brand operated by Sole Trader Kononchuk Oleksandr Yaroslavovych, registered in Dubno, Ukraine.
-            </p>
-          </section>
-
-          {/* Section 2: Services & Deliverables */}
-          <section className="space-y-4">
-            <h2 className="text-white font-black uppercase tracking-widest text-sm italic">2. Digital Assets & Services</h2>
-            <p className="italic">
-              Calyxra provides custom Power BI dashboard assets and data modeling services for Shopify brands. 
-              Deliverables include digital software files (.PBIX) or private cloud access to finalized data visualizations.
-            </p>
-          </section>
-
-          {/* Section 3: Payments & Paddle */}
-          <section className="space-y-4">
-            <h2 className="text-white font-black uppercase tracking-widest text-sm italic">3. Pricing & Payment Terms</h2>
-            <ul className="space-y-3 italic">
-              <li className="flex gap-3"><span className="text-blue-500">•</span> <strong>Paddle:</strong> Our order process is conducted by our Merchant of Record, Paddle.com, who also handles customer service inquiries and returns.</li>
-              <li className="flex gap-3"><span className="text-blue-500">•</span> <strong>Starter Package (€699):</strong> Requires 100% upfront payment.</li>
-              <li className="flex gap-3"><span className="text-blue-500">•</span> <strong>Growth Package (€2,400):</strong> Eligible for a 50/50 split plan (50% deposit to initiate work, 50% final payment upon successful demonstration of the assets).</li>
-            </ul>
-          </section>
-
-          {/* Section 4: Intellectual Property */}
-          <section className="space-y-4">
-            <h2 className="text-white font-black uppercase tracking-widest text-sm italic">4. Intellectual Property Rights</h2>
-            <p className="italic">
-              Until full payment is received, all custom data models and dashboard templates remain the intellectual property of Calyxra. 
-              Upon 100% payment, the client is granted a perpetual, non-exclusive license to use the delivered assets for their internal business operations. 
-              Reselling or redistributing our core templates is strictly prohibited.
-            </p>
-          </section>
-
-          {/* Section 5: Data Access & Security */}
-          <section className="space-y-4">
-            <h2 className="text-white font-black uppercase tracking-widest text-sm italic">5. Client Obligations</h2>
-            <p className="italic">
-              To complete the services, clients must provide necessary API access to their Shopify and Marketing accounts. 
-              We strictly adhere to our <a href="/privacy" className="text-blue-500 underline">Privacy Policy</a>: we do not store your raw transactional data on our servers.
-            </p>
-          </section>
-
-          {/* Section 6: Limitation of Liability */}
-          <section className="space-y-4">
-            <h2 className="text-white font-black uppercase tracking-widest text-sm italic">6. Limitation of Liability</h2>
-            <p className="italic">
-              Calyxra shall not be liable for any indirect, incidental, or consequential damages resulting from the use of our dashboard assets or any changes in third-party APIs (Shopify, Meta, Google).
-            </p>
-          </section>
-
-          {/* Legal Footer */}
-          <div className="pt-16 border-t border-white/5">
-            <div className="grid md:grid-cols-2 gap-8 text-[10px] uppercase tracking-[0.2em] font-black italic">
-              <div className="space-y-2">
-                <p className="text-gray-600 not-italic">Company Details:</p>
-                <p className="text-white">Sole Trader Kononchuk Oleksandr Yaroslavovych</p>
-                <p className="text-white">Address: Dubno, Ukraine</p>
-                <p className="text-white">Contact: admin@calyxra.com</p>
-              </div>
-              <div className="space-y-2 md:text-right">
-                <p className="text-gray-600 not-italic">Governing Law:</p>
-                <p className="text-white">Ukraine</p>
-                <p className="text-gray-600 not-italic mt-4">Last Updated:</p>
-                <p className="text-white">December 26, 2025</p>
-              </div>
-            </div>
-          </div>
-        </div>
+    <div className="mb-10">
+      <h2 className="text-lg font-serif font-bold text-stone-900 mb-3 uppercase tracking-wider border-b border-stone-200 pb-2">{title}</h2>
+      <div className="text-stone-600 text-sm leading-relaxed space-y-3 font-medium">
+        {children}
       </div>
+    </div>
+  );
+}
+
+export default function TermsPage() {
+  return (
+    <div className="min-h-screen bg-[#FAFAF9] text-stone-900 font-sans selection:bg-emerald-200">
+      
+      {/* NAV */}
+      <nav className="fixed w-full z-50 bg-[#FAFAF9]/90 backdrop-blur-md border-b border-stone-200">
+        <div className="max-w-4xl mx-auto px-6 h-20 flex items-center justify-between">
+          <a href="/" className="text-2xl font-serif font-bold tracking-tight text-stone-900 hover:opacity-80">
+            Calyxra<span className="text-emerald-700">.</span>
+          </a>
+          <a href="/" className="text-xs font-bold text-stone-500 uppercase tracking-widest hover:text-stone-900">
+            ← Back to Home
+          </a>
+        </div>
+      </nav>
+
+      <main className="pt-32 px-6 pb-24">
+        <div className="max-w-3xl mx-auto bg-white p-12 border border-stone-200 shadow-sm">
+          
+          <div className="mb-12 text-center">
+            <h1 className="text-4xl font-serif font-medium text-stone-900 mb-2">Terms of Service</h1>
+            <p className="text-xs text-stone-400 font-bold uppercase tracking-widest">Effective Date: December 28, 2025</p>
+          </div>
+
+          <Section title="1. Service Scope">
+            <p>
+              Calyxra ("we") provides data infrastructure engineering and business intelligence assets for marketing agencies ("Client"). By engaging our services, you agree that you are purchasing a B2B service for professional use.
+            </p>
+          </Section>
+
+          <Section title="2. Intellectual Property & License">
+            <p>
+              <strong>Ownership:</strong> Calyxra retains all intellectual property rights to the underlying SQL logic, data schemas, and Power BI template structures ("Core IP").
+            </p>
+            <p>
+              <strong>License Grant:</strong> Upon full payment, Calyxra grants the Client a perpetual, non-exclusive, worldwide license to use, modify, and display the delivered assets for internal business operations and client reporting.
+            </p>
+            <p className="text-red-800 bg-red-50 p-3 border border-red-100">
+              <strong>Restriction:</strong> You may NOT resell, sub-license, or redistribute our source code (.pbix files or SQL scripts) as a standalone software product or template pack to third parties.
+            </p>
+          </Section>
+
+          <Section title="3. Payment Terms">
+            <p>
+              <strong>Agency Pilot (€900 + Setup):</strong> 100% upfront payment required to reserve engineering capacity.
+            </p>
+            <p>
+              <strong>Agency Scale (€1,500 + Setup):</strong> Split payment available (50% deposit / 50% upon delivery) at our discretion.
+            </p>
+            <p>
+              Late payments for monthly retainers may result in the temporary suspension of data pipeline updates (BigQuery scheduled queries).
+            </p>
+          </Section>
+
+          <Section title="4. Liability">
+            <p>
+              Our services rely on third-party APIs (Shopify, Meta, Google). We are not liable for data interruptions caused by platform outages or API deprecations managed by these providers. We commit to updating our connectors within a reasonable timeframe as part of the monthly retainer.
+            </p>
+          </Section>
+
+          <div className="mt-12 pt-8 border-t border-stone-100 text-xs text-stone-400 text-center">
+            <p>Sole Trader Kononchuk Oleksandr Yaroslavovych</p>
+            <p>Dubno, Ukraine. admin@calyxra.com</p>
+          </div>
+
+        </div>
+      </main>
+      
+      <footer className="py-8 text-center text-[10px] text-stone-400 uppercase tracking-widest border-t border-stone-200">
+        © 2025 Calyxra Data Systems.
+      </footer>
     </div>
   );
 }

@@ -1,91 +1,66 @@
-export default function PrivacyPolicy() {
+'use client';
+
+export default function PrivacyPage() {
   return (
-    <div className="bg-[#050505] text-[#ededed] min-h-screen p-8 md:p-24 font-sans italic selection:bg-blue-500/30">
-      <div className="max-w-4xl mx-auto">
-        <a href="/" className="text-blue-500 hover:text-blue-400 mb-12 inline-block font-black uppercase tracking-widest text-xs not-italic transition-colors">
-          ← Back to Home
-        </a>
-        
-        <h1 className="text-5xl font-black mb-16 text-white uppercase italic tracking-tighter">
-          Privacy <span className="text-blue-500">Policy.</span>
-        </h1>
-
-        <div className="space-y-12 text-gray-400 leading-relaxed text-base not-italic">
-          
-          {/* Section 1: Introduction */}
-          <section className="space-y-4">
-            <h2 className="text-white font-black uppercase tracking-widest text-sm italic">1. Introduction & Trust</h2>
-            <p className="font-medium italic">
-              At Calyxra, we understand that your store’s data is your most valuable asset. 
-              This Privacy Policy explains how we handle information when you purchase our premium BI dashboard assets. 
-              Our business, operated by Sole Trader Kononchuk Oleksandr Yaroslavovych, is committed to the highest standards of data protection and transparency.
-            </p>
-          </section>
-
-          {/* Section 2: Data Handling */}
-          <section className="space-y-4">
-            <h2 className="text-white font-black uppercase tracking-widest text-sm italic">2. Data Processing (The "No-Storage" Rule)</h2>
-            <p className="italic">
-              To build your custom dashboards, we require temporary access to your Shopify and Marketing APIs. 
-              <strong> Crucially:</strong> We do not store your raw transactional data on our servers. 
-              The data flows directly from your official APIs into your private Power BI environment. 
-              We never store or have access to your passwords or sensitive customer payment information.
-            </p>
-          </section>
-
-          {/* Section 3: Information We Collect */}
-          <section className="space-y-4">
-            <h2 className="text-white font-black uppercase tracking-widest text-sm italic">3. Information We Collect</h2>
-            <ul className="space-y-3 italic">
-              <li className="flex gap-3"><span className="text-blue-500">•</span> <strong>Contact Information:</strong> Name and email address to manage your order and provide technical support.</li>
-              <li className="flex gap-3"><span className="text-blue-500">•</span> <strong>Technical Metadata:</strong> Store URL and API connection tokens required to build the data models.</li>
-              <li className="flex gap-3"><span className="text-blue-500">•</span> <strong>Payment Data:</strong> Handled entirely by our payment partner, <strong>Paddle</strong>. We never see or store your credit card details.</li>
-            </ul>
-          </section>
-
-          {/* Section 4: Third-Party Services */}
-          <section className="space-y-4">
-            <h2 className="text-white font-black uppercase tracking-widest text-sm italic">4. Third-Party Services</h2>
-            <p className="italic">
-              We use <strong>Paddle</strong> as our Merchant of Record to process payments and handle sales tax. 
-              Paddle’s privacy policy applies to the checkout process. For data visualization, we utilize <strong>Microsoft Power BI</strong>, ensuring your reports remain within a secure, world-class enterprise ecosystem.
-            </p>
-          </section>
-
-          {/* Section 5: Security */}
-          <section className="space-y-4">
-            <h2 className="text-white font-black uppercase tracking-widest text-sm italic">5. Data Security Measures</h2>
-            <p className="italic">
-              We implement industry-standard encryption for all data in transit. 
-              Access to your API tokens is strictly limited to the technical team involved in your project and is revoked immediately upon project completion.
-            </p>
-          </section>
-
-          {/* Section 6: Contact */}
-          <section className="space-y-4">
-            <h2 className="text-white font-black uppercase tracking-widest text-sm italic">6. Your Rights & Contact</h2>
-            <p className="italic">
-              Under GDPR, you have the right to access, rectify, or erase your personal data. 
-              For any privacy-related inquiries, please contact us at <a href="mailto:admin@calyxra.com" className="text-blue-500 underline">admin@calyxra.com</a>.
-            </p>
-          </section>
-
-          {/* Legal Footer */}
-          <div className="pt-16 border-t border-white/5">
-            <div className="grid md:grid-cols-2 gap-8 text-[10px] uppercase tracking-[0.2em] font-black italic">
-              <div className="space-y-2">
-                <p className="text-gray-600 not-italic">Data Controller:</p>
-                <p className="text-white">Sole Trader Kononchuk Oleksandr Yaroslavovych</p>
-                <p className="text-white">Dubno, Ukraine</p>
-              </div>
-              <div className="space-y-2 md:text-right">
-                <p className="text-gray-600 not-italic">Last Updated:</p>
-                <p className="text-white">December 26, 2025</p>
-              </div>
-            </div>
-          </div>
+    <div className="min-h-screen bg-[#FAFAF9] text-stone-900 font-sans selection:bg-emerald-200">
+      
+      <nav className="fixed w-full z-50 bg-[#FAFAF9]/90 backdrop-blur-md border-b border-stone-200">
+        <div className="max-w-4xl mx-auto px-6 h-20 flex items-center justify-between">
+          <a href="/" className="text-2xl font-serif font-bold tracking-tight text-stone-900 hover:opacity-80">
+            Calyxra<span className="text-emerald-700">.</span>
+          </a>
+          <a href="/" className="text-xs font-bold text-stone-500 uppercase tracking-widest hover:text-stone-900">
+            ← Back to Home
+          </a>
         </div>
-      </div>
+      </nav>
+
+      <main className="pt-32 px-6 pb-24">
+        <div className="max-w-3xl mx-auto bg-white p-12 border border-stone-200 shadow-sm">
+          
+          <div className="mb-12 text-center">
+            <h1 className="text-4xl font-serif font-medium text-stone-900 mb-2">Data Privacy & Security</h1>
+            <p className="text-stone-500 text-sm">Security Protocols for Agency Partners</p>
+          </div>
+
+          <div className="space-y-8 text-sm text-stone-600 leading-relaxed font-medium">
+            
+            <div>
+              <h3 className="text-lg font-serif font-bold text-stone-900 mb-2">1. Data Ownership</h3>
+              <p>
+                Calyxra acts solely as a Data Processor. <strong>You (the Client) retain 100% ownership of all data</strong> processed through our infrastructure. We do not aggregate, sell, or share your clients' performance data with any third parties.
+              </p>
+            </div>
+
+            <div>
+              <h3 className="text-lg font-serif font-bold text-stone-900 mb-2">2. Storage Architecture</h3>
+              <p>
+                We deploy a dedicated Google BigQuery project for each agency. Your data is isolated in your own cloud environment, ensuring no cross-contamination with other clients. We use industry-standard encryption (AES-256) for data at rest and in transit.
+              </p>
+            </div>
+
+            <div>
+              <h3 className="text-lg font-serif font-bold text-stone-900 mb-2">3. Access Control</h3>
+              <p>
+                We request "Least Privilege" access to your Shopify and Ad Accounts (usually "Analyst" or "Viewer" level). We never ask for Admin permissions or ability to modify ad campaigns.
+              </p>
+            </div>
+
+            <div>
+              <h3 className="text-lg font-serif font-bold text-stone-900 mb-2">4. Non-Disclosure Agreement (NDA)</h3>
+              <p>
+                We automatically adhere to strict confidentiality regarding your agency's client list and revenue figures. We are happy to sign your specific NDA prior to the Kick-off call.
+              </p>
+            </div>
+
+          </div>
+
+        </div>
+      </main>
+
+      <footer className="py-8 text-center text-[10px] text-stone-400 uppercase tracking-widest border-t border-stone-200">
+        © 2025 Calyxra Data Systems.
+      </footer>
     </div>
   );
 }
