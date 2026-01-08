@@ -19,48 +19,77 @@ export default function PrivacyPage() {
         <div className="max-w-3xl mx-auto bg-white p-12 border border-stone-200 shadow-sm">
           
           <div className="mb-12 text-center">
-            <h1 className="text-4xl font-serif font-medium text-stone-900 mb-2">Data Privacy & Security</h1>
-            <p className="text-stone-500 text-sm">Security Protocols for Agency Partners</p>
+            <h1 className="text-4xl font-serif font-medium text-stone-900 mb-2">Privacy & Data Security</h1>
+            <p className="text-xs text-stone-400 font-bold uppercase tracking-widest">Effective Date: January 1, 2026</p>
+            <p className="text-stone-500 text-xs mt-2 italic">GDPR & B2B Compliance Protocol</p>
           </div>
 
           <div className="space-y-8 text-sm text-stone-600 leading-relaxed font-medium">
             
-            <div>
-              <h3 className="text-lg font-serif font-bold text-stone-900 mb-2">1. Data Ownership</h3>
+            <section>
+              <h3 className="text-lg font-serif font-bold text-stone-900 mb-2 border-b border-stone-100 pb-1">1. Legal Entity & Roles</h3>
               <p>
-                Calyxra acts solely as a Data Processor. <strong>You (the Client) retain 100% ownership of all data</strong> processed through our infrastructure. We do not aggregate, sell, or share your clients' performance data with any third parties.
+                This Privacy Policy governs the data processing practices of <strong>Sole Proprietor Oleksandr Kononchuk operating as Calyxra</strong> (“Calyxra”, “we”, “us”).
               </p>
-            </div>
+              <p className="mt-2">
+                Under GDPR definitions, Calyxra acts as a <strong>Data Processor</strong>. Our Clients act as <strong>Data Controllers</strong>. We process data solely under documented client instructions.
+              </p>
+            </section>
 
-            <div>
-              <h3 className="text-lg font-serif font-bold text-stone-900 mb-2">2. Storage Architecture</h3>
+            <section>
+              <h3 className="text-lg font-serif font-bold text-stone-900 mb-2 border-b border-stone-100 pb-1">2. Data Isolation & Architecture</h3>
+              <ul className="list-disc pl-5 mt-2 space-y-1">
+                <li><strong>Environment Isolation:</strong> Dedicated BigQuery projects or datasets per Client.</li>
+                <li><strong>Encryption:</strong> AES-256 at rest and TLS 1.2+ in transit.</li>
+                <li><strong>No Data Resale:</strong> Client data is never aggregated, sold, or reused.</li>
+              </ul>
+            </section>
+
+            <section>
+              <h3 className="text-lg font-serif font-bold text-stone-900 mb-2 border-b border-stone-100 pb-1">3. Access Control</h3>
               <p>
-                We deploy a dedicated Google BigQuery project for each agency. Your data is isolated in your own cloud environment, ensuring no cross-contamination with other clients. We use industry-standard encryption (AES-256) for data at rest and in transit.
+                We follow the Principle of Least Privilege. Access is limited to required roles only. Credentials are never stored; secure OAuth or service accounts are used.
               </p>
-            </div>
+            </section>
 
-            <div>
-              <h3 className="text-lg font-serif font-bold text-stone-900 mb-2">3. Access Control</h3>
+            <section>
+              <h3 className="text-lg font-serif font-bold text-stone-900 mb-2 border-b border-stone-100 pb-1">4. International Transfers</h3>
               <p>
-                We request "Least Privilege" access to your Shopify and Ad Accounts (usually "Analyst" or "Viewer" level). We never ask for Admin permissions or ability to modify ad campaigns.
+                For EU and US Clients, Standard Contractual Clauses (SCCs) are applied to ensure GDPR-equivalent protection.
               </p>
-            </div>
+            </section>
 
-            <div>
-              <h3 className="text-lg font-serif font-bold text-stone-900 mb-2">4. Non-Disclosure Agreement (NDA)</h3>
+            <section>
+              <h3 className="text-lg font-serif font-bold text-stone-900 mb-2 border-b border-stone-100 pb-1">5. Sub-processors</h3>
+              <ul className="list-disc pl-5 mt-2 space-y-1">
+                <li>Google Cloud Platform (BigQuery)</li>
+                <li>Microsoft Power BI</li>
+                <li>Vercel (website hosting)</li>
+              </ul>
+            </section>
+
+            <section>
+              <h3 className="text-lg font-serif font-bold text-stone-900 mb-2 border-b border-stone-100 pb-1">6. Confidentiality</h3>
               <p>
-                We automatically adhere to strict confidentiality regarding your agency's client list and revenue figures. We are happy to sign your specific NDA prior to the Kick-off call.
+                All project data and communications are confidential. NDA execution is available upon request.
               </p>
-            </div>
+            </section>
 
+            <section>
+              <h3 className="text-lg font-serif font-bold text-stone-900 mb-2 border-b border-stone-100 pb-1">7. Contact</h3>
+              <p>
+                GDPR inquiries: <strong>admin@calyxra.com</strong>
+              </p>
+            </section>
+          </div>
+
+          <div className="mt-12 pt-8 border-t border-stone-100 text-[10px] text-stone-400 text-center uppercase tracking-widest">
+            <p className="font-bold">Sole Proprietor Oleksandr Kononchuk (Calyxra)</p>
+            <p>Dubno, Ukraine • 2026</p>
           </div>
 
         </div>
       </main>
-
-      <footer className="py-8 text-center text-[10px] text-stone-400 uppercase tracking-widest border-t border-stone-200">
-        © 2025 Calyxra Data Systems.
-      </footer>
     </div>
   );
 }
