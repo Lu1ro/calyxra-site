@@ -64,15 +64,8 @@ function PricingCard({
         <div className="mt-2 text-xs font-mono">
           <span className="opacity-50 line-through">{setupPrice}</span>
           <span className={`ml-2 font-bold ${isPopular ? 'text-emerald-400' : 'text-emerald-700'}`}>{discountedSetupPrice}</span>
-          <span className="opacity-70 ml-1">one-time</span>
+          <span className="opacity-70 ml-1">setup (Founding Partner)</span>
         </div>
-      </div>
-
-      {/* Technical Fit Guarantee */}
-      <div className={`text-[11px] mb-6 py-3 px-4 border-l-2 ${isPopular
-        ? 'border-emerald-400 bg-white/5 text-white/80'
-        : 'border-emerald-700 bg-emerald-50 text-stone-600'}`}>
-        <span className="font-semibold">Technical Fit Guarantee:</span> if we can't connect your stack, you don't pay the setup fee.
       </div>
 
       <p className={`text-sm mb-6 pb-6 border-b ${isPopular ? 'border-white/20 text-white/70' : 'border-stone-200 text-stone-500'}`}>
@@ -99,7 +92,7 @@ function PricingCard({
           : 'bg-stone-900 text-white hover:bg-stone-800'
           }`}
       >
-        Start Implementation
+        Book Discovery Call
       </a>
     </div>
   );
@@ -147,7 +140,7 @@ function FAQItem({ question, answer }: { question: string; answer: string }) {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
         </svg>
       </button>
-      <div className={`overflow-hidden transition-all duration-300 ${isOpen ? 'max-h-40 pb-6' : 'max-h-0'}`}>
+      <div className={`overflow-hidden transition-all duration-300 ${isOpen ? 'max-h-96 pb-6' : 'max-h-0'}`}>
         <p className="text-stone-500 leading-relaxed">{answer}</p>
       </div>
     </div>
@@ -160,6 +153,7 @@ function CompareModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
   const compareData = [
     { feature: 'Stores', pilot: 'Up to 2', scale: 'Up to 5', pro: 'Up to 10' },
     { feature: 'Ad Platforms', pilot: '2 platforms', scale: 'Meta + Google + TikTok', pro: 'All platforms' },
+    { feature: 'Data Sources', pilot: 'Shopify + Ads', scale: 'Shopify + Ads + GA4', pro: 'Shopify + Ads + GA4 + Custom' },
     { feature: 'Data Refresh', pilot: 'Daily', scale: 'Daily + monitoring', pro: 'Daily + advanced monitoring' },
     { feature: 'Health Monitoring', pilot: '—', scale: '✓', pro: '✓ (advanced)' },
     { feature: 'Dashboards', pilot: 'Executive + Marketing + P&L', scale: 'All core dashboards', pro: 'All + weekly snapshots' },
@@ -206,14 +200,12 @@ function CompareModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
   );
 }
 
-// --- MAIN PAGE ---
-
 export default function PricingPage() {
   const calendlyUrl = "https://cal.com/calyxra/30min";
   const [isCompareOpen, setIsCompareOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-[#FAFAF9] text-stone-900 font-sans selection:bg-emerald-200 selection:text-emerald-900 overflow-x-hidden">
+    <div className="min-h-screen bg-[#FAFAF9] text-stone-900 font-sans selection:bg-emerald-200 selection:text-emerald-900">
 
       {/* NAVIGATION */}
       <nav className="fixed w-full z-50 bg-[#FAFAF9]/90 backdrop-blur-md border-b border-stone-200">
@@ -233,13 +225,12 @@ export default function PricingPage() {
           </a>
 
           <div className="hidden md:flex gap-8 text-xs font-bold text-stone-500 uppercase tracking-widest">
-            <a href="/#methodology" className="hover:text-stone-900 transition-colors">Methodology</a>
-            <a href="/dashboards" className="hover:text-stone-900 transition-colors">Assets</a>
-            <a href="/pricing" className="text-emerald-700">Investment</a>
+            <a href="/dashboards" className="hover:text-stone-900 transition-colors">Dashboards</a>
+            <a href="/pricing" className="text-emerald-700">Pricing</a>
           </div>
 
           <a href={calendlyUrl} className="px-6 py-3 bg-emerald-700 text-white text-xs font-bold uppercase tracking-wide hover:bg-emerald-800 transition-all hover:shadow-lg hover:shadow-emerald-700/30 active:scale-95">
-            Book Audit
+            Book Call
           </a>
         </div>
       </nav>
@@ -259,9 +250,17 @@ export default function PricingPage() {
             <p className="text-xl text-stone-500 mb-4 max-w-2xl mx-auto leading-relaxed">
               White-label KPI dashboards + automated data pipelines for performance marketing agencies.
             </p>
-            <p className="text-lg text-stone-400 max-w-xl mx-auto">
+            <p className="text-lg text-stone-400 max-w-xl mx-auto mb-8">
               Built for Shopify + paid media teams. Clean data, one KPI layer, zero reporting chaos.
             </p>
+            <div className="flex flex-col sm:flex-row justify-center gap-4">
+              <a href="/dashboards" className="px-8 py-4 bg-emerald-700 text-white font-bold text-sm uppercase tracking-widest hover:bg-emerald-800 transition-all shadow-lg">
+                View Dashboards
+              </a>
+              <a href={calendlyUrl} className="px-8 py-4 bg-transparent border-2 border-stone-300 text-stone-900 font-bold text-sm uppercase tracking-widest hover:bg-stone-100 transition-all">
+                Book Discovery Call
+              </a>
+            </div>
           </div>
         </section>
 
@@ -277,15 +276,15 @@ export default function PricingPage() {
                 <ul className="space-y-4">
                   <li className="flex items-start gap-3 text-stone-600">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0 bg-emerald-700"></span>
-                    <span>Apps show metrics <strong>per store</strong>. Calyxra gives agencies a <strong>standard KPI layer</strong> that stays consistent across all clients.</span>
+                    <span>Apps show metrics per store. Calyxra gives agencies a standard KPI layer that stays consistent across all clients.</span>
                   </li>
                   <li className="flex items-start gap-3 text-stone-600">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0 bg-emerald-700"></span>
-                    <span><strong>Automated pipelines</strong> + white-label reporting you can deliver under your brand.</span>
+                    <span>Automated pipelines + white-label reporting you can deliver under your brand.</span>
                   </li>
                   <li className="flex items-start gap-3 text-stone-600">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0 bg-emerald-700"></span>
-                    <span>Your definitions, your formulas, your naming—<strong>not locked into someone else's schema</strong>.</span>
+                    <span>Your definitions, your formulas, your naming—not locked into someone else's schema.</span>
                   </li>
                 </ul>
               </div>
@@ -298,22 +297,25 @@ export default function PricingPage() {
           <div className="max-w-4xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-1.5 rounded-full text-emerald-200 text-[10px] font-bold uppercase tracking-widest mb-4">
               <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></span>
-              3 Slots Remaining
+              Founding Partner Program
             </div>
             <h2 className="text-2xl md:text-3xl font-serif font-medium text-white mb-4">
-              Founding Partner: <span className="text-emerald-300">50% off setup</span>
+              Join as a Founding Partner: <span className="text-emerald-300">50% off setup</span>
             </h2>
             <p className="text-emerald-100/80 max-w-2xl mx-auto leading-relaxed mb-6">
-              We're onboarding 3 agencies this month. Same monthly pricing, 50% off the one-time setup in exchange for a short testimonial after go-live.
+              We're onboarding 3 founding agencies. Same monthly pricing, 50% off the one-time setup in exchange for a video testimonial after go-live.
             </p>
             <div className="flex flex-wrap justify-center gap-6 text-sm font-mono text-white/90 mb-4">
               <div><span className="line-through opacity-50">€1,250</span> → <span className="text-emerald-300 font-bold">€625</span> <span className="text-white/60">Pilot</span></div>
               <div><span className="line-through opacity-50">€2,990</span> → <span className="text-emerald-300 font-bold">€1,495</span> <span className="text-white/60">Scale</span></div>
               <div><span className="line-through opacity-50">€4,990</span> → <span className="text-emerald-300 font-bold">€2,495</span> <span className="text-white/60">Pro</span></div>
             </div>
-            <p className="text-[11px] text-emerald-200/50">
-              Ends when 3 slots are filled. Subject to technical fit.
+            <p className="text-[11px] text-emerald-200/50 mb-6">
+              Limited to 3 agencies. Must pass technical fit assessment.
             </p>
+            <a href={calendlyUrl} className="inline-block px-8 py-4 bg-white text-emerald-900 font-bold text-sm uppercase tracking-widest hover:bg-emerald-50 transition-all shadow-lg">
+              Apply Now
+            </a>
           </div>
         </section>
 
@@ -330,10 +332,10 @@ export default function PricingPage() {
                 bestFor="agencies onboarding their first 1–2 client stores into a standard reporting system"
                 features={[
                   "Up to 2 active client stores",
-                  "Shopify + up to 2 ad platforms (Meta / Google / TikTok / Microsoft)",
+                  "Shopify + up to 2 ad platforms (Meta / Google / TikTok)",
                   "Daily automated refresh",
                   "Standard KPI layer: MER, ROAS, CAC, AOV, cohorts, LTV, profit",
-                  "Core dashboards: Executive + Marketing + Profit/P&L",
+                  "Core dashboards: Executive + Marketing + P&L",
                   "Support: Email (48h)"
                 ]}
                 goLive="5–7 business days"
@@ -348,7 +350,7 @@ export default function PricingPage() {
                 bestFor="agencies with multiple clients who need reliability + monitoring"
                 features={[
                   "Up to 5 active client stores",
-                  "Shopify + Meta + Google + TikTok",
+                  "Shopify + Meta + Google + TikTok + GA4",
                   "Daily refresh + data health monitoring & alerts",
                   "Tracking & data QA checks (pipeline + event consistency)",
                   "Priority support (Slack, business hours)",
@@ -368,10 +370,10 @@ export default function PricingPage() {
                 features={[
                   "Up to 10 active client stores",
                   "All Scale features + advanced monitoring",
+                  "GA4 + custom integrations (Klaviyo, CRM, etc.)",
                   "Client-ready weekly snapshot reports (auto-generated)",
                   "Custom KPI layer (your naming + your definitions)",
-                  "Dedicated delivery lane (faster changes, tighter SLA)",
-                  "Optional: multi-brand / multi-country support"
+                  "Dedicated delivery lane (faster changes, tighter SLA)"
                 ]}
                 goLive="10–14 business days"
               />
@@ -387,14 +389,72 @@ export default function PricingPage() {
               </button>
               <span className="hidden sm:inline text-stone-300">|</span>
               <p className="text-stone-500">
-                Need more than 10 stores? <a href={calendlyUrl} className="text-emerald-700 font-semibold hover:underline">Enterprise pricing available →</a>
+                Need 10+ stores or custom KPIs? <a href={calendlyUrl} className="text-emerald-700 font-semibold hover:underline">Enterprise pricing →</a>
               </p>
             </div>
           </div>
         </section>
 
-        {/* WHAT YOU NEED FROM US / FROM YOU */}
+        {/* ARCHITECTURE DIAGRAM */}
         <section className="py-24 px-6 bg-white border-y border-stone-200">
+          <div className="max-w-5xl mx-auto">
+            <SectionHeading
+              title="How It Works"
+              subtitle="Clean data architecture from source to dashboard."
+            />
+
+            <div className="grid md:grid-cols-4 gap-6 mb-12">
+              <div className="text-center">
+                <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <svg className="w-8 h-8 text-emerald-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4" />
+                  </svg>
+                </div>
+                <h3 className="font-semibold text-stone-900 mb-2">Data Sources</h3>
+                <p className="text-sm text-stone-500">Shopify, Meta, Google, TikTok, GA4</p>
+              </div>
+
+              <div className="text-center">
+                <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <svg className="w-8 h-8 text-emerald-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                  </svg>
+                </div>
+                <h3 className="font-semibold text-stone-900 mb-2">Data Warehouse</h3>
+                <p className="text-sm text-stone-500">BigQuery (centralized storage)</p>
+              </div>
+
+              <div className="text-center">
+                <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <svg className="w-8 h-8 text-emerald-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
+                  </svg>
+                </div>
+                <h3 className="font-semibold text-stone-900 mb-2">KPI Layer</h3>
+                <p className="text-sm text-stone-500">Your standard definitions (MER, ROAS, etc.)</p>
+              </div>
+
+              <div className="text-center">
+                <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <svg className="w-8 h-8 text-emerald-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                  </svg>
+                </div>
+                <h3 className="font-semibold text-stone-900 mb-2">Dashboards</h3>
+                <p className="text-sm text-stone-500">White-label reports for clients</p>
+              </div>
+            </div>
+
+            <div className="text-center">
+              <a href="/dashboards" className="inline-block px-8 py-4 bg-stone-100 text-stone-900 font-bold text-sm uppercase tracking-widest hover:bg-stone-200 transition-all">
+                View Example Dashboards
+              </a>
+            </div>
+          </div>
+        </section>
+
+        {/* WHAT YOU NEED FROM US / FROM YOU */}
+        <section className="py-24 px-6 bg-[#FAFAF9]">
           <div className="max-w-5xl mx-auto">
             <SectionHeading
               title="Ready to go live fast?"
@@ -402,8 +462,7 @@ export default function PricingPage() {
             />
 
             <div className="grid md:grid-cols-2 gap-12">
-              {/* What we need from you */}
-              <div className="bg-stone-50 p-8 border border-stone-200">
+              <div className="bg-white p-8 border border-stone-200">
                 <h3 className="text-lg font-serif font-medium text-stone-900 mb-6 flex items-center gap-3">
                   <svg className="w-6 h-6 text-stone-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
@@ -430,7 +489,6 @@ export default function PricingPage() {
                 </ul>
               </div>
 
-              {/* What you get */}
               <div className="bg-emerald-50 p-8 border border-emerald-200">
                 <h3 className="text-lg font-serif font-medium text-stone-900 mb-6 flex items-center gap-3">
                   <svg className="w-6 h-6 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -453,7 +511,7 @@ export default function PricingPage() {
                   </li>
                   <li className="flex items-start gap-3 text-stone-700">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0 bg-emerald-600"></span>
-                    <span>Optional monitoring & alerts (Scale/Pro)</span>
+                    <span>Monitoring & alerts (Scale/Pro)</span>
                   </li>
                 </ul>
               </div>
@@ -462,33 +520,33 @@ export default function PricingPage() {
         </section>
 
         {/* ADD-ONS */}
-        <section className="py-24 px-6 bg-[#FAFAF9]">
+        <section className="py-24 px-6 bg-white border-y border-stone-200">
           <div className="max-w-4xl mx-auto">
             <SectionHeading
               title="Add-ons"
-              subtitle="Expand your infrastructure with optional modules as you scale."
+              subtitle="Expand your infrastructure with optional modules."
             />
 
             <div className="space-y-4">
               <AddOnCard
                 name="Additional store"
-                price="+€350/month each"
+                price="+€350/month"
               />
               <AddOnCard
-                name="Additional data source/integration"
+                name="Additional data integration"
                 price="from €150/month"
-                description="GA4, Klaviyo, CRM, etc."
+                description="Klaviyo, CRM, Recharge, custom sources"
               />
               <AddOnCard
                 name="Extra dashboard/report pack"
                 price="from €250 one-time"
               />
               <AddOnCard
-                name="Weekly optimization call / analyst support"
+                name="Weekly optimization call"
                 price="from €400/month"
               />
               <AddOnCard
-                name="Server-side tracking / conversion API assistance"
+                name="Server-side tracking assistance"
                 price="from €600 one-time"
               />
             </div>
@@ -496,18 +554,18 @@ export default function PricingPage() {
         </section>
 
         {/* SETUP FEE EXPLANATION */}
-        <section className="py-24 px-6 bg-white border-y border-stone-200">
+        <section className="py-24 px-6 bg-[#FAFAF9]">
           <div className="max-w-4xl mx-auto">
             <div className="grid md:grid-cols-2 gap-16 items-start">
               <div>
                 <h2 className="text-3xl font-serif font-medium text-stone-900 mb-4">What the setup fee covers</h2>
                 <div className="h-1 w-20 bg-emerald-700 mb-4"></div>
                 <p className="text-stone-500 leading-relaxed">
-                  Setup is a one-time investment in building your custom data infrastructure. Here's exactly what we deliver—so it feels fair.
+                  Setup is a one-time investment in building your custom data infrastructure. Here's exactly what we deliver.
                 </p>
               </div>
 
-              <div className="bg-stone-50 p-8 border border-stone-200 shadow-lg">
+              <div className="bg-white p-8 border border-stone-200 shadow-lg">
                 <ul className="space-y-4">
                   <SetupItem text="KPI definitions + mapping (your KPI names, your formulas)" />
                   <SetupItem text="Data model + pipeline build (Shopify + ad platforms)" />
@@ -521,7 +579,7 @@ export default function PricingPage() {
         </section>
 
         {/* FAQ */}
-        <section className="py-24 px-6 bg-[#FAFAF9]">
+        <section className="py-24 px-6 bg-white border-y border-stone-200">
           <div className="max-w-3xl mx-auto">
             <SectionHeading
               title="Frequently Asked Questions"
@@ -535,15 +593,19 @@ export default function PricingPage() {
               />
               <FAQItem
                 question="Will numbers match platforms exactly?"
-                answer="We standardize rules and document assumptions. If tracking is correct, your reporting becomes consistent and explainable."
+                answer="Platform metrics (spend, clicks, impressions) match exactly. Attribution metrics (conversions, revenue) may differ because we use Shopify order data as source of truth. We document all reconciliation rules upfront."
+              />
+              <FAQItem
+                question="What happens after I pay the setup fee?"
+                answer="We schedule a kickoff call within 48 hours, collect your platform access, and begin implementation. Setup fee is non-refundable after the kickoff call, but if we determine we can't connect your tech stack during that call, you get a full refund."
               />
               <FAQItem
                 question="Is BigQuery/warehouse cost included?"
-                answer="Small usage is typically included; large clients may have pass-through costs (we'll tell you upfront)."
+                answer="Yes for typical usage. If you have unusually high data volume (50M+ events/month), we'll discuss pass-through costs upfront."
               />
               <FAQItem
                 question="Can we white-label this?"
-                answer="Yes — your branding, your KPI names, your client delivery."
+                answer="Yes — your branding, your KPI names, your client delivery. Clients never see Calyxra unless you want them to."
               />
             </div>
           </div>
@@ -553,57 +615,90 @@ export default function PricingPage() {
         <section className="py-24 px-6 bg-stone-900">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-3xl md:text-4xl font-serif font-medium text-white mb-6">
-              Ready to eliminate reporting chaos?
+              Ready to standardize your reporting?
             </h2>
             <p className="text-stone-400 text-lg mb-10 max-w-xl mx-auto">
-              Book a 15-minute KPI audit to see how we can systematize your agency's reporting.
+              Book a 15-minute call to see if Calyxra is the right fit for your agency.
             </p>
-            <div className="flex flex-col sm:flex-row justify-center gap-4 mb-6">
+            <div className="flex flex-col sm:flex-row justify-center gap-4 mb-8">
               <a
                 href={calendlyUrl}
                 className="px-10 py-5 bg-emerald-600 text-white font-bold text-sm tracking-widest uppercase hover:bg-emerald-500 transition-all shadow-xl shadow-emerald-600/30"
               >
-                Book a 15-min KPI Audit
+                Book Discovery Call
               </a>
               <a
-                href={calendlyUrl}
+                href="/dashboards"
                 className="px-10 py-5 bg-transparent border border-white/20 text-white font-bold text-sm tracking-widest uppercase hover:bg-white/10 transition-all"
               >
-                Get a Demo
+                View Dashboards
               </a>
             </div>
-            <a
-              href="mailto:admin@calyxra.com?subject=Pricing%20Request"
-              className="text-stone-500 text-sm hover:text-stone-300 transition-colors"
-            >
-              Prefer email? Request pricing →
-            </a>
+            <div className="text-center">
+              <a
+                href="mailto:admin@calyxra.com?subject=Pricing%20Question"
+                className="text-stone-400 text-sm hover:text-stone-300 transition-colors underline underline-offset-4"
+              >
+                Questions? Email us →
+              </a>
+            </div>
           </div>
         </section>
 
         {/* FOOTER */}
         <footer className="py-16 px-6 bg-white border-t border-stone-200">
-          <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
-            <div>
-              <div className="text-xl font-serif font-bold text-stone-900 mb-2">Calyxra.</div>
-              <p className="text-xs text-stone-400 font-medium max-w-xs leading-relaxed">
-                Premium reporting infrastructure for high-performance agencies. Built by analysts, not marketers.
-              </p>
+          <div className="max-w-7xl mx-auto">
+            <div className="flex flex-col md:flex-row justify-between items-start gap-12 mb-12">
+              <div className="max-w-xs">
+                <div className="text-xl font-serif font-bold text-stone-900 mb-3">Calyxra.</div>
+                <p className="text-sm text-stone-500 leading-relaxed mb-4">
+                  White-label data infrastructure for performance marketing agencies. Standard KPI layer for Shopify + paid media.
+                </p>
+                <div className="text-xs text-stone-400">
+                  Built by analysts for agencies.
+                </div>
+              </div>
+              
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-8">
+                <div>
+                  <h4 className="text-xs font-bold text-stone-900 uppercase tracking-widest mb-3">Product</h4>
+                  <ul className="space-y-2 text-sm text-stone-600">
+                    <li><a href="/pricing" className="hover:text-stone-900 transition-colors">Pricing</a></li>
+                    <li><a href="/dashboards" className="hover:text-stone-900 transition-colors">Dashboards</a></li>
+                  </ul>
+                </div>
+                
+                <div>
+                  <h4 className="text-xs font-bold text-stone-900 uppercase tracking-widest mb-3">Company</h4>
+                  <ul className="space-y-2 text-sm text-stone-600">
+                    <li><a href={calendlyUrl} className="hover:text-stone-900 transition-colors">Book Call</a></li>
+                    <li><a href="mailto:admin@calyxra.com" className="hover:text-stone-900 transition-colors">Contact</a></li>
+                  </ul>
+                </div>
+                
+                <div>
+                  <h4 className="text-xs font-bold text-stone-900 uppercase tracking-widest mb-3">Legal</h4>
+                  <ul className="space-y-2 text-sm text-stone-600">
+                    <li><a href="/terms" className="hover:text-stone-900 transition-colors">Terms</a></li>
+                    <li><a href="/privacy" className="hover:text-stone-900 transition-colors">Privacy</a></li>
+                    <li><a href="/refunds" className="hover:text-stone-900 transition-colors">Refunds</a></li>
+                  </ul>
+                </div>
+              </div>
             </div>
-            <div className="flex flex-wrap gap-8 text-[10px] font-bold text-stone-500 uppercase tracking-widest justify-center md:justify-end">
-              <a href="/terms" className="hover:text-stone-900 transition-colors">Terms of Service</a>
-              <a href="/privacy" className="hover:text-stone-900 transition-colors">Privacy Policy</a>
-              <a href="/refunds" className="hover:text-stone-900 transition-colors">Refund Policy</a>
-              <a href="mailto:admin@calyxra.com" className="hover:text-stone-900 transition-colors">Contact Support</a>
+            
+            <div className="pt-8 border-t border-stone-200 flex flex-col sm:flex-row justify-between items-center gap-4">
+              <div className="text-xs text-stone-400">
+                © 2025 Calyxra Data Systems. All rights reserved.
+              </div>
+              <div className="text-xs text-stone-500">
+                Questions? <a href="mailto:admin@calyxra.com" className="text-emerald-700 hover:underline">admin@calyxra.com</a>
+              </div>
             </div>
-          </div>
-          <div className="max-w-7xl mx-auto mt-12 pt-8 border-t border-stone-100 text-center text-[10px] text-stone-300 uppercase tracking-widest">
-            © 2025 Calyxra Data Systems.
           </div>
         </footer>
       </main>
 
-      {/* Compare Plans Modal */}
       <CompareModal isOpen={isCompareOpen} onClose={() => setIsCompareOpen(false)} />
     </div>
   );
