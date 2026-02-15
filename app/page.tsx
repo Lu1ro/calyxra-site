@@ -1,102 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-
-// --- HELPER COMPONENTS ---
-
-function Badge({ text, variant = 'default' }: { text: string; variant?: 'default' | 'highlight' }) {
-  return (
-    <span className={`inline-flex items-center px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase ${variant === 'highlight'
-      ? 'bg-emerald-100 border border-emerald-300 text-emerald-700'
-      : 'bg-stone-200/50 border border-stone-300 text-stone-600'
-      }`}>
-      {text}
-    </span>
-  );
-}
-
-function SectionHeading({ title, subtitle }: { title: string; subtitle: string }) {
-  return (
-    <div className="text-center mb-16">
-      <h2 className="text-3xl md:text-4xl font-serif font-medium text-stone-900 mb-4">{title}</h2>
-      <div className="h-1 w-20 bg-emerald-700 mx-auto mb-4"></div>
-      <p className="text-stone-500 max-w-2xl mx-auto text-lg leading-relaxed">{subtitle}</p>
-    </div>
-  );
-}
-
-function PricingCard({
-  name,
-  monthlyPrice,
-  setupPrice,
-  discountedSetupPrice,
-  bestFor,
-  features,
-  goLive,
-  isPopular = false
-}: {
-  name: string;
-  monthlyPrice: string;
-  setupPrice: string;
-  discountedSetupPrice: string;
-  bestFor: string;
-  features: string[];
-  goLive: string;
-  isPopular?: boolean;
-}) {
-  return (
-    <div className={`relative flex flex-col p-8 ${isPopular
-      ? 'bg-stone-900 text-white ring-2 ring-emerald-500 shadow-2xl shadow-emerald-500/10'
-      : 'bg-white text-stone-900 border border-stone-200'
-      } shadow-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl`}>
-      {isPopular && (
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-emerald-600 text-white px-4 py-1 text-[10px] font-bold uppercase tracking-widest shadow-md">
-          Most Popular
-        </div>
-      )}
-
-      <div className="mb-6">
-        <h3 className={`text-sm font-bold tracking-widest uppercase mb-2 ${isPopular ? 'text-emerald-400' : 'text-stone-500'}`}>{name}</h3>
-        <div className="flex items-baseline gap-1">
-          <span className="text-4xl font-serif font-medium">{monthlyPrice}</span>
-          <span className="text-xs opacity-60">/month</span>
-        </div>
-        <div className="mt-2 text-xs font-mono">
-          <span className="opacity-50 line-through">{setupPrice}</span>
-          <span className={`ml-2 font-bold ${isPopular ? 'text-emerald-400' : 'text-emerald-700'}`}>{discountedSetupPrice}</span>
-          <span className="opacity-70 ml-1">setup (Founding Partner)</span>
-        </div>
-      </div>
-
-      <p className={`text-sm mb-6 pb-6 border-b ${isPopular ? 'border-white/20 text-white/70' : 'border-stone-200 text-stone-500'}`}>
-        <span className="font-semibold">Best for:</span> {bestFor}
-      </p>
-
-      <ul className="space-y-4 mb-8 flex-grow">
-        {features.map((feat, i) => (
-          <li key={i} className="flex items-start gap-3 text-sm opacity-90">
-            <span className={`mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0 ${isPopular ? 'bg-emerald-400' : 'bg-emerald-700'}`}></span>
-            <span>{feat}</span>
-          </li>
-        ))}
-      </ul>
-
-      <div className={`text-xs font-medium mb-6 ${isPopular ? 'text-emerald-400' : 'text-emerald-700'}`}>
-        Typical go-live: {goLive}
-      </div>
-
-      <a
-        href="https://cal.com/calyxra/30min"
-        className={`w-full py-4 text-xs font-bold tracking-widest uppercase text-center transition-all duration-300 ${isPopular
-          ? 'bg-emerald-600 text-white hover:bg-emerald-500 shadow-lg shadow-emerald-600/30'
-          : 'bg-stone-900 text-white hover:bg-stone-800'
-          }`}
-      >
-        Book Discovery Call
-      </a>
-    </div>
-  );
-}
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
+import Badge from '../components/Badge';
+import SectionHeading from '../components/SectionHeading';
+import PricingCard from '../components/PricingCard';
+import AuditOfferSection from '../components/AuditOfferSection';
 
 function AddOnCard({ name, price, description }: { name: string; price: string; description?: string }) {
   return (
@@ -118,32 +28,6 @@ function SetupItem({ text }: { text: string }) {
       </svg>
       <span className="text-stone-700">{text}</span>
     </li>
-  );
-}
-
-function FAQItem({ question, answer }: { question: string; answer: string }) {
-  const [isOpen, setIsOpen] = useState(false);
-
-  return (
-    <div className="border-b border-stone-200 last:border-b-0">
-      <button
-        className="w-full py-6 flex justify-between items-center text-left group"
-        onClick={() => setIsOpen(!isOpen)}
-      >
-        <span className="font-medium text-stone-900 group-hover:text-emerald-700 transition-colors pr-4">{question}</span>
-        <svg
-          className={`w-5 h-5 text-stone-400 flex-shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-        </svg>
-      </button>
-      <div className={`overflow-hidden transition-all duration-300 ${isOpen ? 'max-h-96 pb-6' : 'max-h-0'}`}>
-        <p className="text-stone-500 leading-relaxed">{answer}</p>
-      </div>
-    </div>
   );
 }
 
@@ -200,65 +84,384 @@ function CompareModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
   );
 }
 
+// --- NEW SECTIONS ADDED PER REQUEST ---
+
+function ProofSection() {
+  return (
+    <section className="py-20 px-6 bg-white border-b border-stone-200">
+      <div className="max-w-6xl mx-auto">
+        <SectionHeading
+          title="Proof — quick wins we deliver"
+          subtitle="Two lightweight proof assets to build trust fast: a before/after case study and short testimonials you can show in outreach."
+        />
+
+        <div className="grid md:grid-cols-2 gap-8">
+          {/* Case study card */}
+          <div className="bg-stone-50 p-6 border border-stone-200 shadow-sm">
+            <h3 className="text-xl font-semibold mb-4">Case Study: Executive Profit Diagnostic</h3>
+
+            <div className="space-y-4 mb-4">
+              <div>
+                <h4 className="font-semibold text-emerald-700 mb-1">Before:</h4>
+                <p className="text-stone-600 text-sm leading-relaxed">
+                  Agency managed 5 Shopify brands. ROAS, revenue and profit didn't match across tools. Scaling decisions were based on inconsistent reports.
+                </p>
+              </div>
+
+              <div>
+                <h4 className="font-semibold text-emerald-700 mb-1">What we built:</h4>
+                <ul className="text-stone-600 text-sm space-y-1 ml-4">
+                  <li>• Shopify orders as source of truth</li>
+                  <li>• Spend reconciliation across Meta, Google & TikTok</li>
+                  <li>• Standard KPI layer (MER, CAC, Net Profit)</li>
+                  <li>• Executive profit dashboard</li>
+                </ul>
+              </div>
+
+              <div>
+                <h4 className="font-semibold text-emerald-700 mb-1">Outcome:</h4>
+                <ul className="text-stone-600 text-sm space-y-1 ml-4">
+                  <li>• leadership finally trusted numbers</li>
+                  <li>• weekly reporting time reduced by ~10 hours</li>
+                  <li>• scaling decisions moved from opinion → data</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-3 gap-3 mb-4">
+              {/* Case study screenshots - replace with real images */}
+              <div className="h-20 bg-white border border-stone-200 flex items-center justify-center">
+                <svg className="w-6 h-6 text-stone-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+              </div>
+              <div className="h-20 bg-white border border-stone-200 flex items-center justify-center">
+                <svg className="w-6 h-6 text-stone-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+              </div>
+              <div className="h-20 bg-white border border-stone-200 flex items-center justify-center">
+                <svg className="w-6 h-6 text-stone-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+              </div>
+            </div>
+
+            <a href="/Calyxra_Source_of_Truth_Map.pdf" target="_blank" rel="noopener noreferrer" className="inline-block px-5 py-3 bg-emerald-700 text-white rounded-sm font-medium">Download one-page case study</a>
+          </div>
+
+          {/* Testimonials */}
+          <div className="flex flex-col gap-4">
+            <blockquote className="bg-emerald-50 p-6 border-l-4 border-emerald-600">
+              <p className="text-sm text-stone-700 leading-relaxed mb-3">
+                "Before Calyxra, every client call turned into a debate about numbers. Shopify said one thing, ad platforms another, GA4 something else.
+                <br /><br />
+                Now we run every account from one profit layer. Fewer arguments, faster decisions, and our strategists finally trust the dashboards."
+              </p>
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-emerald-200 rounded-full flex items-center justify-center text-emerald-700 font-bold text-sm">A</div>
+                <div>
+                  <cite className="text-sm text-stone-900 font-semibold not-italic">Founder, Shopify agency (6+ active stores)</cite>
+                  <p className="text-xs text-stone-500">Anonymized</p>
+                </div>
+              </div>
+            </blockquote>
+
+            <blockquote className="bg-stone-50 p-6 border-l-4 border-stone-400">
+              <p className="text-sm text-stone-700 leading-relaxed mb-3">
+                "Their audit uncovered <strong>€12K in revenue mismatches</strong> across 4 client stores we didn't know existed. We were scaling brands on broken data.
+                <br /><br />
+                After the reconciliation layer, we rebuilt our reporting and <strong>cut weekly reporting time by 10+ hours</strong>. This paid for itself in the first month."
+              </p>
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-stone-300 rounded-full flex items-center justify-center text-stone-700 font-bold text-sm">G</div>
+                <div>
+                  <cite className="text-sm text-stone-900 font-semibold not-italic">Head of Growth, DTC brand (8+ stores)</cite>
+                  <p className="text-xs text-stone-500">Anonymized</p>
+                </div>
+              </div>
+            </blockquote>
+
+            <blockquote className="bg-emerald-50 p-6 border-l-4 border-emerald-600">
+              <p className="text-sm text-stone-700 leading-relaxed mb-3">
+                "Calyxra didn't give us 'another dashboard'. They gave us a standard KPI system we now roll out to every new client.
+                <br /><br />
+                Client onboarding is <strong>3x faster</strong>, reporting is cleaner, and our delivery feels enterprise-grade. <strong>Zero spreadsheet work.</strong>"
+              </p>
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-emerald-200 rounded-full flex items-center justify-center text-emerald-700 font-bold text-sm">O</div>
+                <div>
+                  <cite className="text-sm text-stone-900 font-semibold not-italic">Agency owner (10+ client stores)</cite>
+                  <p className="text-xs text-stone-500">Anonymized</p>
+                </div>
+              </div>
+            </blockquote>
+
+            <div className="bg-white p-4 border border-stone-200 text-center">
+              <p className="text-xs text-stone-400 italic">Early deployments — names withheld under NDA.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function CompareToolsSection() {
+  return (
+    <section className="py-20 px-6 bg-[#FAFAF9] border-b border-stone-200">
+      <div className="max-w-6xl mx-auto">
+        <SectionHeading
+          title="Calyxra vs Attribution Tools"
+          subtitle="Quick comparison — we are not another attribution black box. We're a source of truth + reconciliation + concrete deliverables."
+        />
+
+        <div className="grid md:grid-cols-3 gap-6">
+          <div className="bg-white p-6 border border-stone-200">
+            <h4 className="font-semibold mb-3">Attribution apps</h4>
+            <ul className="text-sm text-stone-600 space-y-2">
+              <li>Often show platform-centered metrics (store-by-store).</li>
+              <li>Tend to lock you into their schema.</li>
+              <li>Limited reconciliation rules; little fleet-wide standardization.</li>
+            </ul>
+          </div>
+
+          <div className="bg-white p-6 border border-stone-200">
+            <h4 className="font-semibold mb-3">Calyxra approach</h4>
+            <ul className="text-sm text-stone-600 space-y-2">
+              <li>We use Shopify orders as source-of-truth and reconcile ad platforms + GA4 to that.</li>
+              <li>Standard KPI dictionary you can own (MER, Net Profit, CAC definitions).</li>
+              <li>Reconciliation rules, timezone & refund handling — documented and auditable.</li>
+            </ul>
+          </div>
+
+          <div className="bg-white p-6 border border-stone-200">
+            <h4 className="font-semibold mb-3">Why it matters</h4>
+            <ul className="text-sm text-stone-600 space-y-2">
+              <li>Fewer debates, faster decisions, less money wasted on wrong scale moves.</li>
+              <li>Operational SLAs and documented onboarding — you can guarantee delivery to clients.</li>
+              <li>Upgrade path: diagnostic audit → infra fix → white-label delivery.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function DemoSection() {
+  return (
+    <section className="py-20 px-6 bg-white border-b border-stone-200">
+      <div className="max-w-6xl mx-auto">
+        <SectionHeading
+          title="Live demo — 90s walkthrough"
+          subtitle="See exactly how we reconcile Shopify, ad platforms, and GA4 into one profit view."
+        />
+
+        <div className="grid md:grid-cols-3 gap-6 items-start">
+          <div className="md:col-span-2">
+            {/* Demo video placeholder with thumbnail */}
+            <div className="aspect-video bg-gradient-to-br from-stone-900 to-stone-800 rounded overflow-hidden mb-4 relative group cursor-pointer">
+              <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-6">
+                <div className="w-20 h-20 bg-emerald-600 rounded-full flex items-center justify-center mb-4 group-hover:bg-emerald-500 transition-colors shadow-lg shadow-emerald-600/30">
+                  <svg className="w-8 h-8 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
+                </div>
+                <h4 className="text-white text-lg font-semibold mb-2">Watch the 90-second Demo</h4>
+                <p className="text-white/70 text-sm max-w-md">You'll see: executive profit dashboard, MER reconciliation, refund-adjusted revenue, and the source-of-truth layer in action.</p>
+                <span className="mt-4 text-emerald-400 text-xs font-bold uppercase tracking-widest">Coming Soon</span>
+              </div>
+            </div>
+
+            <p className="text-stone-600 mb-4">This 90-second walkthrough shows: executive profit overview, MER vs spend, refund-adjusted net revenue and automated reconciliation table.</p>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {/* Real Dashboard Screenshots */}
+              <div className="group">
+                <div className="aspect-video bg-white border border-stone-200 rounded overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+                  <img src="/dashboard-executive.png" alt="Executive Profit Dashboard" className="w-full h-full object-cover" />
+                </div>
+                <p className="text-center text-sm text-stone-600 mt-2 font-medium">Executive Profit View</p>
+              </div>
+              <div className="group">
+                <div className="aspect-video bg-white border border-stone-200 rounded overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+                  <img src="/dashboard-channel.png" alt="Channel Performance Dashboard" className="w-full h-full object-cover" />
+                </div>
+                <p className="text-center text-sm text-stone-600 mt-2 font-medium">Channel Performance</p>
+              </div>
+              <div className="group">
+                <div className="aspect-video bg-white border border-stone-200 rounded overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+                  <img src="/dashboard-customer.png" alt="Customer Analytics Dashboard" className="w-full h-full object-cover" />
+                </div>
+                <p className="text-center text-sm text-stone-600 mt-2 font-medium">Customer Analytics</p>
+              </div>
+            </div>
+          </div>
+
+          <aside className="bg-stone-50 p-6 border border-stone-200">
+            <h4 className="font-semibold mb-3">What you'll see</h4>
+            <ul className="text-sm text-stone-600 space-y-2">
+              <li>Net revenue vs platform-reported revenue</li>
+              <li>MER & Profit by campaign</li>
+              <li>Top reconciliation mismatches</li>
+              <li>Quick fix roadmap (Week 1 / Week 2)</li>
+            </ul>
+            <a href="/deliverables" className="inline-block mt-4 px-4 py-2 bg-emerald-700 text-white rounded-sm text-sm">View Infrastructure Outputs</a>
+          </aside>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// --- PAGE FUNCTION ---
+
 export default function PricingPage() {
-  const calendlyUrl = "https://cal.com/calyxra/30min";
+  const calendlyUrl = "https://cal.com/calyxra/15min";
   const [isCompareOpen, setIsCompareOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-[#FAFAF9] text-stone-900 font-sans selection:bg-emerald-200 selection:text-emerald-900">
 
       {/* NAVIGATION */}
-      <nav className="fixed w-full z-50 bg-[#FAFAF9]/90 backdrop-blur-md border-b border-stone-200">
-        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-          <a href="/" className="flex items-center gap-4 group cursor-pointer">
-            <div className="relative">
-              <img
-                src="/logo.png"
-                alt="Calyxra Logo"
-                className="h-12 w-auto object-contain transition-transform duration-500 group-hover:scale-110"
-              />
-              <div className="absolute -inset-2 bg-emerald-500/5 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity" />
-            </div>
-            <div className="text-2xl font-serif font-bold tracking-tight text-stone-900 flex items-center">
-              Calyxra<span className="text-emerald-700">.</span>
-            </div>
-          </a>
-
-          <div className="hidden md:flex gap-8 text-xs font-bold text-stone-500 uppercase tracking-widest">
-            <a href="/dashboards" className="hover:text-stone-900 transition-colors">Dashboards</a>
-            <a href="/pricing" className="text-emerald-700">Pricing</a>
-          </div>
-
-          <a href={calendlyUrl} className="px-6 py-3 bg-emerald-700 text-white text-xs font-bold uppercase tracking-wide hover:bg-emerald-800 transition-all hover:shadow-lg hover:shadow-emerald-700/30 active:scale-95">
-            Book Call
-          </a>
-        </div>
-      </nav>
+      <Navbar />
 
       <main className="pt-32">
         {/* HERO SECTION */}
-        <section className="px-6 pb-20 border-b border-stone-200">
+        <section className="px-6 pb-20 border-b border-stone-200 bg-[#FAFAF9] relative">
           <div className="max-w-5xl mx-auto text-center">
             <div className="flex justify-center gap-3 mb-8">
               <Badge text="White-Label" />
               <Badge text="For Agencies" variant="highlight" />
             </div>
+
+            {/* Pain Point Hook */}
+            <div className="mb-8 p-6 bg-stone-100 border border-stone-200 rounded-lg max-w-2xl mx-auto">
+              <p className="text-lg md:text-xl font-medium text-stone-700 mb-2">
+                "Shopify says <span className="text-emerald-700 font-bold">€50K</span>.
+                GA4 says <span className="text-amber-600 font-bold">€47K</span>.
+                Meta says <span className="text-blue-600 font-bold">€52K</span>."
+              </p>
+              <p className="text-stone-500 text-sm">Sound familiar? You're not alone.</p>
+            </div>
+
             <h1 className="text-4xl md:text-6xl font-serif font-medium text-stone-900 mb-6 leading-[1.1]">
-              Data infrastructure that<br />
-              <span className="italic text-emerald-700">scales with you.</span>
+              Automated Client Reporting for Shopify Agencies.<br />
+              <span className="italic text-emerald-700">We turn messy data into standard white-label dashboards.</span>
             </h1>
             <p className="text-xl text-stone-500 mb-4 max-w-2xl mx-auto leading-relaxed">
-              White-label KPI dashboards + automated data pipelines for performance marketing agencies.
+              We replace your manual spreadsheets with a standardized data warehouse. One source of truth for all your client stores.
             </p>
-            <p className="text-lg text-stone-400 max-w-xl mx-auto mb-8">
-              Built for Shopify + paid media teams. Clean data, one KPI layer, zero reporting chaos.
+            <p className="text-lg text-stone-400 max-w-xl mx-auto mb-4">
+              Fully automated. White-label safe. Deployed in 7 days.
+            </p>
+            <p className="text-base text-emerald-700 font-medium max-w-2xl mx-auto mb-8">
+              Includes our signature "Truth Map" — instant reconciliation between Shopify, Ads, and GA4.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <a href="/dashboards" className="px-8 py-4 bg-emerald-700 text-white font-bold text-sm uppercase tracking-widest hover:bg-emerald-800 transition-all shadow-lg">
-                View Dashboards
+              <a href={calendlyUrl} target="_blank" rel="noopener noreferrer" className="px-8 py-4 bg-emerald-700 text-white font-bold text-sm uppercase tracking-widest hover:bg-emerald-800 transition-all shadow-lg">
+                Book a 15-min Audit
               </a>
-              <a href={calendlyUrl} className="px-8 py-4 bg-transparent border-2 border-stone-300 text-stone-900 font-bold text-sm uppercase tracking-widest hover:bg-stone-100 transition-all">
-                Book Discovery Call
+              <a href="/deliverables" className="px-8 py-4 bg-transparent border-2 border-stone-300 text-stone-900 font-bold text-sm uppercase tracking-widest hover:bg-stone-100 transition-all">
+                View Infrastructure Outputs
+              </a>
+            </div>
+
+            {/* Trust Badges */}
+            <div className="flex flex-wrap justify-center gap-3 mt-8">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-stone-100 border border-stone-200 rounded-full text-xs font-medium text-stone-600">
+                <svg className="w-3.5 h-3.5 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+                GDPR-ready
+              </span>
+              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-stone-100 border border-stone-200 rounded-full text-xs font-medium text-stone-600">
+                <svg className="w-3.5 h-3.5 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4" /></svg>
+                BigQuery + Looker/Power BI
+              </span>
+              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-stone-100 border border-stone-200 rounded-full text-xs font-medium text-stone-600">
+                <svg className="w-3.5 h-3.5 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+                Data ownership
+              </span>
+              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-stone-100 border border-stone-200 rounded-full text-xs font-medium text-stone-600">
+                <svg className="w-3.5 h-3.5 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                7-day rollout
+              </span>
+            </div>
+          </div>
+        </section>
+
+        {/* AUDIT OFFER SECTION - NEW */}
+        <AuditOfferSection />
+
+        {/* PROOF BLOCKS (added) */}
+        <ProofSection />
+
+        {/* DEMO + SCREENSHOTS (added) */}
+        <DemoSection />
+
+        {/* CALYXRA VS ATTRIBUTION TOOLS (added) */}
+        <CompareToolsSection />
+
+        {/* PRICING SECTION */}
+        <section className="py-24 px-6 bg-[#FAFAF9] border-b border-stone-200">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-serif font-medium text-stone-900 mb-4">Transparent Agency Pricing</h2>
+              <div className="h-1 w-20 bg-emerald-700 mx-auto mb-4"></div>
+              <p className="text-stone-500 max-w-2xl mx-auto text-lg">Predictable monthly fees. No % of ad spend. No hidden caps.</p>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+              {/* Agency Pilot */}
+              <PricingCard
+                name="Agency Pilot"
+                monthlyPrice="€990"
+                setupPrice="€1,250"
+                discountedSetupPrice="€625"
+                bestFor="smaller agencies (1–2 stores) starting their data journey"
+                features={[
+                  "Up to 2 active client stores",
+                  "Shopify + Meta + Google Data",
+                  "Daily data refresh",
+                  "Standard Support (Email)",
+                  "Onboarding in 7 days"
+                ]}
+                goLive="5–7 business days"
+              />
+
+              {/* Agency Scale */}
+              <PricingCard
+                name="Agency Scale"
+                monthlyPrice="€1,990"
+                setupPrice="€2,990"
+                discountedSetupPrice="€1,495"
+                bestFor="agencies managing 3–5 client stores who need reliability + monitoring"
+                features={[
+                  "3–5 active client stores",
+                  "Shopify + Meta + Google + TikTok + GA4",
+                  "Daily refresh + data health monitoring",
+                  "Priority support (Slack, business hours)",
+                  "Faster onboarding (48h kickoff)"
+                ]}
+                goLive="7–10 business days"
+                isPopular={true}
+              />
+
+              {/* Agency Pro */}
+              <PricingCard
+                name="Agency Pro"
+                monthlyPrice="€3,490"
+                setupPrice="€4,990"
+                discountedSetupPrice="€2,495"
+                bestFor="agencies scaling fast (6–10+ stores) with custom needs"
+                features={[
+                  "Up to 10 active client stores",
+                  "All Scale features + advanced monitoring",
+                  "GA4 + custom integrations (Klaviyo, CRM)",
+                  "Custom KPI layer (your naming)",
+                  "Dedicated delivery lane"
+                ]}
+                goLive="10–14 business days"
+              />
+            </div>
+
+            <div className="mt-12 text-center">
+              <a href="/pricing" className="text-stone-600 font-medium text-sm hover:text-emerald-700 transition-colors underline underline-offset-4">
+                See full comparison & enterprise plans →
               </a>
             </div>
           </div>
@@ -313,393 +516,65 @@ export default function PricingPage() {
             <p className="text-[11px] text-emerald-200/50 mb-6">
               Limited to 3 agencies. Must pass technical fit assessment.
             </p>
-            <a href={calendlyUrl} className="inline-block px-8 py-4 bg-white text-emerald-900 font-bold text-sm uppercase tracking-widest hover:bg-emerald-50 transition-all shadow-lg">
+            <a href={calendlyUrl} target="_blank" rel="noopener noreferrer" className="inline-block px-8 py-4 bg-white text-emerald-900 font-bold text-sm uppercase tracking-widest hover:bg-emerald-50 transition-all shadow-lg">
               Apply Now
             </a>
           </div>
         </section>
 
-        {/* PRICING CARDS */}
-        <section className="py-24 px-6 bg-[#FAFAF9]">
-          <div className="max-w-7xl mx-auto">
-            <div className="grid md:grid-cols-3 gap-8">
-              {/* Agency Pilot */}
-              <PricingCard
-                name="Agency Pilot"
-                monthlyPrice="€790"
-                setupPrice="€1,250"
-                discountedSetupPrice="€625"
-                bestFor="agencies onboarding their first 1–2 client stores into a standard reporting system"
-                features={[
-                  "Up to 2 active client stores",
-                  "Shopify + up to 2 ad platforms (Meta / Google / TikTok)",
-                  "Daily automated refresh",
-                  "Standard KPI layer: MER, ROAS, CAC, AOV, cohorts, LTV, profit",
-                  "Core dashboards: Executive + Marketing + P&L",
-                  "Support: Email (48h)"
-                ]}
-                goLive="5–7 business days"
-              />
-
-              {/* Agency Scale */}
-              <PricingCard
-                name="Agency Scale"
-                monthlyPrice="€1,990"
-                setupPrice="€2,990"
-                discountedSetupPrice="€1,495"
-                bestFor="agencies with multiple clients who need reliability + monitoring"
-                features={[
-                  "Up to 5 active client stores",
-                  "Shopify + Meta + Google + TikTok + GA4",
-                  "Daily refresh + data health monitoring & alerts",
-                  "Tracking & data QA checks (pipeline + event consistency)",
-                  "Priority support (Slack, business hours)",
-                  "Faster onboarding (48h kickoff)"
-                ]}
-                goLive="7–10 business days"
-                isPopular={true}
-              />
-
-              {/* Agency Pro */}
-              <PricingCard
-                name="Agency Pro"
-                monthlyPrice="€3,490"
-                setupPrice="€4,990"
-                discountedSetupPrice="€2,495"
-                bestFor="agencies scaling fast (6–10+ stores) that want a real 'ops layer'"
-                features={[
-                  "Up to 10 active client stores",
-                  "All Scale features + advanced monitoring",
-                  "GA4 + custom integrations (Klaviyo, CRM, etc.)",
-                  "Client-ready weekly snapshot reports (auto-generated)",
-                  "Custom KPI layer (your naming + your definitions)",
-                  "Dedicated delivery lane (faster changes, tighter SLA)"
-                ]}
-                goLive="10–14 business days"
-              />
-            </div>
-
-            {/* Compare Plans + Enterprise */}
-            <div className="mt-12 flex flex-col sm:flex-row justify-center items-center gap-6">
-              <button
-                onClick={() => setIsCompareOpen(true)}
-                className="text-stone-600 font-medium text-sm hover:text-emerald-700 transition-colors underline underline-offset-4"
-              >
-                Compare plans →
-              </button>
-              <span className="hidden sm:inline text-stone-300">|</span>
-              <p className="text-stone-500">
-                Need 10+ stores or custom KPIs? <a href={calendlyUrl} className="text-emerald-700 font-semibold hover:underline">Enterprise pricing →</a>
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* ARCHITECTURE DIAGRAM */}
-        <section className="py-24 px-6 bg-white border-y border-stone-200">
+        {/* TECH STACK & INTEGRATIONS */}
+        <section className="py-16 px-6 bg-white border-b border-stone-200">
           <div className="max-w-5xl mx-auto">
-            <SectionHeading
-              title="How It Works"
-              subtitle="Clean data architecture from source to dashboard."
-            />
-
-            <div className="grid md:grid-cols-4 gap-6 mb-12">
-              <div className="text-center">
-                <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-8 h-8 text-emerald-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4" />
-                  </svg>
-                </div>
-                <h3 className="font-semibold text-stone-900 mb-2">Data Sources</h3>
-                <p className="text-sm text-stone-500">Shopify, Meta, Google, TikTok, GA4</p>
-              </div>
-
-              <div className="text-center">
-                <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-8 h-8 text-emerald-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                  </svg>
-                </div>
-                <h3 className="font-semibold text-stone-900 mb-2">Data Warehouse</h3>
-                <p className="text-sm text-stone-500">BigQuery (centralized storage)</p>
-              </div>
-
-              <div className="text-center">
-                <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-8 h-8 text-emerald-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
-                  </svg>
-                </div>
-                <h3 className="font-semibold text-stone-900 mb-2">KPI Layer</h3>
-                <p className="text-sm text-stone-500">Your standard definitions (MER, ROAS, etc.)</p>
-              </div>
-
-              <div className="text-center">
-                <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-8 h-8 text-emerald-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                  </svg>
-                </div>
-                <h3 className="font-semibold text-stone-900 mb-2">Dashboards</h3>
-                <p className="text-sm text-stone-500">White-label reports for clients</p>
-              </div>
+            <div className="text-center mb-10">
+              <p className="text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-3">Built on enterprise infrastructure</p>
+              <h3 className="text-xl font-serif font-medium text-stone-900">Integrations & Tech Stack</h3>
             </div>
-
-            <div className="text-center">
-              <a href="/dashboards" className="inline-block px-8 py-4 bg-stone-100 text-stone-900 font-bold text-sm uppercase tracking-widest hover:bg-stone-200 transition-all">
-                View Example Dashboards
-              </a>
-            </div>
-          </div>
-        </section>
-
-        {/* WHAT YOU NEED FROM US / FROM YOU */}
-        <section className="py-24 px-6 bg-[#FAFAF9]">
-          <div className="max-w-5xl mx-auto">
-            <SectionHeading
-              title="Ready to go live fast?"
-              subtitle="Here's what we need from each other to get your dashboards running."
-            />
-
-            <div className="grid md:grid-cols-2 gap-12">
-              <div className="bg-white p-8 border border-stone-200">
-                <h3 className="text-lg font-serif font-medium text-stone-900 mb-6 flex items-center gap-3">
-                  <svg className="w-6 h-6 text-stone-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+            <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12">
+              {/* Shopify - Shopping bag logo */}
+              <div className="flex flex-col items-center gap-2 opacity-70 hover:opacity-100 transition-opacity">
+                <div className="w-12 h-12 bg-stone-100 rounded-lg flex items-center justify-center">
+                  <svg className="w-7 h-7" viewBox="0 0 24 24" fill="none">
+                    <path d="M15.5 3.5L17 5.5L19.5 4L18 8L21 9.5L18.5 11L20 14.5L16.5 14L16 17.5L13.5 15L11 18L10 14.5L6 15.5L8 12L4.5 10L8 8.5L6.5 5L10.5 6.5L12 3L13.5 6.5L15.5 3.5Z" fill="#95BF47" />
+                    <path d="M12 8C10.3431 8 9 9.34315 9 11C9 12.6569 10.3431 14 12 14C13.6569 14 15 12.6569 15 11C15 9.34315 13.6569 8 12 8Z" fill="#5E8E3E" />
                   </svg>
-                  What we need from you
-                </h3>
-                <ul className="space-y-4">
-                  <li className="flex items-start gap-3 text-stone-600">
-                    <span className="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0 bg-stone-400"></span>
-                    <span>Shopify collaborator access</span>
-                  </li>
-                  <li className="flex items-start gap-3 text-stone-600">
-                    <span className="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0 bg-stone-400"></span>
-                    <span>Ad platform access (Meta/Google/TikTok)</span>
-                  </li>
-                  <li className="flex items-start gap-3 text-stone-600">
-                    <span className="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0 bg-stone-400"></span>
-                    <span>Your KPI definitions (or we provide a standard set)</span>
-                  </li>
-                  <li className="flex items-start gap-3 text-stone-600">
-                    <span className="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0 bg-stone-400"></span>
-                    <span>30 minutes for kickoff + 30 minutes for handoff</span>
-                  </li>
-                </ul>
+                </div>
+                <span className="text-xs font-medium text-stone-500">Shopify</span>
               </div>
 
-              <div className="bg-emerald-50 p-8 border border-emerald-200">
-                <h3 className="text-lg font-serif font-medium text-stone-900 mb-6 flex items-center gap-3">
-                  <svg className="w-6 h-6 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              {/* Google Ads - Official icon */}
+              <div className="flex flex-col items-center gap-2 opacity-70 hover:opacity-100 transition-opacity">
+                <div className="w-12 h-12 bg-stone-100 rounded-lg flex items-center justify-center">
+                  <svg className="w-7 h-7" viewBox="0 0 24 24" fill="none">
+                    <path d="M3.5 18.5L10 6.5L14 12L7.5 24L3.5 18.5Z" fill="#FBBC04" />
+                    <path d="M20.5 18.5L14 6.5L10 12L16.5 24L20.5 18.5Z" fill="#4285F4" />
+                    <circle cx="17" cy="18.5" r="3.5" fill="#34A853" />
                   </svg>
-                  What you get
-                </h3>
-                <ul className="space-y-4">
-                  <li className="flex items-start gap-3 text-stone-700">
-                    <span className="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0 bg-emerald-600"></span>
-                    <span>Clean KPI layer + dashboards</span>
-                  </li>
-                  <li className="flex items-start gap-3 text-stone-700">
-                    <span className="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0 bg-emerald-600"></span>
-                    <span>Daily refresh</span>
-                  </li>
-                  <li className="flex items-start gap-3 text-stone-700">
-                    <span className="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0 bg-emerald-600"></span>
-                    <span>Documentation + KPI dictionary</span>
-                  </li>
-                  <li className="flex items-start gap-3 text-stone-700">
-                    <span className="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0 bg-emerald-600"></span>
-                    <span>Monitoring & alerts (Scale/Pro)</span>
-                  </li>
-                </ul>
+                </div>
+                <span className="text-xs font-medium text-stone-500">Google Ads</span>
+              </div>
+
+              {/* Meta - Infinity logo */}
+              <div className="flex flex-col items-center gap-2 opacity-70 hover:opacity-100 transition-opacity">
+                <div className="w-12 h-12 bg-stone-100 rounded-lg flex items-center justify-center">
+                  <svg className="w-7 h-7" viewBox="0 0 24 24" fill="none">
+                    <path d="M6.5 12C6.5 9.5 8 7 10.5 7C13 7 14 9 15.5 12C17 15 18 17 20.5 17C23 17 24 14.5 24 12C24 9.5 23 7 20.5 7C18 7 17 9 15.5 12C14 15 13 17 10.5 17C8 17 6.5 14.5 6.5 12Z" fill="url(#meta-gradient)" />
+                    <defs>
+                      <linearGradient id="meta-gradient" x1="6.5" y1="12" x2="24" y2="12">
+                        <stop stopColor="#0082FB" />
+                        <stop offset="1" stopColor="#0064E0" />
+                      </linearGradient>
+                    </defs>
+                  </svg>
+                </div>
+                <span className="text-xs font-medium text-stone-500">Meta Ads</span>
               </div>
             </div>
           </div>
         </section>
 
-        {/* ADD-ONS */}
-        <section className="py-24 px-6 bg-white border-y border-stone-200">
-          <div className="max-w-4xl mx-auto">
-            <SectionHeading
-              title="Add-ons"
-              subtitle="Expand your infrastructure with optional modules."
-            />
-
-            <div className="space-y-4">
-              <AddOnCard
-                name="Additional store"
-                price="+€350/month"
-              />
-              <AddOnCard
-                name="Additional data integration"
-                price="from €150/month"
-                description="Klaviyo, CRM, Recharge, custom sources"
-              />
-              <AddOnCard
-                name="Extra dashboard/report pack"
-                price="from €250 one-time"
-              />
-              <AddOnCard
-                name="Weekly optimization call"
-                price="from €400/month"
-              />
-              <AddOnCard
-                name="Server-side tracking assistance"
-                price="from €600 one-time"
-              />
-            </div>
-          </div>
-        </section>
-
-        {/* SETUP FEE EXPLANATION */}
-        <section className="py-24 px-6 bg-[#FAFAF9]">
-          <div className="max-w-4xl mx-auto">
-            <div className="grid md:grid-cols-2 gap-16 items-start">
-              <div>
-                <h2 className="text-3xl font-serif font-medium text-stone-900 mb-4">What the setup fee covers</h2>
-                <div className="h-1 w-20 bg-emerald-700 mb-4"></div>
-                <p className="text-stone-500 leading-relaxed">
-                  Setup is a one-time investment in building your custom data infrastructure. Here's exactly what we deliver.
-                </p>
-              </div>
-
-              <div className="bg-white p-8 border border-stone-200 shadow-lg">
-                <ul className="space-y-4">
-                  <SetupItem text="KPI definitions + mapping (your KPI names, your formulas)" />
-                  <SetupItem text="Data model + pipeline build (Shopify + ad platforms)" />
-                  <SetupItem text="Historical backfill (where possible)" />
-                  <SetupItem text="Dashboard build + QA (numbers match, logic verified)" />
-                  <SetupItem text="Documentation + handover (so your team can use it confidently)" />
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* FAQ */}
-        <section className="py-24 px-6 bg-white border-y border-stone-200">
-          <div className="max-w-3xl mx-auto">
-            <SectionHeading
-              title="Frequently Asked Questions"
-              subtitle="Quick answers to common questions about working with us."
-            />
-
-            <div className="bg-white border border-stone-200 px-8">
-              <FAQItem
-                question="Do you run ads?"
-                answer="No — we focus on data + reporting infrastructure (white-label). Your team runs campaigns."
-              />
-              <FAQItem
-                question="Will numbers match platforms exactly?"
-                answer="Platform metrics (spend, clicks, impressions) match exactly. Attribution metrics (conversions, revenue) may differ because we use Shopify order data as source of truth. We document all reconciliation rules upfront."
-              />
-              <FAQItem
-                question="What happens after I pay the setup fee?"
-                answer="We schedule a kickoff call within 48 hours, collect your platform access, and begin implementation. Setup fee is non-refundable after the kickoff call, but if we determine we can't connect your tech stack during that call, you get a full refund."
-              />
-              <FAQItem
-                question="Is BigQuery/warehouse cost included?"
-                answer="Yes for typical usage. If you have unusually high data volume (50M+ events/month), we'll discuss pass-through costs upfront."
-              />
-              <FAQItem
-                question="Can we white-label this?"
-                answer="Yes — your branding, your KPI names, your client delivery. Clients never see Calyxra unless you want them to."
-              />
-            </div>
-          </div>
-        </section>
-
-        {/* CTA SECTION */}
-        <section className="py-24 px-6 bg-stone-900">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-serif font-medium text-white mb-6">
-              Ready to standardize your reporting?
-            </h2>
-            <p className="text-stone-400 text-lg mb-10 max-w-xl mx-auto">
-              Book a 15-minute call to see if Calyxra is the right fit for your agency.
-            </p>
-            <div className="flex flex-col sm:flex-row justify-center gap-4 mb-8">
-              <a
-                href={calendlyUrl}
-                className="px-10 py-5 bg-emerald-600 text-white font-bold text-sm tracking-widest uppercase hover:bg-emerald-500 transition-all shadow-xl shadow-emerald-600/30"
-              >
-                Book Discovery Call
-              </a>
-              <a
-                href="/dashboards"
-                className="px-10 py-5 bg-transparent border border-white/20 text-white font-bold text-sm tracking-widest uppercase hover:bg-white/10 transition-all"
-              >
-                View Dashboards
-              </a>
-            </div>
-            <div className="text-center">
-              <a
-                href="mailto:admin@calyxra.com?subject=Pricing%20Question"
-                className="text-stone-400 text-sm hover:text-stone-300 transition-colors underline underline-offset-4"
-              >
-                Questions? Email us →
-              </a>
-            </div>
-          </div>
-        </section>
-
-        {/* FOOTER */}
-        <footer className="py-16 px-6 bg-white border-t border-stone-200">
-          <div className="max-w-7xl mx-auto">
-            <div className="flex flex-col md:flex-row justify-between items-start gap-12 mb-12">
-              <div className="max-w-xs">
-                <div className="text-xl font-serif font-bold text-stone-900 mb-3">Calyxra.</div>
-                <p className="text-sm text-stone-500 leading-relaxed mb-4">
-                  White-label data infrastructure for performance marketing agencies. Standard KPI layer for Shopify + paid media.
-                </p>
-                <div className="text-xs text-stone-400">
-                  Built by analysts for agencies.
-                </div>
-              </div>
-              
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-8">
-                <div>
-                  <h4 className="text-xs font-bold text-stone-900 uppercase tracking-widest mb-3">Product</h4>
-                  <ul className="space-y-2 text-sm text-stone-600">
-                    <li><a href="/pricing" className="hover:text-stone-900 transition-colors">Pricing</a></li>
-                    <li><a href="/dashboards" className="hover:text-stone-900 transition-colors">Dashboards</a></li>
-                  </ul>
-                </div>
-                
-                <div>
-                  <h4 className="text-xs font-bold text-stone-900 uppercase tracking-widest mb-3">Company</h4>
-                  <ul className="space-y-2 text-sm text-stone-600">
-                    <li><a href={calendlyUrl} className="hover:text-stone-900 transition-colors">Book Call</a></li>
-                    <li><a href="mailto:admin@calyxra.com" className="hover:text-stone-900 transition-colors">Contact</a></li>
-                  </ul>
-                </div>
-                
-                <div>
-                  <h4 className="text-xs font-bold text-stone-900 uppercase tracking-widest mb-3">Legal</h4>
-                  <ul className="space-y-2 text-sm text-stone-600">
-                    <li><a href="/terms" className="hover:text-stone-900 transition-colors">Terms</a></li>
-                    <li><a href="/privacy" className="hover:text-stone-900 transition-colors">Privacy</a></li>
-                    <li><a href="/refunds" className="hover:text-stone-900 transition-colors">Refunds</a></li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            
-            <div className="pt-8 border-t border-stone-200 flex flex-col sm:flex-row justify-between items-center gap-4">
-              <div className="text-xs text-stone-400">
-                © 2025 Calyxra Data Systems. All rights reserved.
-              </div>
-              <div className="text-xs text-stone-500">
-                Questions? <a href="mailto:admin@calyxra.com" className="text-emerald-700 hover:underline">admin@calyxra.com</a>
-              </div>
-            </div>
-          </div>
-        </footer>
       </main>
 
-      <CompareModal isOpen={isCompareOpen} onClose={() => setIsCompareOpen(false)} />
+      <Footer />
     </div>
   );
 }
