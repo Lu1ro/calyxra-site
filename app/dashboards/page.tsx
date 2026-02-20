@@ -2,11 +2,13 @@
 
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
-import { ArrowUpRight, Shield, Database, RefreshCw, BarChart3, TrendingUp } from 'lucide-react';
+import { ArrowUpRight, Shield, Database, RefreshCw, BarChart3, TrendingUp, Users } from 'lucide-react';
 
 export default function DashboardsPage() {
   const executiveUrl = "https://lookerstudio.google.com/reporting/388ce53d-d8d2-4b49-8a10-3708aea0ebda";
   const reconciliationUrl = "https://lookerstudio.google.com/reporting/20051360-1a44-4dd0-a0c6-e512944a2da6";
+  const channelUrl = "https://lookerstudio.google.com/reporting/c85be51d-9b1b-456e-beb4-5e2739d8c68e";
+  const customerUrl = "https://lookerstudio.google.com/reporting/6829a01c-0667-4afb-915e-22d0cf579727";
 
   const dashboardFeatures = [
     {
@@ -15,19 +17,19 @@ export default function DashboardsPage() {
       desc: "Net Revenue, Margin, AOV, MER — with period-over-period comparison"
     },
     {
-      icon: <BarChart3 className="w-5 h-5 text-emerald-600" />,
-      title: "Revenue vs Profit Trend",
-      desc: "Daily combo chart of revenue and contribution margin"
-    },
-    {
       icon: <Shield className="w-5 h-5 text-red-600" />,
       title: "Reconciliation Layer",
       desc: "Phantom Revenue, Over-reporting %, Claimed vs True ROAS"
     },
     {
-      icon: <Database className="w-5 h-5 text-emerald-600" />,
-      title: "Daily Reconciliation",
-      desc: "Day-by-day Shopify vs platform breakdown with gradient alerts"
+      icon: <BarChart3 className="w-5 h-5 text-blue-500" />,
+      title: "Channel Performance",
+      desc: "Per-platform spend, True ROAS, CTR, CPC — reconciled against Shopify"
+    },
+    {
+      icon: <Users className="w-5 h-5 text-violet-500" />,
+      title: "Customer Analytics",
+      desc: "New vs returning, repeat rate, AOV by segment, country breakdown"
     }
   ];
 
@@ -44,36 +46,14 @@ export default function DashboardsPage() {
               <span className="text-emerald-400 text-xs font-bold uppercase tracking-widest">Live Dashboards</span>
             </div>
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-serif font-medium text-stone-100 mb-4 leading-tight">
-              Executive & Reconciliation Analytics
+              Live Analytics Dashboards
             </h1>
             <p className="text-stone-500 text-base max-w-2xl mx-auto mb-8 leading-relaxed">
-              Two production dashboards running on anonymized Shopify data.
-              Executive overview for KPIs + reconciliation layer that exposes platform over-reporting.
+              Four production dashboards running on anonymized Shopify data.
+              Executive KPIs, reconciliation, channel performance, and customer analytics — all from Shopify source of truth.
             </p>
 
-            {/* Main CTAs */}
-            <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <a
-                href={executiveUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-3 px-8 py-4 bg-emerald-700 hover:bg-emerald-800 text-white text-sm font-bold uppercase tracking-widest transition-all shadow-lg hover:shadow-xl active:scale-[0.98]"
-              >
-                Executive Dashboard
-                <ArrowUpRight className="w-4 h-4" />
-              </a>
-              <a
-                href={reconciliationUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-3 px-8 py-4 bg-stone-900 hover:bg-stone-800 text-white text-sm font-bold uppercase tracking-widest transition-all shadow-lg hover:shadow-xl active:scale-[0.98]"
-              >
-                Reconciliation Dashboard
-                <ArrowUpRight className="w-4 h-4" />
-              </a>
-            </div>
-
-            <p className="mt-4 text-stone-600 text-xs uppercase tracking-widest font-medium">
+            <p className="mt-2 text-stone-600 text-xs uppercase tracking-widest font-medium">
               Anonymized dataset · Source: Shopify → BigQuery · Updated daily
             </p>
           </div>
@@ -498,7 +478,312 @@ export default function DashboardsPage() {
               </div>
             </a>
           </div>
-        </section >
+        </section>
+
+        {/* ═══════════════ CHANNEL PERFORMANCE DASHBOARD ═══════════════ */}
+        <section className="px-4 md:px-8 mb-16">
+          <div className="max-w-5xl mx-auto">
+            {/* Section header */}
+            <div className="text-center mb-8">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-blue-900/20 border border-blue-700/30 rounded-full mb-4">
+                <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
+                <span className="text-blue-400 text-xs font-bold uppercase tracking-widest">Channel Layer</span>
+              </div>
+              <h2 className="text-2xl md:text-3xl font-serif text-stone-100 mb-3">Channel Performance</h2>
+              <p className="text-stone-500 text-sm max-w-xl mx-auto">Reconciliation at platform level — True ROAS, phantom revenue, and over-reporting per channel.</p>
+            </div>
+
+            <a
+              href={channelUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block relative rounded-xl overflow-hidden border border-blue-800/50 shadow-2xl shadow-blue-900/30 bg-[#292524] group cursor-pointer"
+            >
+              {/* Hover overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10 flex items-end justify-center pb-8">
+                <span className="inline-flex items-center gap-2 px-6 py-3 bg-blue-700 text-white text-sm font-bold uppercase tracking-widest rounded">
+                  Open Channel Performance <ArrowUpRight className="w-4 h-4" />
+                </span>
+              </div>
+
+              {/* Dashboard mockup */}
+              <div className="p-6 md:p-10">
+                {/* Header */}
+                <div className="flex items-center justify-between mb-6">
+                  <div>
+                    <h3 className="text-lg font-serif text-stone-200">Channel Performance</h3>
+                    <p className="text-xs text-stone-500">Reconciliation, not attribution. Platform-level truth from Shopify.</p>
+                  </div>
+                  <div className="px-4 py-2 border border-stone-600 rounded text-xs text-stone-400">
+                    1 Dec 2025 – 12 Feb 2026
+                  </div>
+                </div>
+
+                {/* KPI Cards */}
+                <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3 mb-6">
+                  {[
+                    { label: 'Total Spend', value: '€34,473', color: 'text-red-400' },
+                    { label: 'Phantom Revenue', value: '€18,034', color: 'text-red-400' },
+                    { label: 'Cost/Purchase', value: '€40.91', color: 'text-stone-100' },
+                    { label: 'Claimed ROAS', value: '3.11', color: 'text-yellow-400' },
+                    { label: 'True ROAS', value: '2.50', color: 'text-emerald-400' },
+                    { label: 'Avg CPC', value: '€1.29', color: 'text-stone-100' },
+                    { label: 'Avg CTR', value: '3.93%', color: 'text-stone-100' },
+                  ].map((kpi) => (
+                    <div key={kpi.label} className="bg-[#1C1917] border border-stone-700/50 rounded-lg p-3">
+                      <div className="text-[10px] text-stone-500 uppercase tracking-wider mb-1">{kpi.label}</div>
+                      <div className={`text-lg font-bold ${kpi.color}`}>{kpi.value}</div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Over-Report + Spend Trend */}
+                <div className="grid md:grid-cols-5 gap-4 mb-6">
+                  {/* Over-Report Scorecards */}
+                  <div className="md:col-span-2 flex flex-col gap-3">
+                    <div className="bg-[#1C1917] border border-stone-700/50 rounded-lg p-4">
+                      <div className="text-[10px] text-stone-500 uppercase tracking-wider mb-1">Google Over-Report %</div>
+                      <div className="text-2xl font-bold text-yellow-400">21.6%</div>
+                      <div className="text-xs text-stone-500 mt-1">Platform inflates revenue by this margin</div>
+                    </div>
+                    <div className="bg-[#1C1917] border border-stone-700/50 rounded-lg p-4">
+                      <div className="text-[10px] text-stone-500 uppercase tracking-wider mb-1">Meta Over-Report %</div>
+                      <div className="text-2xl font-bold text-blue-400">25.8%</div>
+                      <div className="text-xs text-stone-500 mt-1">Consistently higher inflation than Google</div>
+                    </div>
+                  </div>
+
+                  {/* Spend Trend */}
+                  <div className="md:col-span-3 bg-[#1C1917] border border-stone-700/50 rounded-lg p-4">
+                    <h4 className="text-sm text-stone-200 font-semibold mb-1">Daily Spend</h4>
+                    <div className="flex items-center gap-4 mb-3">
+                      <span className="flex items-center gap-1.5 text-[10px] text-stone-500">
+                        <span className="w-4 h-[2px] bg-blue-400 inline-block rounded"></span> Meta
+                      </span>
+                      <span className="flex items-center gap-1.5 text-[10px] text-stone-500">
+                        <span className="w-4 h-[2px] bg-yellow-400 inline-block rounded"></span> Google
+                      </span>
+                    </div>
+                    <div className="relative border-l border-b border-stone-700/40" style={{ height: '120px' }}>
+                      <div className="absolute w-full border-t border-stone-800/60" style={{ top: '0%' }}></div>
+                      <div className="absolute w-full border-t border-dashed border-stone-700/30" style={{ top: '50%' }}></div>
+                      <svg className="absolute inset-0 w-full h-full" viewBox="0 0 300 120" preserveAspectRatio="none">
+                        <polyline fill="none" stroke="#60a5fa" strokeWidth="1.5" vectorEffect="non-scaling-stroke"
+                          points="5,50 20,45 35,55 50,42 65,48 80,40 95,52 110,38 125,45 140,42 155,50 170,44 185,48 200,40 215,46 230,42 245,50 260,44 275,48 290,42"
+                        />
+                        <polyline fill="none" stroke="#facc15" strokeWidth="1.5" vectorEffect="non-scaling-stroke"
+                          points="5,72 20,68 35,75 50,65 65,70 80,62 95,74 110,60 125,66 140,62 155,72 170,66 185,70 200,60 215,68 230,58 245,70 260,64 275,68 290,62"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Campaign Table */}
+                <div className="bg-[#1C1917] border border-stone-700/50 rounded-lg overflow-hidden">
+                  <div className="px-4 py-2 border-b border-stone-700/50">
+                    <span className="text-xs text-stone-400 font-medium">Campaign Breakdown</span>
+                  </div>
+                  <table className="w-full text-xs">
+                    <thead>
+                      <tr className="border-b border-stone-700/50 text-stone-500">
+                        <th className="text-left px-4 py-2 font-medium">Platform</th>
+                        <th className="text-left px-4 py-2 font-medium">Campaign</th>
+                        <th className="text-right px-4 py-2 font-medium">Spend</th>
+                        <th className="text-right px-4 py-2 font-medium hidden md:table-cell">CTR %</th>
+                        <th className="text-right px-4 py-2 font-medium hidden md:table-cell">CPC</th>
+                        <th className="text-right px-4 py-2 font-medium">Claimed ROAS</th>
+                      </tr>
+                    </thead>
+                    <tbody className="text-stone-300">
+                      {[
+                        { p: 'Meta', c: 'Prospecting — Broad Interest', s: '€7,288', ctr: '0.81', cpc: '€1.10', roas: '2.97' },
+                        { p: 'Meta', c: 'Retargeting — Website Visitors', s: '€5,201', ctr: '1.69', cpc: '€0.59', roas: '3.02' },
+                        { p: 'Google', c: 'Shopping — Feed Standard', s: '€4,900', ctr: '6.89', cpc: '€1.73', roas: '3.25' },
+                        { p: 'Google', c: 'Search — Brand Terms', s: '€3,542', ctr: '7.24', cpc: '€1.88', roas: '2.90' },
+                      ].map((row) => (
+                        <tr key={row.c} className="border-b border-stone-800/50 hover:bg-stone-800/20">
+                          <td className="px-4 py-2 font-medium">{row.p}</td>
+                          <td className="px-4 py-2">{row.c}</td>
+                          <td className="text-right px-4 py-2">{row.s}</td>
+                          <td className="text-right px-4 py-2 hidden md:table-cell">
+                            <span className={`px-1.5 py-0.5 rounded text-[10px] font-bold ${parseFloat(row.ctr) < 1 ? 'bg-red-900/40 text-red-400' : parseFloat(row.ctr) < 3 ? 'bg-yellow-900/40 text-yellow-400' : 'bg-emerald-900/40 text-emerald-400'}`}>
+                              {row.ctr}%
+                            </span>
+                          </td>
+                          <td className="text-right px-4 py-2 hidden md:table-cell">{row.cpc}</td>
+                          <td className="text-right px-4 py-2">{row.roas}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+
+                {/* Insight */}
+                <div className="mt-4 px-3 py-2 bg-stone-800/40 border border-stone-700/30 rounded text-[10px] text-stone-500">
+                  ⚡ Reconciliation, not attribution · Phantom = reported − Shopify · True ROAS = Shopify ÷ spend
+                </div>
+              </div>
+            </a>
+          </div>
+        </section>
+
+        {/* ═══════════════ CUSTOMER ANALYTICS DASHBOARD ═══════════════ */}
+        <section className="px-4 md:px-8 mb-16">
+          <div className="max-w-5xl mx-auto">
+            {/* Section header */}
+            <div className="text-center mb-8">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-violet-900/20 border border-violet-700/30 rounded-full mb-4">
+                <span className="w-2 h-2 rounded-full bg-violet-500 animate-pulse"></span>
+                <span className="text-violet-400 text-xs font-bold uppercase tracking-widest">Customer Layer</span>
+              </div>
+              <h2 className="text-2xl md:text-3xl font-serif text-stone-100 mb-3">Customer Analytics</h2>
+              <p className="text-stone-500 text-sm max-w-xl mx-auto">New vs returning segmentation, repeat rate, AOV by segment, and geographic breakdown.</p>
+            </div>
+
+            <a
+              href={customerUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block relative rounded-xl overflow-hidden border border-violet-800/50 shadow-2xl shadow-violet-900/30 bg-[#292524] group cursor-pointer"
+            >
+              {/* Hover overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10 flex items-end justify-center pb-8">
+                <span className="inline-flex items-center gap-2 px-6 py-3 bg-violet-700 text-white text-sm font-bold uppercase tracking-widest rounded">
+                  Open Customer Analytics <ArrowUpRight className="w-4 h-4" />
+                </span>
+              </div>
+
+              {/* Dashboard mockup */}
+              <div className="p-6 md:p-10">
+                {/* Header */}
+                <div className="flex items-center justify-between mb-6">
+                  <div>
+                    <h3 className="text-lg font-serif text-stone-200">Customer Analytics</h3>
+                    <p className="text-xs text-stone-500">New vs returning. Revenue by segment. Unit economics.</p>
+                  </div>
+                  <div className="px-4 py-2 border border-stone-600 rounded text-xs text-stone-400">
+                    1 Jan – 4 Feb 2026
+                  </div>
+                </div>
+
+                {/* KPI Cards */}
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 mb-6">
+                  {[
+                    { label: 'Total Customers', value: '1,182', color: 'text-stone-100' },
+                    { label: 'New Customers', value: '774', color: 'text-emerald-400' },
+                    { label: 'Returning', value: '498', color: 'text-blue-400' },
+                    { label: 'Repeat Rate', value: '39.3%', color: 'text-yellow-400' },
+                    { label: 'New AOV', value: '€120.09', color: 'text-emerald-400' },
+                    { label: 'Returning AOV', value: '€118.89', color: 'text-blue-400' },
+                  ].map((kpi) => (
+                    <div key={kpi.label} className="bg-[#1C1917] border border-stone-700/50 rounded-lg p-3">
+                      <div className="text-[10px] text-stone-500 uppercase tracking-wider mb-1">{kpi.label}</div>
+                      <div className={`text-lg font-bold ${kpi.color}`}>{kpi.value}</div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Charts row */}
+                <div className="grid md:grid-cols-2 gap-4 mb-6">
+                  {/* Revenue by Segment */}
+                  <div className="bg-[#1C1917] border border-stone-700/50 rounded-lg p-4">
+                    <h4 className="text-sm text-stone-200 font-semibold mb-1">Revenue by Segment</h4>
+                    <div className="flex items-center gap-4 mb-3">
+                      <span className="flex items-center gap-1.5 text-[10px] text-stone-500">
+                        <span className="w-3 h-3 bg-emerald-500/80 rounded-sm inline-block"></span> New
+                      </span>
+                      <span className="flex items-center gap-1.5 text-[10px] text-stone-500">
+                        <span className="w-3 h-3 bg-blue-500/80 rounded-sm inline-block"></span> Returning
+                      </span>
+                    </div>
+                    <div className="flex">
+                      <div className="flex flex-col justify-between text-[9px] text-stone-600 pr-2" style={{ height: '120px' }}>
+                        <span>3K</span><span>2K</span><span>1K</span><span>0</span>
+                      </div>
+                      <div className="flex-1 border-l border-b border-stone-700/40 relative" style={{ height: '120px' }}>
+                        <div className="absolute w-full border-t border-stone-800/60" style={{ top: '0%' }}></div>
+                        <div className="absolute w-full border-t border-stone-800/60" style={{ top: '33%' }}></div>
+                        <div className="absolute w-full border-t border-stone-800/60" style={{ top: '66%' }}></div>
+                        <div className="absolute inset-0 flex items-end gap-[1px] px-[1px]">
+                          {[65, 58, 62, 70, 55, 68, 60, 52, 72, 63, 55, 48, 60, 65, 58, 52, 70, 62, 55, 68, 50, 72, 58, 62, 65, 48, 58, 62, 55, 70, 52, 65, 58, 62].map((h, i) => (
+                            <div key={i} className="flex-1 flex flex-col justify-end" style={{ height: '100%' }}>
+                              <div className="bg-blue-500/70 w-full" style={{ height: `${h * 0.4}%` }}></div>
+                              <div className="bg-emerald-500/70 w-full" style={{ height: `${h * 0.6}%` }}></div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* New vs Returning Trend */}
+                  <div className="bg-[#1C1917] border border-stone-700/50 rounded-lg p-4">
+                    <h4 className="text-sm text-stone-200 font-semibold mb-1">New vs Returning Customers</h4>
+                    <div className="flex items-center gap-4 mb-3">
+                      <span className="flex items-center gap-1.5 text-[10px] text-stone-500">
+                        <span className="w-4 h-[2px] bg-emerald-400 inline-block rounded"></span> New
+                      </span>
+                      <span className="flex items-center gap-1.5 text-[10px] text-stone-500">
+                        <span className="w-4 h-[2px] bg-blue-400 inline-block rounded"></span> Returning
+                      </span>
+                    </div>
+                    <div className="relative border-l border-b border-stone-700/40" style={{ height: '120px' }}>
+                      <div className="absolute w-full border-t border-stone-800/60" style={{ top: '0%' }}></div>
+                      <div className="absolute w-full border-t border-dashed border-stone-700/30" style={{ top: '50%' }}></div>
+                      <svg className="absolute inset-0 w-full h-full" viewBox="0 0 300 120" preserveAspectRatio="none">
+                        <polyline fill="none" stroke="#34d399" strokeWidth="1.5" vectorEffect="non-scaling-stroke"
+                          points="5,55 15,50 25,58 35,45 45,52 55,48 65,55 75,42 85,50 95,48 105,55 115,45 125,50 135,48 145,55 155,42 165,48 175,52 185,45 195,50 205,55 215,48 225,42 235,50 245,48 255,55 265,48 275,52 285,50 295,55"
+                        />
+                        <polyline fill="none" stroke="#60a5fa" strokeWidth="1.5" vectorEffect="non-scaling-stroke"
+                          points="5,75 15,72 25,78 35,68 45,74 55,70 65,76 75,65 85,72 95,68 105,76 115,66 125,72 135,68 145,75 155,64 165,70 175,72 185,66 195,72 205,76 215,70 225,65 235,72 245,68 255,76 265,70 275,74 285,72 295,76"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Country Table */}
+                <div className="bg-[#1C1917] border border-stone-700/50 rounded-lg overflow-hidden">
+                  <div className="px-4 py-2 border-b border-stone-700/50">
+                    <span className="text-xs text-stone-400 font-medium">Revenue by Country</span>
+                  </div>
+                  <table className="w-full text-xs">
+                    <thead>
+                      <tr className="border-b border-stone-700/50 text-stone-500">
+                        <th className="text-left px-4 py-2 font-medium">Country</th>
+                        <th className="text-right px-4 py-2 font-medium">Customers</th>
+                        <th className="text-right px-4 py-2 font-medium">Revenue (€)</th>
+                        <th className="text-right px-4 py-2 font-medium hidden md:table-cell">AOV (€)</th>
+                        <th className="text-right px-4 py-2 font-medium">Repeat %</th>
+                      </tr>
+                    </thead>
+                    <tbody className="text-stone-300">
+                      {[
+                        { c: 'DE', cu: '290', r: '39,022', a: '123.1', rp: '41.7' },
+                        { c: 'NL', cu: '169', r: '21,839', a: '116.2', rp: '45.0' },
+                        { c: 'GB', cu: '146', r: '17,414', a: '110.2', rp: '39.7' },
+                        { c: 'BE', cu: '132', r: '16,214', a: '117.5', rp: '40.9' },
+                      ].map((row) => (
+                        <tr key={row.c} className="border-b border-stone-800/50 hover:bg-stone-800/20">
+                          <td className="px-4 py-2 font-medium">{row.c}</td>
+                          <td className="text-right px-4 py-2">{row.cu}</td>
+                          <td className="text-right px-4 py-2">{row.r}</td>
+                          <td className="text-right px-4 py-2 hidden md:table-cell">{row.a}</td>
+                          <td className="text-right px-4 py-2">
+                            <span className={`px-1.5 py-0.5 rounded text-[10px] font-bold ${parseFloat(row.rp) > 42 ? 'bg-emerald-900/40 text-emerald-400' : parseFloat(row.rp) > 38 ? 'bg-yellow-900/40 text-yellow-400' : 'bg-red-900/40 text-red-400'}`}>
+                              {row.rp}%
+                            </span>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </a>
+          </div>
+        </section>
 
         {/* Features grid */}
         < section className="px-6 mb-16" >
