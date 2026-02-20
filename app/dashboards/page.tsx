@@ -79,6 +79,63 @@ export default function DashboardsPage() {
           </div>
         </section>
 
+        {/* Demo Video */}
+        <section className="px-4 md:px-8 mb-16">
+          <div className="max-w-4xl mx-auto">
+            {/* Header */}
+            <div className="text-center mb-8">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-stone-800/60 border border-stone-700/40 rounded-full mb-4">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span className="text-stone-400 text-xs font-bold uppercase tracking-widest">Live Walkthrough</span>
+              </div>
+              <h2 className="text-2xl md:text-3xl font-serif text-stone-100 mb-2">See it in 90 seconds</h2>
+              <p className="text-stone-500 text-sm max-w-md mx-auto">Executive KPIs + Reconciliation layer — running on real anonymized Shopify data</p>
+            </div>
+
+            {/* Video with glow effect */}
+            <div className="relative group">
+              <div className="absolute -inset-[2px] rounded-2xl bg-gradient-to-r from-emerald-700/40 via-stone-700/20 to-emerald-700/40 opacity-60 group-hover:opacity-100 transition-opacity duration-500 blur-sm"></div>
+              <div className="relative rounded-xl overflow-hidden border border-stone-700/60 shadow-2xl shadow-emerald-900/20">
+                <video controls playsInline className="w-full block">
+                  <source src="/Calyxra_looker_dashboards.mp4" type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+            </div>
+
+            {/* What you'll see */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+              <div className="flex items-start gap-3 p-4 bg-stone-900/40 border border-stone-800/60 rounded-xl">
+                <span className="text-emerald-500 mt-0.5 flex-shrink-0">
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
+                </span>
+                <div>
+                  <p className="text-stone-200 text-sm font-medium mb-0.5">Executive KPIs</p>
+                  <p className="text-stone-500 text-xs">Net revenue, margin, MER — from Shopify as source of truth</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3 p-4 bg-stone-900/40 border border-stone-800/60 rounded-xl">
+                <span className="text-red-400 mt-0.5 flex-shrink-0">
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                </span>
+                <div>
+                  <p className="text-stone-200 text-sm font-medium mb-0.5">Phantom Revenue</p>
+                  <p className="text-stone-500 text-xs">€21,761 gap between what platforms claim and Shopify reality</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3 p-4 bg-stone-900/40 border border-stone-800/60 rounded-xl">
+                <span className="text-amber-400 mt-0.5 flex-shrink-0">
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>
+                </span>
+                <div>
+                  <p className="text-stone-200 text-sm font-medium mb-0.5">Claimed vs True ROAS</p>
+                  <p className="text-stone-500 text-xs">Meta 2.91 → 2.36 · Google 3.12 → 2.63</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* ═══════════════ EXECUTIVE DASHBOARD ═══════════════ */}
         <section className="px-4 md:px-8 mb-16">
           <div className="max-w-5xl mx-auto">

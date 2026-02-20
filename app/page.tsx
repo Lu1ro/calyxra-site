@@ -243,71 +243,6 @@ function CompareToolsSection() {
   );
 }
 
-function DemoSection() {
-  return (
-    <section className="py-20 px-6 bg-white border-b border-stone-200">
-      <div className="max-w-6xl mx-auto">
-        <SectionHeading
-          title="Live demo — 90s walkthrough"
-          subtitle="See exactly how we reconcile Shopify, ad platforms, and GA4 into one profit view."
-        />
-
-        <div className="grid md:grid-cols-3 gap-6 items-start">
-          <div className="md:col-span-2">
-            {/* Demo video placeholder with thumbnail */}
-            <div className="aspect-video bg-gradient-to-br from-stone-900 to-stone-800 rounded overflow-hidden mb-4 relative group cursor-pointer">
-              <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-6">
-                <div className="w-20 h-20 bg-emerald-600 rounded-full flex items-center justify-center mb-4 group-hover:bg-emerald-500 transition-colors shadow-lg shadow-emerald-600/30">
-                  <svg className="w-8 h-8 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M8 5v14l11-7z" />
-                  </svg>
-                </div>
-                <h4 className="text-white text-lg font-semibold mb-2">Watch the 90-second Demo</h4>
-                <p className="text-white/70 text-sm max-w-md">You'll see: executive profit dashboard, MER reconciliation, refund-adjusted revenue, and the source-of-truth layer in action.</p>
-                <span className="mt-4 text-emerald-400 text-xs font-bold uppercase tracking-widest">Coming Soon</span>
-              </div>
-            </div>
-
-            <p className="text-stone-600 mb-4">This 90-second walkthrough shows: executive profit overview, MER vs spend, refund-adjusted net revenue and automated reconciliation table.</p>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {/* Real Dashboard Screenshots */}
-              <div className="group">
-                <div className="aspect-video bg-white border border-stone-200 rounded overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
-                  <img src="/dashboard-executive.png" alt="Executive Profit Dashboard" className="w-full h-full object-cover" />
-                </div>
-                <p className="text-center text-sm text-stone-600 mt-2 font-medium">Executive Profit View</p>
-              </div>
-              <div className="group">
-                <div className="aspect-video bg-white border border-stone-200 rounded overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
-                  <img src="/dashboard-channel.png" alt="Channel Performance Dashboard" className="w-full h-full object-cover" />
-                </div>
-                <p className="text-center text-sm text-stone-600 mt-2 font-medium">Channel Performance</p>
-              </div>
-              <div className="group">
-                <div className="aspect-video bg-white border border-stone-200 rounded overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
-                  <img src="/dashboard-customer.png" alt="Customer Analytics Dashboard" className="w-full h-full object-cover" />
-                </div>
-                <p className="text-center text-sm text-stone-600 mt-2 font-medium">Customer Analytics</p>
-              </div>
-            </div>
-          </div>
-
-          <aside className="bg-stone-50 p-6 border border-stone-200">
-            <h4 className="font-semibold mb-3">What you'll see</h4>
-            <ul className="text-sm text-stone-600 space-y-2">
-              <li>Net revenue vs platform-reported revenue</li>
-              <li>MER & Profit by campaign</li>
-              <li>Top reconciliation mismatches</li>
-              <li>Quick fix roadmap (Week 1 / Week 2)</li>
-            </ul>
-            <a href="/deliverables" className="inline-block mt-4 px-4 py-2 bg-emerald-700 text-white rounded-sm text-sm">View Infrastructure Outputs</a>
-          </aside>
-        </div>
-      </div>
-    </section>
-  );
-}
 
 // --- PAGE FUNCTION ---
 
@@ -390,8 +325,6 @@ export default function PricingPage() {
         {/* PROOF BLOCKS (added) */}
         <ProofSection />
 
-        {/* DEMO + SCREENSHOTS (added) */}
-        <DemoSection />
 
         {/* CALYXRA VS ATTRIBUTION TOOLS (added) */}
         <CompareToolsSection />

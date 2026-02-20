@@ -12,7 +12,6 @@ export default function Navbar() {
 
   const navLinks = [
     { name: 'Live Dashboard', href: '/dashboards' },
-    { name: 'Demo', href: '/demo' },
     { name: 'What We Deliver', href: '/deliverables' },
     { name: 'Use Cases', href: '/case-studies' },
     { name: 'Pricing', href: '/pricing' },
@@ -55,7 +54,7 @@ export default function Navbar() {
         {/* Desktop CTA */}
         <div className="hidden md:flex items-center gap-3">
           <Link
-            href="/demo"
+            href="/dashboards"
             className="px-5 py-3 bg-stone-100 text-stone-900 text-xs font-bold uppercase tracking-wide hover:bg-stone-200 transition-all"
           >
             Get Demo + Call
@@ -105,7 +104,7 @@ export default function Navbar() {
           </div>
           <div className="flex flex-col gap-3 pt-4 border-t border-stone-100">
             <Link
-              href="/demo"
+              href="/dashboards"
               className="w-full py-3 bg-stone-100 text-stone-900 text-center text-xs font-bold uppercase tracking-wide"
               onClick={() => setIsMobileMenuOpen(false)}
             >
