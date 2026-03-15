@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  // Нове позиціонування для преміум-сегменту
-  title: "Calyxra | White-Label Reporting Infrastructure for Agencies",
-  description: "Automated data warehousing and Power BI dashboards for performance agencies. Scale your reporting without the manual work.",
+  title: "Calyxra — Revenue Reconciliation for Shopify Brands",
+  description:
+    "Calyxra reconciles ad platform revenue against Shopify net revenue so you can see true ROAS, phantom revenue, and real profit per campaign.",
   
   // Налаштування для месенджерів та соцмереж
   openGraph: {
