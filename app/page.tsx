@@ -24,6 +24,11 @@ function FreeScanSection() {
   const toolUrl = process.env.NEXT_PUBLIC_RECONCILE_URL || '';
 
   const handleSubmit = async (useSample = false) => {
+    if (!toolUrl) {
+      setError('Scan backend is not configured. Set NEXT_PUBLIC_RECONCILE_URL to your tool URL.');
+      return;
+    }
+
     if (!useSample && (!form.shopifyDomain || !form.shopifyApiKey)) {
       setError('Shopify domain and API key are required.');
       return;
@@ -47,7 +52,7 @@ function FreeScanSection() {
             dateTo: form.dateTo || undefined,
           };
 
-      const endpoint = `${toolUrl || ''}/api/report`;
+      const endpoint = `${toolUrl}/api/report`;
 
       const res = await fetch(endpoint, {
         method: 'POST',
@@ -56,29 +61,26 @@ function FreeScanSection() {
       });
 
       if (!res.ok) {
-        let details = '';
+        const text = await res.text();
+        console.error('Reconciliation API error', {
+          status: res.status,
+          statusText: res.statusText,
+          endpoint,
+          shopifyDomain: body.shopifyDomain,
+          hasMeta: !!body.metaAccessToken,
+          hasGoogle: !!body.googleAdsDeveloperToken,
+          hasTikTok: !!body.tiktokAccessToken,
+          body: text,
+        });
+        // Try to surface a meaningful message if backend returned JSON
         try {
-          const payload = await res.json();
-          details = payload?.error || JSON.stringify(payload);
-          // Log full API error for debugging (tokens are not logged)
-          console.error('Reconciliation API error', {
-            status: res.status,
-            statusText: res.statusText,
-            endpoint,
-            shopifyDomain: body.shopifyDomain,
-            hasMeta: !!body.metaAccessToken,
-            hasGoogle: !!body.googleAdsDeveloperToken,
-            hasTikTok: !!body.tiktokAccessToken,
-            details,
-          });
+          const maybeJson = JSON.parse(text);
+          const msg = maybeJson?.error || maybeJson?.message;
+          if (msg) throw new Error(msg);
         } catch {
-          console.error('Reconciliation API error (non-JSON response)', {
-            status: res.status,
-            statusText: res.statusText,
-            endpoint,
-          });
+          // fall through to generic message
         }
-        throw new Error(details || 'Reconciliation failed. Check your credentials.');
+        throw new Error('Reconciliation failed. Check your credentials and try again.');
       }
 
       const data = await res.json();
