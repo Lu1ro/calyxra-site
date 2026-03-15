@@ -127,82 +127,67 @@ export default function PricingPage() {
 
         {/* PRICING CARDS */}
         <section className="py-24 px-6 bg-[#FAFAF9]">
-          <div className="max-w-7xl mx-auto">
-            <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-
-              {/* Agency Pilot */}
-              <PricingCard
-                name="Agency Pilot"
-                monthlyPrice="€990"
-                setupPrice="€1,250"
-                discountedSetupPrice="€625"
-                bestFor="smaller agencies (1–2 stores) starting their data journey"
-                features={[
-                  "Up to 2 active client stores",
-                  "Shopify + Meta + Google Data",
-                  "Daily data refresh",
-                  "Standard Support (Email)",
-                  "Onboarding in 7 days"
-                ]}
-                goLive="5–7 business days"
-              />
-
-              {/* Agency Scale */}
-              <PricingCard
-                name="Agency Scale"
-                monthlyPrice="€1,990"
-                setupPrice="€2,990"
-                discountedSetupPrice="€1,495"
-                bestFor="agencies managing 3–5 client stores who need reliability + monitoring"
-                features={[
-                  "3–5 active client stores",
-                  "Shopify + Meta + Google + TikTok + GA4",
-                  "Daily refresh + data health monitoring & alerts",
-                  "Tracking & data QA checks (pipeline + event consistency)",
-                  "Priority support (Slack, business hours)",
-                  "Faster onboarding (48h kickoff)"
-                ]}
-                goLive="7–10 business days"
-                isPopular={true}
-              />
-
-              {/* Agency Pro */}
-              <PricingCard
-                name="Agency Pro"
-                monthlyPrice="€3,490"
-                setupPrice="€4,990"
-                discountedSetupPrice="€2,495"
-                bestFor="agencies scaling fast (6–10+ stores) that want a real 'ops layer'"
-                features={[
-                  "Up to 10 active client stores",
-                  "All Scale features + advanced monitoring",
-                  "GA4 + custom integrations (Klaviyo, CRM, etc.)",
-                  "Client-ready weekly snapshot reports (auto-generated)",
-                  "Custom KPI layer (your naming + your definitions)",
-                  "Dedicated delivery lane (faster changes, tighter SLA)"
-                ]}
-                goLive="10–14 business days"
-              />
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-serif font-medium text-stone-900 mb-4">Simple pricing. Real numbers.</h2>
+              <div className="h-1 w-20 bg-emerald-700 mx-auto mb-4"></div>
+              <p className="text-stone-500 max-w-2xl mx-auto text-lg">No contracts. No % of ad spend. Cancel anytime.</p>
             </div>
 
-            {/* Compare Plans + Enterprise */}
-            <div className="mt-12 flex flex-col sm:flex-row justify-center items-center gap-6">
-              <button
-                onClick={() => setIsCompareOpen(true)}
-                className="text-stone-600 font-medium text-sm hover:text-emerald-700 transition-colors underline underline-offset-4"
-              >
-                Compare plans →
-              </button>
-              <span className="hidden sm:inline text-stone-300">|</span>
-              <p className="text-stone-500">
-                Need 10+ stores or custom KPIs? <a href={calendlyUrl} target="_blank" rel="noopener noreferrer" className="text-emerald-700 font-semibold hover:underline">Enterprise pricing →</a>
-              </p>
+            <div className="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">
+              {/* Revenue Leak Audit */}
+              <div className="bg-white p-8 border border-stone-200 hover:border-emerald-300 transition-colors shadow-xl">
+                <p className="text-[10px] font-bold text-emerald-700 uppercase tracking-widest mb-3">Revenue Leak Audit</p>
+                <div className="flex items-baseline gap-1 mb-1">
+                  <span className="text-4xl font-serif font-medium text-stone-900">$249</span>
+                </div>
+                <p className="text-sm text-stone-400 mb-4">one-time · delivered in 48 hours</p>
+                <div className="flex gap-2 mb-6">
+                  <span className="inline-flex items-center gap-1 px-2 py-1 bg-emerald-50 border border-emerald-200 rounded text-[10px] font-bold text-emerald-700">⚡ 48h delivery</span>
+                  <span className="inline-flex items-center gap-1 px-2 py-1 bg-amber-50 border border-amber-200 rounded text-[10px] font-bold text-amber-700">🛡️ Refund guarantee</span>
+                </div>
+                <ul className="space-y-3 mb-8">
+                  <SetupItem text="Full Shopify + Meta reconciliation" />
+                  <SetupItem text="Gap root cause analysis" />
+                  <SetupItem text="Campaign-level recommendations" />
+                  <SetupItem text="Budget reallocation plan" />
+                  <SetupItem text="Branded PDF report" />
+                  <SetupItem text="Projected annual impact" />
+                  <SetupItem text="30-min walkthrough call" />
+                </ul>
+                <a href={calendlyUrl} target="_blank" rel="noopener noreferrer" className="block text-center px-6 py-4 border-2 border-emerald-700 text-emerald-700 font-bold text-sm uppercase tracking-widest hover:bg-emerald-50 transition-all">
+                  Book $249 Audit →
+                </a>
+                <p className="text-center text-xs text-stone-400 mt-3">Gap under 5% = full refund</p>
+              </div>
+
+              {/* Monthly Reconciliation */}
+              <div className="bg-white p-8 border-2 border-emerald-700 relative shadow-2xl shadow-emerald-500/10">
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-emerald-700 text-white px-4 py-1 text-[10px] font-bold uppercase tracking-widest">
+                  First 5 agencies only
+                </div>
+                <p className="text-[10px] font-bold text-emerald-700 uppercase tracking-widest mb-3">Monthly Reconciliation</p>
+                <div className="flex items-baseline gap-1 mb-1">
+                  <span className="text-4xl font-serif font-medium text-stone-900">$150</span>
+                  <span className="text-stone-400 text-sm">/month</span>
+                </div>
+                <p className="text-sm text-stone-400 mb-6">price increases after 5 clients</p>
+                <ul className="space-y-3 mb-8">
+                  <SetupItem text="Everything in the audit" />
+                  <SetupItem text="Monthly monitoring + alerts" />
+                  <SetupItem text="Action Engine recommendations" />
+                  <SetupItem text="White-label PDF for your clients" />
+                  <SetupItem text="Direct founder support" />
+                </ul>
+                <a href={calendlyUrl} target="_blank" rel="noopener noreferrer" className="block text-center px-6 py-4 bg-emerald-700 text-white font-bold text-sm uppercase tracking-widest hover:bg-emerald-800 transition-all shadow-lg">
+                  Start Free Pilot →
+                </a>
+              </div>
             </div>
 
-            {/* Smaller agencies note */}
-            <div className="mt-8 text-center">
+            <div className="mt-12 text-center">
               <p className="text-stone-500 text-sm">
-                Only managing 1–2 stores? <a href="https://cal.com/calyxra/audit" target="_blank" rel="noopener noreferrer" className="text-emerald-700 font-semibold hover:underline">Start with our €349 Source-of-Truth Audit →</a>
+                Need something custom? <a href={calendlyUrl} target="_blank" rel="noopener noreferrer" className="text-emerald-700 font-semibold hover:underline">Book a call →</a>
               </p>
             </div>
           </div>
@@ -226,8 +211,8 @@ export default function PricingPage() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7a2 2 0 00-2-2h-2M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4" />
                   </svg>
                 </div>
-                <h3 className="font-semibold text-stone-900 mb-2">Data Sources</h3>
-                <p className="text-sm text-stone-500">Shopify, Meta, Google, TikTok, GA4</p>
+                <h3 className="font-semibold text-stone-900 mb-2">Connect</h3>
+                <p className="text-sm text-stone-500">Shopify, Meta Ads, Google Ads</p>
               </div>
 
               <div className="text-center">
@@ -236,8 +221,8 @@ export default function PricingPage() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
                   </svg>
                 </div>
-                <h3 className="font-semibold text-stone-900 mb-2">Data Warehouse</h3>
-                <p className="text-sm text-stone-500">BigQuery (centralized storage)</p>
+                <h3 className="font-semibold text-stone-900 mb-2">Reconcile</h3>
+                <p className="text-sm text-stone-500">Find phantom revenue automatically</p>
               </div>
 
               <div className="text-center">
@@ -246,8 +231,8 @@ export default function PricingPage() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
                   </svg>
                 </div>
-                <h3 className="font-semibold text-stone-900 mb-2">KPI Layer</h3>
-                <p className="text-sm text-stone-500">Your standard definitions (MER, ROAS, etc.)</p>
+                <h3 className="font-semibold text-stone-900 mb-2">Dashboard</h3>
+                <p className="text-sm text-stone-500">True ROAS, KPIs, waterfall breakdown</p>
               </div>
 
               <div className="text-center">
@@ -256,8 +241,8 @@ export default function PricingPage() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                   </svg>
                 </div>
-                <h3 className="font-semibold text-stone-900 mb-2">Dashboards</h3>
-                <p className="text-sm text-stone-500">White-label reports for clients</p>
+                <h3 className="font-semibold text-stone-900 mb-2">Report</h3>
+                <p className="text-sm text-stone-500">White-label PDF for your clients</p>
               </div>
             </div>
 
@@ -274,29 +259,29 @@ export default function PricingPage() {
           <div className="max-w-3xl mx-auto">
             <SectionHeading
               title="Common Questions"
-              subtitle="Everything you need to know about the founding partner program and technical setup."
+              subtitle="Everything you need to know about our audit and ongoing reconciliation."
             />
             <div className="bg-white p-2 rounded-2xl shadow-sm border border-stone-200">
               <div className="px-6">
                 <FAQItem
-                  question="Why is there a setup fee?"
-                  answer="We don't give you a login. We provision a dedicated BigQuery warehouse, connect client sources, and deploy the KPI truth layer. This is infrastructure, not software access."
+                  question="What do I need to get started?"
+                  answer="Just your Shopify Admin API token and Meta Ads access token. We connect read-only and never modify your data. The whole setup takes 15 minutes."
                 />
                 <FAQItem
-                  question="What happens if a connector breaks?"
-                  answer="We monitor ingestion pipelines and reconciliation checks. If a source degrades or an API breaks, we resolve it under maintenance SLA before incorrect numbers reach reports."
+                  question="How accurate is the reconciliation?"
+                  answer="Our numbers match Shopify Analytics exactly. We use subtotal_price + discounts as gross revenue and subtract all verified refunds, cancelled orders, and test orders."
                 />
                 <FAQItem
-                  question="Can I use my own Looker Studio / Power BI account?"
-                  answer="Yes — reports are delivered into your existing Power BI or Looker workspace. The warehouse remains yours, ensuring full portability and ownership."
-                />
-                <FAQItem
-                  question="Do you support custom data sources?"
-                  answer="The Pro plan supports additional sources through custom integrations and dbt transformations, standardized into your warehouse schema."
+                  question="What if I only have Shopify and no ads connected?"
+                  answer="You'll still get a full revenue breakdown with refund analysis, discount tracking, and order quality metrics. Phantom revenue simply shows $0 until ads are connected."
                 />
                 <FAQItem
                   question="Is this white-label?"
-                  answer="Fully white-label. Reports carry agency branding and can be delivered under your domain. Clients see this as your reporting infrastructure."
+                  answer="Fully white-label. PDF reports carry your agency's logo, colors, and branding. Your clients never see Calyxra."
+                />
+                <FAQItem
+                  question="Can I cancel the monthly plan anytime?"
+                  answer="Yes. No contracts, no lock-in. Cancel anytime. The $150/month launch price is locked in for early agencies — it goes up to $500+ after our first 5 clients."
                 />
               </div>
             </div>
@@ -306,17 +291,17 @@ export default function PricingPage() {
         {/* CALL TO ACTION */}
         <section className="py-24 px-6 bg-stone-900 text-white text-center">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl md:text-5xl font-serif font-medium mb-8">Ready to upgrade your agency's infrastructure?</h2>
+            <h2 className="text-3xl md:text-5xl font-serif font-medium mb-8">Stop scaling on inflated numbers.</h2>
             <p className="text-stone-400 text-lg mb-12 max-w-2xl mx-auto">
-              Join the Founding Partner program. get 50% off setup, and stop wrestling with broken spreadsheets forever.
+              Find your phantom revenue in 30 seconds with our free calculator, or book a full $250 audit with a 30-min walkthrough.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-6">
               <a href={calendlyUrl} target="_blank" rel="noopener noreferrer" className="px-8 py-5 bg-emerald-600 text-white font-bold text-sm uppercase tracking-widest hover:bg-emerald-500 transition-all shadow-xl shadow-emerald-500/20">
-                Book 15-min Intro Call
+                Book $250 Audit
               </a>
             </div>
             <p className="mt-8 text-xs text-stone-500 uppercase tracking-widest">
-              Limited to 3 agencies for this cohort
+              First 5 agencies get $150/month locked in
             </p>
           </div>
         </section>

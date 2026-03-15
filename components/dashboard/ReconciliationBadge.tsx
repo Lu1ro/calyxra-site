@@ -23,7 +23,7 @@ export function ReconciliationBadge({ status, varianceAmount, unreconciledSource
                 <AlertCircle className="w-3.5 h-3.5" />
                 <span>~99% ACCURACY</span>
                 <span className="opacity-50">|</span>
-                <span>Var: {varianceAmount > 0 ? '+' : ''}€{varianceAmount.toFixed(2)}</span>
+                <span>Var: {varianceAmount > 0 ? '+' : ''}${varianceAmount.toFixed(2)}</span>
             </div>
         );
     }

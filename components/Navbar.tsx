@@ -3,19 +3,10 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { usePathname } from 'next/navigation';
 
 export default function Navbar() {
-  const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const calendlyUrl = "https://cal.com/calyxra/15min";
-
-  const navLinks = [
-    { name: 'Live Dashboard', href: '/dashboards' },
-    { name: 'What We Deliver', href: '/deliverables' },
-    { name: 'Use Cases', href: '/case-studies' },
-    { name: 'Pricing', href: '/pricing' },
-  ];
 
   return (
     <nav className="fixed w-full z-50 bg-[#FAFAF9]/90 backdrop-blur-md border-b border-stone-200">
@@ -37,35 +28,20 @@ export default function Navbar() {
           </div>
         </Link>
 
-        {/* Desktop Navigation */}
-        <div className="hidden md:flex gap-8 text-xs font-bold text-stone-500 uppercase tracking-widest">
-          {navLinks.map((link) => (
-            <Link
-              key={link.name}
-              href={link.href}
-              className={`transition-colors hover:text-stone-900 ${pathname === link.href ? 'text-emerald-700' : ''
-                }`}
-            >
-              {link.name}
-            </Link>
-          ))}
-        </div>
-
-        {/* Desktop CTA */}
         <div className="hidden md:flex items-center gap-3">
-          <Link
-            href="/dashboards"
-            className="px-5 py-3 bg-stone-100 text-stone-900 text-xs font-bold uppercase tracking-wide hover:bg-stone-200 transition-all"
+          <a
+            href="/login"
+            className="px-5 py-3 text-stone-600 text-xs font-bold uppercase tracking-wide hover:text-stone-900 transition-all"
           >
-            Get Demo + Call
-          </Link>
+            Login
+          </a>
           <a
             href={calendlyUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="px-6 py-3 bg-emerald-700 text-white text-xs font-bold uppercase tracking-wide hover:bg-emerald-800 transition-all hover:shadow-lg hover:shadow-emerald-700/30 active:scale-95"
           >
-            Book a 15-min Audit
+            Book Audit — $249
           </a>
         </div>
 
@@ -89,34 +65,22 @@ export default function Navbar() {
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
         <div className="md:hidden absolute top-20 left-0 w-full bg-[#FAFAF9] border-b border-stone-200 p-6 flex flex-col gap-6 shadow-xl">
-          <div className="flex flex-col gap-4 text-center">
-            {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                href={link.href}
-                className={`text-sm font-bold uppercase tracking-widest py-2 ${pathname === link.href ? 'text-emerald-700' : 'text-stone-600'
-                  }`}
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                {link.name}
-              </Link>
-            ))}
-          </div>
-          <div className="flex flex-col gap-3 pt-4 border-t border-stone-100">
-            <Link
-              href="/dashboards"
+          <div className="flex flex-col gap-3">
+            <a
+              href="/login"
               className="w-full py-3 bg-stone-100 text-stone-900 text-center text-xs font-bold uppercase tracking-wide"
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              Get Demo + Call
-            </Link>
+              Login
+            </a>
             <a
               href={calendlyUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="w-full py-3 bg-emerald-700 text-white text-center text-xs font-bold uppercase tracking-wide"
+              onClick={() => setIsMobileMenuOpen(false)}
             >
-              Book a 15-min Audit
+              Book Audit — $249
             </a>
           </div>
         </div>

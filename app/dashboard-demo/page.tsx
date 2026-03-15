@@ -95,7 +95,7 @@ export default function DashboardDemoPage() {
                                                         fontSize: '12px',
                                                         boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.05)'
                                                     }}
-                                                    formatter={(value: number) => [`€${value.toFixed(0)}`, 'Profit']}
+                                                    formatter={(value: number) => [`$${value.toFixed(0)}`, 'Profit']}
                                                 />
                                                 <Area type="monotone" dataKey="net_profit" stroke="#1c1917" strokeWidth={2} fillOpacity={1} fill="url(#colorProfit)" />
                                                 <Area type="monotone" dataKey="gross_margin" stroke="#a8a29e" strokeWidth={1} strokeDasharray="4 4" fill="transparent" />
@@ -117,12 +117,12 @@ export default function DashboardDemoPage() {
                                     <h4 className="text-stone-400 text-xs font-bold uppercase mb-4 tracking-wider">Month to Date</h4>
                                     <div className="space-y-4">
                                         <div>
-                                            <div className="text-2xl font-serif">€142,050</div>
+                                            <div className="text-2xl font-serif">$142,050</div>
                                             <div className="text-xs text-stone-500 font-medium">Gross Revenue</div>
                                         </div>
                                         <div className="h-px bg-stone-800 w-full"></div>
                                         <div>
-                                            <div className="text-2xl font-serif">€42,100</div>
+                                            <div className="text-2xl font-serif">$42,100</div>
                                             <div className="text-xs text-stone-500 font-medium">Ad Spend (All Channels)</div>
                                         </div>
                                     </div>
@@ -138,7 +138,7 @@ export default function DashboardDemoPage() {
                 <div className="max-w-3xl mx-auto mt-20 text-center">
                     <h2 className="text-xl font-serif text-stone-900 mb-2">Trust your numbers, not your spreadsheet.</h2>
                     <p className="text-stone-500 text-sm mb-6">
-                        This report was generated automatically from a unified BigQuery warehouse.
+                        This report was generated automatically from a unified Calyxra warehouse.
                     </p>
                     <button className="bg-stone-900 hover:bg-stone-800 text-white px-6 py-3 rounded text-sm font-bold inline-flex items-center gap-2 transition-colors">
                         Request a live warehouse audit

@@ -1,0 +1,1246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calyxra — Profit Reconciliation for Agencies</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-card: #111118;
+            --bg-card-alt: #16161f;
+            --accent: #6c5ce7;
+            --accent-light: #a29bfe;
+            --accent-glow: rgba(108, 92, 231, 0.3);
+            --green: #00d2a0;
+            --green-dark: #00a87d;
+            --green-glow: rgba(0, 210, 160, 0.15);
+            --red: #ff6b6b;
+            --red-dark: #e05555;
+            --orange: #ffa940;
+            --text-primary: #f0f0f5;
+            --text-secondary: #9999b0;
+            --text-muted: #55556a;
+            --border: rgba(255, 255, 255, 0.07);
+            --border-light: rgba(255, 255, 255, 0.12);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+            background-size: 60px 60px;
+            z-index: 0;
+        }
+
+        .bg-glow {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            filter: blur(150px);
+            opacity: 0.12;
+            z-index: 0;
+        }
+
+        .bg-glow-1 {
+            top: -200px;
+            right: -100px;
+            background: var(--accent);
+        }
+
+        .bg-glow-2 {
+            bottom: -200px;
+            left: -100px;
+            background: var(--green);
+            opacity: 0.08;
+        }
+
+        /* ===== SLIDE SYSTEM ===== */
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            padding: 50px 70px;
+            opacity: 0;
+            transform: translateX(50px);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .slide.active {
+            opacity: 1;
+            transform: translateX(0);
+            pointer-events: all;
+        }
+
+        .slide.exit {
+            opacity: 0;
+            transform: translateX(-50px);
+        }
+
+        .slide>* {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ===== FIXED UI ===== */
+        .logo-fixed {
+            position: fixed;
+            top: 20px;
+            left: 30px;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 2.5px;
+            color: var(--text-muted);
+            z-index: 100;
+            text-transform: uppercase;
+        }
+
+        .slide-counter {
+            position: fixed;
+            top: 20px;
+            right: 30px;
+            font-size: 13px;
+            color: var(--text-muted);
+            z-index: 100;
+            font-weight: 500;
+        }
+
+        .nav {
+            position: fixed;
+            bottom: 22px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 100;
+        }
+
+        .nav-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--text-muted);
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .nav-dot.active {
+            background: var(--accent);
+            box-shadow: 0 0 10px var(--accent-glow);
+            width: 26px;
+            border-radius: 4px;
+        }
+
+        .key-hint {
+            position: fixed;
+            bottom: 20px;
+            right: 30px;
+            font-size: 11px;
+            color: var(--text-muted);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .key-box {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+            border-radius: 5px;
+            border: 1px solid var(--border);
+            font-size: 10px;
+            background: var(--bg-card);
+        }
+
+        /* ===== TYPOGRAPHY ===== */
+        .section-label {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--accent-light);
+            margin-bottom: 10px;
+        }
+
+        .slide-title {
+            font-size: 36px;
+            font-weight: 800;
+            line-height: 1.15;
+            letter-spacing: -1px;
+            margin-bottom: 8px;
+        }
+
+        .slide-subtitle {
+            font-size: 16px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            max-width: 700px;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, var(--accent-light), var(--green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .text-red {
+            color: var(--red);
+        }
+
+        .text-green {
+            color: var(--green);
+        }
+
+        .text-orange {
+            color: var(--orange);
+        }
+
+        .text-accent {
+            color: var(--accent-light);
+        }
+
+        /* ===== ANIMATIONS ===== */
+        .slide.active .fade-up {
+            animation: fadeUp 0.5s ease-out forwards;
+        }
+
+        .fade-up {
+            opacity: 0;
+            transform: translateY(16px);
+        }
+
+        .fade-up:nth-child(1) {
+            animation-delay: 0.05s;
+        }
+
+        .fade-up:nth-child(2) {
+            animation-delay: 0.12s;
+        }
+
+        .fade-up:nth-child(3) {
+            animation-delay: 0.2s;
+        }
+
+        .fade-up:nth-child(4) {
+            animation-delay: 0.28s;
+        }
+
+        .fade-up:nth-child(5) {
+            animation-delay: 0.36s;
+        }
+
+        .fade-up:nth-child(6) {
+            animation-delay: 0.44s;
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ===== SLIDE 1: TITLE ===== */
+        .s1 {
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .s1-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 7px 16px;
+            border-radius: 100px;
+            background: rgba(108, 92, 231, 0.08);
+            border: 1px solid rgba(108, 92, 231, 0.2);
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--accent-light);
+            margin-bottom: 28px;
+            letter-spacing: 0.5px;
+        }
+
+        .s1-badge::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--green);
+            animation: pulse-dot 2s infinite;
+        }
+
+        @keyframes pulse-dot {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.3;
+            }
+        }
+
+        .s1 .slide-title {
+            font-size: 54px;
+            letter-spacing: -2px;
+            margin-bottom: 20px;
+        }
+
+        .s1 .slide-subtitle {
+            font-size: 18px;
+            margin-bottom: 36px;
+        }
+
+        .s1-stats {
+            display: flex;
+            gap: 48px;
+        }
+
+        .s1-stat {
+            text-align: center;
+        }
+
+        .s1-stat-num {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--green);
+        }
+
+        .s1-stat-label {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        /* ===== SLIDE 2: PROBLEM ===== */
+        .s2 {
+            justify-content: center;
+            gap: 28px;
+        }
+
+        .s2-content {
+            display: flex;
+            gap: 32px;
+            width: 100%;
+        }
+
+        .s2-left {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .s2-right {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .problem-card {
+            padding: 18px 20px;
+            border-radius: 12px;
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+
+        .problem-card:hover {
+            border-color: var(--red);
+            box-shadow: 0 0 20px rgba(255, 107, 107, 0.1);
+        }
+
+        .problem-icon {
+            font-size: 22px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .problem-text h4 {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .problem-text p {
+            font-size: 12.5px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .s2-comparison {
+            display: flex;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .comp-side {
+            flex: 1;
+            padding: 28px 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            text-align: center;
+        }
+
+        .comp-left {
+            background: rgba(255, 107, 107, 0.04);
+        }
+
+        .comp-right {
+            background: rgba(0, 210, 160, 0.04);
+        }
+
+        .comp-divider {
+            width: 1px;
+            background: var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .comp-divider span {
+            background: var(--bg-card);
+            padding: 8px 4px;
+            font-size: 16px;
+            color: var(--text-muted);
+        }
+
+        .comp-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .comp-number {
+            font-size: 44px;
+            font-weight: 800;
+            letter-spacing: -2px;
+        }
+
+        .comp-detail {
+            font-size: 12px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .s2-bottom {
+            padding: 14px 20px;
+            border-radius: 10px;
+            background: rgba(255, 107, 107, 0.06);
+            border: 1px solid rgba(255, 107, 107, 0.15);
+            text-align: center;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .s2-bottom strong {
+            color: var(--red);
+        }
+
+        /* ===== SLIDE 3: SOLUTION ===== */
+        .s3 {
+            justify-content: center;
+            gap: 24px;
+        }
+
+        .s3-flow {
+            display: flex;
+            align-items: stretch;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .flow-step {
+            flex: 1;
+            padding: 20px 16px;
+            border-radius: 14px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+        }
+
+        .flow-step:hover {
+            border-color: var(--accent);
+            box-shadow: 0 0 20px var(--accent-glow);
+            transform: translateY(-3px);
+        }
+
+        .flow-icon {
+            font-size: 28px;
+        }
+
+        .flow-name {
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .flow-items {
+            list-style: none;
+            text-align: left;
+            width: 100%;
+        }
+
+        .flow-items li {
+            font-size: 12px;
+            color: var(--text-secondary);
+            padding: 4px 0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .flow-items li::before {
+            content: '→';
+            color: var(--accent-light);
+            font-size: 10px;
+        }
+
+        .flow-arrow-h {
+            display: flex;
+            align-items: center;
+            font-size: 18px;
+            color: var(--text-muted);
+            flex-shrink: 0;
+        }
+
+        .s3-outputs {
+            display: flex;
+            gap: 14px;
+            width: 100%;
+        }
+
+        .output-card {
+            flex: 1;
+            padding: 18px 16px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: var(--bg-card);
+            transition: all 0.3s;
+        }
+
+        .output-card:hover {
+            border-color: var(--green);
+            box-shadow: 0 0 20px var(--green-glow);
+        }
+
+        .output-metric {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--green);
+            margin-bottom: 4px;
+        }
+
+        .output-label {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .output-example {
+            margin-top: 8px;
+            font-size: 12px;
+            color: var(--text-secondary);
+            padding-top: 8px;
+            border-top: 1px solid var(--border);
+        }
+
+        /* ===== SLIDE 4: AGENCY ===== */
+        .s4 {
+            justify-content: center;
+            gap: 24px;
+        }
+
+        .s4-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            width: 100%;
+        }
+
+        .s4-card {
+            padding: 24px 20px;
+            border-radius: 14px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+
+        .s4-card:hover {
+            border-color: var(--accent);
+            box-shadow: 0 0 20px var(--accent-glow);
+            transform: translateY(-3px);
+        }
+
+        .s4-card-icon {
+            font-size: 28px;
+            margin-bottom: 14px;
+        }
+
+        .s4-card h3 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .s4-card p {
+            font-size: 12.5px;
+            color: var(--text-secondary);
+            line-height: 1.55;
+        }
+
+        .s4-card ul {
+            list-style: none;
+            margin-top: 10px;
+        }
+
+        .s4-card ul li {
+            font-size: 12px;
+            color: var(--text-secondary);
+            padding: 3px 0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .s4-card ul li::before {
+            content: '✓';
+            color: var(--green);
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .s4-quote {
+            padding: 20px 28px;
+            border-radius: 12px;
+            background: rgba(108, 92, 231, 0.06);
+            border-left: 3px solid var(--accent);
+            font-size: 16px;
+            font-style: italic;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            width: 100%;
+        }
+
+        /* ===== SLIDE 5: HOW WE WORK ===== */
+        .s5 {
+            justify-content: center;
+            gap: 24px;
+        }
+
+        .s5-timeline {
+            display: flex;
+            gap: 16px;
+            width: 100%;
+        }
+
+        .s5-step {
+            flex: 1;
+            padding: 24px 20px;
+            border-radius: 14px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            position: relative;
+        }
+
+        .s5-step-num {
+            width: 32px;
+            height: 32px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--accent), var(--green));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 14px;
+            margin-bottom: 14px;
+        }
+
+        .s5-step h3 {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .s5-step p {
+            font-size: 12.5px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .s5-step .time-badge {
+            margin-top: 12px;
+            display: inline-flex;
+            padding: 4px 10px;
+            border-radius: 6px;
+            background: rgba(0, 210, 160, 0.08);
+            border: 1px solid rgba(0, 210, 160, 0.2);
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--green);
+        }
+
+        .s5-bottom {
+            display: flex;
+            gap: 16px;
+            width: 100%;
+        }
+
+        .s5-info {
+            flex: 1;
+            padding: 18px 20px;
+            border-radius: 12px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+        }
+
+        .s5-info h4 {
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .s5-info p,
+        .s5-info li {
+            font-size: 12.5px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .s5-info ul {
+            list-style: none;
+        }
+
+        .s5-info ul li {
+            padding: 3px 0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .s5-info ul li::before {
+            content: '→';
+            color: var(--accent-light);
+            font-size: 10px;
+        }
+
+        /* ===== SLIDE 6: CTA ===== */
+        .s6 {
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            gap: 28px;
+        }
+
+        .s6 .slide-title {
+            font-size: 48px;
+            letter-spacing: -1.5px;
+        }
+
+        .s6-offer {
+            padding: 28px 36px;
+            border-radius: 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .s6-offer h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 14px;
+        }
+
+        .s6-offer-items {
+            list-style: none;
+            text-align: left;
+        }
+
+        .s6-offer-items li {
+            font-size: 14px;
+            color: var(--text-secondary);
+            padding: 7px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .s6-offer-items li:last-child {
+            border-bottom: none;
+        }
+
+        .s6-offer-items li::before {
+            content: '✓';
+            color: var(--green);
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .s6-contact {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .s6-contact a {
+            color: var(--accent-light);
+            text-decoration: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .slide {
+                padding: 40px 40px;
+            }
+
+            .s1 .slide-title {
+                font-size: 40px;
+            }
+
+            .s2-content {
+                flex-direction: column;
+            }
+
+            .s3-flow {
+                flex-wrap: wrap;
+            }
+
+            .s4-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .s5-timeline {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="bg-grid"></div>
+    <div class="bg-glow bg-glow-1"></div>
+    <div class="bg-glow bg-glow-2"></div>
+
+    <div class="logo-fixed">CALYXRA</div>
+    <div class="slide-counter"><span id="current">1</span> / <span id="total">6</span></div>
+    <div class="key-hint">
+        <span class="key-box">←</span>
+        <span class="key-box">→</span>
+        navigate
+    </div>
+
+    <!-- ===== SLIDE 1: TITLE ===== -->
+    <div class="slide active s1" data-slide="1">
+        <div class="s1-badge fade-up">Profit Reconciliation for Agencies</div>
+        <h1 class="slide-title fade-up">
+            Platform ROAS<br>is <span class="gradient-text">not</span> real profit.
+        </h1>
+        <p class="slide-subtitle fade-up">
+            We build the data layer between what ad platforms report — and what actually lands in your client's bank
+            account. Automated. White-label. Under your brand.
+        </p>
+        <div class="s1-stats fade-up">
+            <div class="s1-stat">
+                <div class="s1-stat-num">20–40%</div>
+                <div class="s1-stat-label">Typical revenue overreporting</div>
+            </div>
+            <div class="s1-stat">
+                <div class="s1-stat-num">BigQuery</div>
+                <div class="s1-stat-label">Enterprise-grade warehouse</div>
+            </div>
+            <div class="s1-stat">
+                <div class="s1-stat-num">1–2 weeks</div>
+                <div class="s1-stat-label">Setup time per client</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== SLIDE 2: PROBLEM ===== -->
+    <div class="slide s2" data-slide="2">
+        <div class="section-label fade-up">THE PROBLEM</div>
+        <h2 class="slide-title fade-up">Every agency deals with this.</h2>
+        <p class="slide-subtitle fade-up" style="margin-bottom: 20px;">Platforms inflate numbers. Shopify doesn't
+            reconcile payouts with ad spend. Agencies look at the wrong data to make decisions.</p>
+
+        <div class="s2-content fade-up">
+            <div class="s2-left">
+                <div class="problem-card">
+                    <span class="problem-icon">📊</span>
+                    <div class="problem-text">
+                        <h4>Meta says 5x ROAS</h4>
+                        <p>But after refunds ($8K), Shopify fees ($2K), and payment gateway cuts — real ROAS is closer
+                            to 2.8x. Clients see Meta dashboard and expect 5x.</p>
+                    </div>
+                </div>
+                <div class="problem-card">
+                    <span class="problem-icon">🔄</span>
+                    <div class="problem-text">
+                        <h4>Refunds invisible in ad reports</h4>
+                        <p>A customer buys for $200, returns for $180. Meta still counts it as a $200 conversion.
+                            Multiply by thousands of orders.</p>
+                    </div>
+                </div>
+                <div class="problem-card">
+                    <span class="problem-icon">📋</span>
+                    <div class="problem-text">
+                        <h4>Monthly spreadsheet chaos</h4>
+                        <p>Someone manually pulls data from 3–5 platforms, pastes into spreadsheets, gets different
+                            numbers every time. Takes 8–10 hours per client.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="s2-right">
+                <div class="s2-comparison">
+                    <div class="comp-side comp-left">
+                        <div class="comp-label">What Meta Reports</div>
+                        <div class="comp-number text-red">$50K</div>
+                        <div class="comp-detail">
+                            "Revenue from ads"<br>
+                            Inflated ROAS ✓<br>
+                            No refunds counted ✗
+                        </div>
+                    </div>
+                    <div class="comp-divider"><span>→</span></div>
+                    <div class="comp-side comp-right">
+                        <div class="comp-label">Actual Net Profit</div>
+                        <div class="comp-number text-green">$25K</div>
+                        <div class="comp-detail">
+                            After refunds −$8K<br>
+                            After fees −$2K<br>
+                            After ad spend −$15K
+                        </div>
+                    </div>
+                </div>
+                <div class="s2-bottom">
+                    The gap is <strong>$25,000</strong> — and most brands discover it at month-end, not in real time.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== SLIDE 3: SOLUTION ===== -->
+    <div class="slide s3" data-slide="3">
+        <div class="section-label fade-up">THE SOLUTION</div>
+        <h2 class="slide-title fade-up">One source of truth. Fully automated.</h2>
+        <p class="slide-subtitle fade-up" style="margin-bottom: 16px;">We connect all data sources into BigQuery,
+            reconcile revenue vs. actual payouts, and deliver a live P&L dashboard.</p>
+
+        <div class="s3-flow fade-up">
+            <div class="flow-step">
+                <div class="flow-icon">🛍️</div>
+                <div class="flow-name">Shopify</div>
+                <ul class="flow-items">
+                    <li>Orders & line items</li>
+                    <li>Refunds & returns</li>
+                    <li>Payouts (bank deposits)</li>
+                    <li>Transaction fees</li>
+                </ul>
+            </div>
+            <div class="flow-arrow-h">→</div>
+            <div class="flow-step">
+                <div class="flow-icon">📢</div>
+                <div class="flow-name">Ad Platforms</div>
+                <ul class="flow-items">
+                    <li>Meta Ads spend & ROAS</li>
+                    <li>Google Ads spend & CPA</li>
+                    <li>TikTok Ads (if used)</li>
+                    <li>Campaign-level data</li>
+                </ul>
+            </div>
+            <div class="flow-arrow-h">→</div>
+            <div class="flow-step" style="border-color: var(--accent); box-shadow: 0 0 15px var(--accent-glow);">
+                <div class="flow-icon">⚡</div>
+                <div class="flow-name">BigQuery + dbt</div>
+                <ul class="flow-items">
+                    <li>Automated daily sync</li>
+                    <li>Revenue reconciliation</li>
+                    <li>Real P&L calculations</li>
+                    <li>MER / True ROAS models</li>
+                </ul>
+            </div>
+            <div class="flow-arrow-h">→</div>
+            <div class="flow-step" style="border-color: var(--green); box-shadow: 0 0 15px var(--green-glow);">
+                <div class="flow-icon">📊</div>
+                <div class="flow-name">Live Dashboard</div>
+                <ul class="flow-items">
+                    <li>Real-time P&L</li>
+                    <li>White-label branding</li>
+                    <li>Client-facing reports</li>
+                    <li>Executive summaries</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="s3-outputs fade-up">
+            <div class="output-card">
+                <div class="output-metric">Real ROAS</div>
+                <div class="output-label">After all costs deducted</div>
+                <div class="output-example">Platform says 5x → Actual is 2.8x</div>
+            </div>
+            <div class="output-card">
+                <div class="output-metric">Net Profit</div>
+                <div class="output-label">Revenue − returns − fees − ad spend</div>
+                <div class="output-example">$50K revenue → $25K real margin</div>
+            </div>
+            <div class="output-card">
+                <div class="output-metric">True MER</div>
+                <div class="output-label">Marketing Efficiency Ratio</div>
+                <div class="output-example">Total revenue ÷ total marketing spend</div>
+            </div>
+            <div class="output-card">
+                <div class="output-metric">Payout Match</div>
+                <div class="output-label">Shopify payouts vs. reported revenue</div>
+                <div class="output-example">Catches 100% of hidden leakages</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== SLIDE 4: FOR AGENCIES ===== -->
+    <div class="slide s4" data-slide="4">
+        <div class="section-label fade-up">FOR AGENCIES</div>
+        <h2 class="slide-title fade-up">Your brand. Our infrastructure. Their clarity.</h2>
+        <p class="slide-subtitle fade-up" style="margin-bottom: 16px;">We operate as your invisible data team. Clients
+            see premium reporting under your agency brand.</p>
+
+        <div class="s4-grid fade-up">
+            <div class="s4-card">
+                <div class="s4-card-icon">🏷️</div>
+                <h3>White-Label</h3>
+                <p>Dashboards carry your agency logo and colors. Clients never see Calyxra. You present it as your own
+                    capability.</p>
+                <ul>
+                    <li>Your logo on every report</li>
+                    <li>Custom domain optional</li>
+                    <li>Shareable client links</li>
+                </ul>
+            </div>
+            <div class="s4-card">
+                <div class="s4-card-icon">⚙️</div>
+                <h3>Fully Automated</h3>
+                <p>Data syncs every day automatically. No manual exports, no spreadsheets, no 10-hour monthly reports.
+                </p>
+                <ul>
+                    <li>Daily data refresh</li>
+                    <li>Zero manual work</li>
+                    <li>Alert on anomalies</li>
+                </ul>
+            </div>
+            <div class="s4-card">
+                <div class="s4-card-icon">📈</div>
+                <h3>Scalable</h3>
+                <p>Add new clients in days, not weeks. Same infrastructure, same quality. Works for 2 clients or 50.</p>
+                <ul>
+                    <li>Onboard client in 1–2 weeks</li>
+                    <li>Standardized pipeline</li>
+                    <li>Multi-store support</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="s4-quote fade-up">
+            "You bring the strategy and the clients. We bring the data layer underneath. You focus on scaling — we make
+            sure the numbers are real. White-label, under your brand. Your clients never see us."
+        </div>
+    </div>
+
+    <!-- ===== SLIDE 5: HOW WE WORK ===== -->
+    <div class="slide s5" data-slide="5">
+        <div class="section-label fade-up">HOW WE WORK</div>
+        <h2 class="slide-title fade-up">From zero to live dashboard in 4 steps.</h2>
+        <p class="slide-subtitle fade-up" style="margin-bottom: 16px;">Minimal effort from your side. We handle the
+            heavy lifting.</p>
+
+        <div class="s5-timeline fade-up">
+            <div class="s5-step">
+                <div class="s5-step-num">1</div>
+                <h3>Connect Sources</h3>
+                <p>Share read-only access to Shopify, Meta Ads, and Google Ads. Takes 15 minutes.</p>
+                <div class="time-badge">Day 1</div>
+            </div>
+            <div class="s5-step">
+                <div class="s5-step-num">2</div>
+                <h3>We Build the Pipeline</h3>
+                <p>We set up BigQuery, configure data connectors (Fivetran), and build dbt transformation models.</p>
+                <div class="time-badge">Days 2–7</div>
+            </div>
+            <div class="s5-step">
+                <div class="s5-step-num">3</div>
+                <h3>Dashboard Goes Live</h3>
+                <p>Looker Studio dashboards with your branding, real P&L, reconciled ROAS, and executive summaries.</p>
+                <div class="time-badge">Days 8–12</div>
+            </div>
+            <div class="s5-step">
+                <div class="s5-step-num">4</div>
+                <h3>Ongoing Operations</h3>
+                <p>Data flows daily. We monitor pipelines, fix breaks, add new metrics as you need them.</p>
+                <div class="time-badge">Ongoing</div>
+            </div>
+        </div>
+
+        <div class="s5-bottom fade-up">
+            <div class="s5-info">
+                <h4>🛠️ Tech Stack</h4>
+                <ul>
+                    <li>BigQuery — data warehouse</li>
+                    <li>Fivetran — automated connectors</li>
+                    <li>dbt — transformations & models</li>
+                    <li>Looker Studio — dashboards</li>
+                </ul>
+            </div>
+            <div class="s5-info">
+                <h4>📋 What You Need to Provide</h4>
+                <ul>
+                    <li>Shopify Admin API access (read-only)</li>
+                    <li>Meta Business Manager viewer access</li>
+                    <li>Google Ads read-only access</li>
+                    <li>That's it — we handle the rest</li>
+                </ul>
+            </div>
+            <div class="s5-info">
+                <h4>🤝 Zero Risk</h4>
+                <p style="font-size: 16px; font-weight: 700; color: var(--green); margin-bottom: 4px;">Pilot first.
+                    Pricing after.</p>
+                <p>We set up the full pipeline for one client. You see the value. Then we discuss pricing that works for
+                    both sides.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== SLIDE 6: CTA ===== -->
+    <div class="slide s6" data-slide="6">
+        <div class="section-label fade-up">NEXT STEP</div>
+        <h1 class="slide-title fade-up">Let's run a <span class="gradient-text">pilot</span>.</h1>
+        <p class="slide-subtitle fade-up">
+            Pick one client. We set up the full reconciliation layer.<br>You see real numbers. Then decide.
+        </p>
+
+        <div class="s6-offer fade-up">
+            <h3>🎯 Pilot Offer</h3>
+            <ul class="s6-offer-items">
+                <li>Full BigQuery + dbt pipeline for 1 Shopify store</li>
+                <li>Shopify + Meta + Google Ads data connected</li>
+                <li>White-label Looker Studio dashboard</li>
+                <li>Real P&L, reconciled ROAS, MER</li>
+                <li>Live in 1–2 weeks</li>
+                <li>No long-term commitment</li>
+            </ul>
+        </div>
+
+        <p class="s6-contact fade-up">
+            Lukian Kononchuk · Founder · <a href="https://calyxra.com">calyxra.com</a> · <a
+                href="https://cal.com/calyxra/30min">Book a call</a>
+        </p>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <button class="nav-dot active" data-goto="1"></button>
+        <button class="nav-dot" data-goto="2"></button>
+        <button class="nav-dot" data-goto="3"></button>
+        <button class="nav-dot" data-goto="4"></button>
+        <button class="nav-dot" data-goto="5"></button>
+        <button class="nav-dot" data-goto="6"></button>
+    </nav>
+
+    <script>
+        let currentSlide = 1;
+        const totalSlides = 6;
+
+        function goToSlide(n) {
+            if (n < 1 || n > totalSlides || n === currentSlide) return;
+            const cur = document.querySelector(`.slide[data-slide="${currentSlide}"]`);
+            const next = document.querySelector(`.slide[data-slide="${n}"]`);
+
+            next.querySelectorAll('.fade-up').forEach(el => {
+                el.style.animation = 'none';
+                el.offsetHeight;
+                el.style.animation = '';
+            });
+
+            cur.classList.remove('active');
+            cur.classList.add('exit');
+            setTimeout(() => cur.classList.remove('exit'), 500);
+            next.classList.add('active');
+            currentSlide = n;
+
+            document.querySelectorAll('.nav-dot').forEach(d => d.classList.remove('active'));
+            document.querySelector(`.nav-dot[data-goto="${n}"]`).classList.add('active');
+            document.getElementById('current').textContent = n;
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); goToSlide(currentSlide + 1); }
+            if (e.key === 'ArrowLeft') { e.preventDefault(); goToSlide(currentSlide - 1); }
+        });
+
+        document.querySelectorAll('.nav-dot').forEach(dot => {
+            dot.addEventListener('click', () => goToSlide(parseInt(dot.dataset.goto)));
+        });
+
+        let touchStartX = 0;
+        document.addEventListener('touchstart', e => touchStartX = e.touches[0].clientX);
+        document.addEventListener('touchend', e => {
+            const diff = touchStartX - e.changedTouches[0].clientX;
+            if (Math.abs(diff) > 50) diff > 0 ? goToSlide(currentSlide + 1) : goToSlide(currentSlide - 1);
+        });
+    </script>
+</body>
+
+</html>

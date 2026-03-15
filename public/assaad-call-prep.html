@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Call Prep — Assaad Kassis | E-GAP</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <style>
+        @media print {
+            body {
+                background: white !important;
+                color: #111 !important;
+            }
+
+            .page {
+                break-after: page;
+                box-shadow: none !important;
+                margin: 0 !important;
+                padding: 40px !important;
+            }
+
+            .no-print {
+                display: none !important;
+            }
+
+            * {
+                color: #111 !important;
+                border-color: #ccc !important;
+            }
+
+            .header-bar {
+                background: #111 !important;
+            }
+
+            .header-bar * {
+                color: white !important;
+            }
+
+            .tag {
+                background: #eee !important;
+                color: #333 !important;
+            }
+
+            .priority-high {
+                background: #f0f0f0 !important;
+            }
+
+            .section-card {
+                background: #f9f9f9 !important;
+                border: 1px solid #ddd !important;
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: #0f0f14;
+            color: #e8e8ef;
+            line-height: 1.6;
+        }
+
+        .page {
+            max-width: 900px;
+            margin: 30px auto;
+            background: #16161e;
+            border-radius: 16px;
+            padding: 48px 52px;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .header-bar {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            margin: -48px -52px 36px -52px;
+            padding: 36px 52px;
+            border-radius: 16px 16px 0 0;
+            border-bottom: 2px solid rgba(108, 92, 231, 0.3);
+        }
+
+        .header-bar h1 {
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 4px;
+        }
+
+        .header-bar .subtitle {
+            font-size: 14px;
+            color: #9999b0;
+        }
+
+        .header-meta {
+            display: flex;
+            gap: 16px;
+            margin-top: 16px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            background: rgba(108, 92, 231, 0.12);
+            color: #a29bfe;
+            border: 1px solid rgba(108, 92, 231, 0.2);
+        }
+
+        .tag-green {
+            background: rgba(0, 210, 160, 0.1);
+            color: #00d2a0;
+            border-color: rgba(0, 210, 160, 0.2);
+        }
+
+        .tag-red {
+            background: rgba(255, 107, 107, 0.1);
+            color: #ff6b6b;
+            border-color: rgba(255, 107, 107, 0.2);
+        }
+
+        .tag-orange {
+            background: rgba(255, 169, 64, 0.1);
+            color: #ffa940;
+            border-color: rgba(255, 169, 64, 0.2);
+        }
+
+        h2 {
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: -0.3px;
+            margin: 36px 0 16px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        h2 .icon {
+            font-size: 22px;
+        }
+
+        h3 {
+            font-size: 16px;
+            font-weight: 700;
+            margin: 20px 0 10px 0;
+            color: #a29bfe;
+        }
+
+        .section-card {
+            background: #1c1c28;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin-bottom: 14px;
+        }
+
+        .section-card h4 {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 12px 0;
+            font-size: 13.5px;
+        }
+
+        th {
+            text-align: left;
+            font-weight: 700;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #666680;
+            padding: 8px 12px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.08);
+        }
+
+        td {
+            padding: 10px 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            vertical-align: top;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 14px;
+        }
+
+        .quote-block {
+            padding: 16px 20px;
+            border-radius: 10px;
+            background: rgba(108, 92, 231, 0.06);
+            border-left: 3px solid #6c5ce7;
+            font-size: 14px;
+            font-style: italic;
+            color: #b0b0c8;
+            margin: 12px 0;
+            line-height: 1.7;
+        }
+
+        .quote-block strong {
+            color: #e8e8ef;
+            font-style: normal;
+        }
+
+        .alert {
+            padding: 14px 18px;
+            border-radius: 10px;
+            font-size: 13px;
+            margin: 12px 0;
+            line-height: 1.6;
+        }
+
+        .alert-red {
+            background: rgba(255, 107, 107, 0.08);
+            border: 1px solid rgba(255, 107, 107, 0.2);
+            color: #ffaaaa;
+        }
+
+        .alert-green {
+            background: rgba(0, 210, 160, 0.06);
+            border: 1px solid rgba(0, 210, 160, 0.2);
+            color: #7affd4;
+        }
+
+        .alert-orange {
+            background: rgba(255, 169, 64, 0.08);
+            border: 1px solid rgba(255, 169, 64, 0.2);
+            color: #ffd090;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 28px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 7px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, #6c5ce7, #00d2a0);
+            border-radius: 2px;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 24px;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: -24px;
+            top: 3px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #6c5ce7;
+            border: 2px solid #1c1c28;
+        }
+
+        .timeline-time {
+            font-size: 12px;
+            font-weight: 700;
+            color: #00d2a0;
+            margin-bottom: 4px;
+            letter-spacing: 0.5px;
+        }
+
+        .timeline-title {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .timeline-body {
+            font-size: 13.5px;
+            color: #9999b0;
+            line-height: 1.6;
+        }
+
+        .speech {
+            padding: 12px 16px;
+            border-radius: 10px;
+            background: rgba(108, 92, 231, 0.06);
+            border: 1px solid rgba(108, 92, 231, 0.12);
+            font-size: 13.5px;
+            margin: 8px 0;
+            color: #c8c8e0;
+        }
+
+        .speech::before {
+            content: '💬 ';
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        ul li {
+            padding: 4px 0;
+            font-size: 13.5px;
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+        }
+
+        ul li::before {
+            content: '→';
+            color: #6c5ce7;
+            flex-shrink: 0;
+            font-size: 12px;
+        }
+
+        .check-list li::before {
+            content: '✓';
+            color: #00d2a0;
+            font-weight: 700;
+        }
+
+        .x-list li::before {
+            content: '✗';
+            color: #ff6b6b;
+            font-weight: 700;
+        }
+
+        .num-list {
+            counter-reset: num;
+        }
+
+        .num-list li::before {
+            counter-increment: num;
+            content: counter(num) ".";
+            color: #a29bfe;
+            font-weight: 700;
+            min-width: 18px;
+        }
+
+        .priority-high {
+            background: rgba(0, 210, 160, 0.06);
+            border: 1px solid rgba(0, 210, 160, 0.15);
+            border-radius: 10px;
+            padding: 16px 20px;
+            margin: 12px 0;
+        }
+
+        .divider {
+            height: 1px;
+            background: rgba(255, 255, 255, 0.06);
+            margin: 32px 0;
+        }
+
+        .pricing-card {
+            border-radius: 12px;
+            padding: 20px;
+            background: #1c1c28;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .pricing-card h4 {
+            font-size: 16px;
+            font-weight: 800;
+            margin-bottom: 4px;
+        }
+
+        .pricing-card .price {
+            font-size: 13px;
+            color: #00d2a0;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .pricing-card p {
+            font-size: 12.5px;
+            color: #9999b0;
+            margin-bottom: 8px;
+        }
+
+        .footer-note {
+            margin-top: 40px;
+            padding: 16px 20px;
+            border-radius: 10px;
+            background: rgba(108, 92, 231, 0.04);
+            border: 1px solid rgba(108, 92, 231, 0.1);
+            font-size: 12px;
+            color: #666680;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ==================== PAGE 1: WHO & WHY ==================== -->
+    <div class="page">
+        <div class="header-bar">
+            <h1>📞 Call Prep — Assaad Kassis</h1>
+            <div class="subtitle">E-GAP · The Growth & Profitability Agency</div>
+            <div class="header-meta">
+                <span class="tag">📅 Monday, March 10, 2026</span>
+                <span class="tag">⏱ 15 minutes</span>
+                <span class="tag tag-green">🟢 He requested the call</span>
+                <span class="tag tag-orange">🎯 Goal: Free Pilot Agreement</span>
+            </div>
+        </div>
+
+        <!-- WHO IS ASSAAD -->
+        <h2><span class="icon">🧑‍💼</span> Who Is Assaad Kassis</h2>
+
+        <table>
+            <tr>
+                <td style="width:180px; color:#666680; font-weight:600;">Name</td>
+                <td>Assaad Kassis</td>
+            </tr>
+            <tr>
+                <td style="color:#666680; font-weight:600;">Title</td>
+                <td>Founder & Managing Director @ E-GAP</td>
+            </tr>
+            <tr>
+                <td style="color:#666680; font-weight:600;">Experience</td>
+                <td><strong>23 years</strong> — media, performance marketing, e-commerce</td>
+            </tr>
+            <tr>
+                <td style="color:#666680; font-weight:600;">Past clients</td>
+                <td>L'Oréal, McDonald's, Emirates Airlines, Coca-Cola, J&J, Reckitt</td>
+            </tr>
+            <tr>
+                <td style="color:#666680; font-weight:600;">Location</td>
+                <td>Beirut, Lebanon → serves GCC (UAE, Saudi Arabia)</td>
+            </tr>
+            <tr>
+                <td style="color:#666680; font-weight:600;">Agency age</td>
+                <td>~4 months (founded Nov 2025) — <strong>building from scratch</strong></td>
+            </tr>
+            <tr>
+                <td style="color:#666680; font-weight:600;">E-GAP focus</td>
+                <td>DTC & e-commerce growth + profitability</td>
+            </tr>
+            <tr>
+                <td style="color:#666680; font-weight:600;">Key line from his profile</td>
+                <td><em>"Align media investment with business KPIs: CAC, AOV, LTV, retention, and profitability"</em>
+                </td>
+            </tr>
+            <tr>
+                <td style="color:#666680; font-weight:600;">He explicitly wants</td>
+                <td><em>"Data dashboards, attribution models, and reporting structures"</em></td>
+            </tr>
+        </table>
+
+        <!-- WHY HE IS THE BEST LEAD -->
+        <h2><span class="icon">🔑</span> Why He's The Best Lead Right Now</h2>
+
+        <div class="grid-2">
+            <div class="section-card">
+                <h4>🆕 New agency = no legacy</h4>
+                <p style="font-size:13px; color:#9999b0;">E-GAP is 4 months old. He's building everything from scratch.
+                    No existing data team, no reporting infrastructure. He NEEDS an external data layer — that's us.</p>
+            </div>
+            <div class="section-card">
+                <h4>📊 "Profitability" is in his name</h4>
+                <p style="font-size:13px; color:#9999b0;">"The Growth & Profitability Agency." His positioning literally
+                    matches our product — real P&L, not vanity ROAS.</p>
+            </div>
+            <div class="section-card">
+                <h4>🌍 GCC market = big budgets</h4>
+                <p style="font-size:13px; color:#9999b0;">UAE and Saudi Arabia brands spend serious money on ads. Bigger
+                    budgets = bigger reconciliation gaps = more value from our tool.</p>
+            </div>
+            <div class="section-card">
+                <h4>✋ He reached out first</h4>
+                <p style="font-size:13px; color:#9999b0;">He said "interesting, let us have a quick call to discuss in
+                    details." This is warm — not a cold pitch.</p>
+            </div>
+        </div>
+
+        <!-- CONVERSATION HISTORY -->
+        <h2><span class="icon">💬</span> Conversation History</h2>
+
+        <div class="section-card">
+            <p style="font-size:13px; margin-bottom:10px;"><strong style="color:#a29bfe;">Wednesday — You
+                    (Lukian):</strong></p>
+            <div class="quote-block">"Hey Assaad - love that you lead with profitability, not just growth. We built a
+                reconciliation layer that shows real P&L after refunds and fees. Feels like it fits what E-GAP does?"
+            </div>
+            <p style="font-size:13px; margin-bottom:10px; margin-top:16px;"><strong style="color:#00d2a0;">Thursday —
+                    Assaad:</strong></p>
+            <div class="quote-block" style="border-left-color:#00d2a0">"interesting, let us have a quick call to discuss
+                in details"</div>
+            <p style="font-size:13px; margin-top:16px;"><strong style="color:#a29bfe;">Thursday — You (Lukian):</strong>
+            </p>
+            <div class="quote-block">"Great! You can grab a time that works for you here: cal.com/calyxra/15min"</div>
+        </div>
+
+        <div class="alert alert-green">
+            <strong>⚠️ KEY INSIGHT:</strong> He said "interesting" and booked the call HIMSELF. He's genuinely curious.
+            Don't oversell — let the product speak.
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- YOUR POSITION -->
+        <h2><span class="icon">🎯</span> Your Position On This Call</h2>
+
+        <div class="grid-2">
+            <div class="section-card">
+                <h4>✅ What you ARE</h4>
+                <ul class="check-list">
+                    <li>Co-founder of Calyxra (2 co-founders)</li>
+                    <li>Got into ecom data through a family online store</li>
+                    <li>Building reconciliation infrastructure for agencies</li>
+                    <li>White-label data team for agencies</li>
+                </ul>
+            </div>
+            <div class="section-card">
+                <h4>❌ What you are NOT</h4>
+                <ul class="x-list">
+                    <li>A marketing agency</li>
+                    <li>A campaign optimizer</li>
+                    <li>A replacement for Triple Whale (they do attribution, we do reconciliation)</li>
+                    <li>Someone who makes up case studies</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <h4>🎙️ Your intro (memorize this)</h4>
+            <div class="speech">I got into ecommerce data through my family's online store — ran ads, tracked margins,
+                and kept seeing the same problem: Meta says one thing, Shopify says another. Built Calyxra to fix that
+                for agencies. BigQuery warehouse, automated reconciliation, white-label dashboards.</div>
+        </div>
+
+        <div class="section-card">
+            <h4>💡 Tone rules</h4>
+            <ul>
+                <li>Calm, honest, concrete — no hype</li>
+                <li>Short sentences — one idea = one sentence</li>
+                <li>Listen more than you talk (he's 23 years senior to you)</li>
+                <li>If you don't know → "Great question. Let me get back to you with the right answer."</li>
+                <li>Don't apologize for your English — just keep it short</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ==================== PAGE 2: MINUTE-BY-MINUTE ==================== -->
+    <div class="page">
+        <h2><span class="icon">⏱️</span> 15-Minute Script — Minute by Minute</h2>
+
+        <div class="timeline">
+
+            <!-- MIN 0-2 -->
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-time">MINUTES 0–2 · OPEN</div>
+                <div class="timeline-title">Greet & Let Him Talk</div>
+                <div class="timeline-body">
+                    <div class="speech">Thanks for taking the time, Assaad. Before I show anything — I'd love to hear:
+                        what are you focused on right now with E-GAP? What's the biggest challenge?</div>
+                    <div class="alert alert-orange" style="margin-top:10px;">
+                        <strong>⏸️ STOP TALKING HERE.</strong> Let him speak for 1–2 minutes. Listen. Write down
+                        keywords. This is easier on your English AND gives you intel to adapt the demo.
+                    </div>
+                    <p style="font-size:12.5px; margin-top:10px;">Keywords to listen for: <strong>"reporting",
+                            "dashboards", "profit", "ROAS", "data", "spreadsheets", "clients asking about
+                            numbers"</strong> → if he says ANY of these, that's your bridge to the demo.</p>
+                </div>
+            </div>
+
+            <!-- MIN 2-5 -->
+            <div class="timeline-item">
+                <div class="timeline-dot" style="background:#00d2a0;"></div>
+                <div class="timeline-time">MINUTES 2–5 · BRIDGE + QUESTIONS</div>
+                <div class="timeline-title">Discovery — Understand His Workflow</div>
+                <div class="timeline-body">
+                    <p style="margin-bottom:10px;">Ask these 1 by 1. Don't dump all at once.</p>
+
+                    <div class="speech">How do you handle reporting for your clients today? Is it dashboards,
+                        spreadsheets, or platform screenshots?</div>
+                    <div style="font-size:12px; color:#666680; margin:4px 0 12px 0;">🎯 Goal: understand his CURRENT
+                        process (manual? GA4? nothing?)</div>
+
+                    <div class="speech">When you run campaigns across Meta and Google — do your clients ever question
+                        why the platform says one thing, and Shopify shows something different?</div>
+                    <div style="font-size:12px; color:#666680; margin:4px 0 12px 0;">🎯 Goal: confirm the reconciliation
+                        pain point exists for him</div>
+
+                    <div class="speech">How many clients are you working with right now?</div>
+                    <div style="font-size:12px; color:#666680; margin:4px 0 0 0;">🎯 Goal: understand scale (1-2 →
+                        Agency Pilot plan, 3-5 → Agency Scale)</div>
+                </div>
+            </div>
+
+            <!-- MIN 5-9 -->
+            <div class="timeline-item">
+                <div class="timeline-dot" style="background:#ffa940;"></div>
+                <div class="timeline-time">MINUTES 5–9 · DEMO (SCREENSHARE)</div>
+                <div class="timeline-title">Show calyxra.com/dashboards — 4 Layers</div>
+                <div class="timeline-body">
+                    <div class="alert alert-red">
+                        <strong>⚠️ OPEN BEFORE THE CALL:</strong> calyxra.com/dashboards in one tab. The live Looker
+                        Studio demo in another tab. presentation.html as backup.
+                    </div>
+
+                    <p style="margin:12px 0 8px 0; font-weight:700;">Say:</p>
+                    <div class="speech">Let me share my screen real quick — I want to show you what we actually deliver.
+                    </div>
+
+                    <div class="section-card" style="margin-top:12px;">
+                        <h4>Layer 1: Executive Overview (30 sec)</h4>
+                        <div class="speech">This is real Shopify data — anonymized. Net revenue, margins, refunds, AOV.
+                            Not Shopify's number. The REAL number, after everything is deducted.</div>
+                    </div>
+
+                    <div class="section-card">
+                        <h4>Layer 2: Reconciliation (45 sec) ← MOST IMPORTANT</h4>
+                        <div class="speech">This is where we catch phantom revenue. Platforms claim one ROAS, Shopify
+                            reality is different. This dashboard shows the exact gap — the money platforms CLAIM but the
+                            brand never actually received.</div>
+                        <div style="font-size:12px; color:#666680; margin-top:6px;">📌 This is your "wow moment." Pause
+                            here. Let him react.</div>
+                    </div>
+
+                    <div class="section-card">
+                        <h4>Layer 3: Channel Performance (30 sec)</h4>
+                        <div class="speech">Per-platform breakdown. Meta, Google, TikTok — each with true ROAS, not
+                            platform ROAS. Reconciled against actual Shopify orders.</div>
+                    </div>
+
+                    <div class="section-card">
+                        <h4>Layer 4: White-Label (30 sec)</h4>
+                        <div class="speech">All of this goes under YOUR brand. Your clients see E-GAP, not Calyxra. Your
+                            logo, your colors. We're invisible.</div>
+                    </div>
+
+                    <div style="font-size:12.5px; color:#9999b0; margin-top:12px;">
+                        <strong>Total demo time: ~3 minutes.</strong> Don't go longer. Show, don't explain.
+                    </div>
+                </div>
+            </div>
+
+            <!-- MIN 9-11 -->
+            <div class="timeline-item">
+                <div class="timeline-dot" style="background:#6c5ce7;"></div>
+                <div class="timeline-time">MINUTES 9–11 · PARTNERSHIP PITCH</div>
+                <div class="timeline-title">Position It As Infrastructure</div>
+                <div class="timeline-body">
+                    <div class="speech" style="font-size:14px;">You bring the strategy and the clients. We bring the
+                        data infrastructure underneath. Your clients see your brand. We stay invisible. You charge more
+                        because you deliver real numbers — not screenshots from Meta.</div>
+
+                    <p style="margin-top:12px; font-size:13px;">Then add, specific to him:</p>
+                    <div class="speech">For GCC brands especially — having a clean profitability dashboard builds
+                        serious trust. And for E-GAP, at 4 months in, this is a way to look enterprise-grade from day
+                        one.</div>
+                </div>
+            </div>
+
+            <!-- MIN 11-13 -->
+            <div class="timeline-item">
+                <div class="timeline-dot" style="background:#00d2a0;"></div>
+                <div class="timeline-time">MINUTES 11–13 · THE OFFER</div>
+                <div class="timeline-title">Free Pilot — One Client</div>
+                <div class="timeline-body">
+                    <div class="priority-high">
+                        <div class="speech" style="font-size:14px; background:transparent; border:none; padding:0;">
+                            Here's what I suggest: we set up one of your clients — completely free. Full BigQuery
+                            pipeline. White-label dashboard. You see the quality, you see if it fits your workflow.
+                            Takes about 7 days. If it works, we talk pricing. If not — you got a free dashboard. Zero
+                            risk.</div>
+                    </div>
+
+                    <div class="alert alert-orange" style="margin-top:12px;">
+                        <strong>IF HE ASKS ABOUT PRICING:</strong> Don't dodge it, but lead with value first.
+                    </div>
+                    <div class="speech">For agencies, we have three tiers. The Pilot plan covers 1–2 stores. But
+                        honestly — let's start with the free pilot. You see the value first, then we find the right
+                        plan.</div>
+                </div>
+            </div>
+
+            <!-- MIN 13-15 -->
+            <div class="timeline-item">
+                <div class="timeline-dot" style="background:#ff6b6b;"></div>
+                <div class="timeline-time">MINUTES 13–15 · CLOSE</div>
+                <div class="timeline-title">Get The Next Step</div>
+                <div class="timeline-body">
+                    <div class="speech">So — do you have a client we could start with? I just need read-only Shopify
+                        access and ad platform viewer access. Takes 15 minutes from your side.</div>
+
+                    <table style="margin-top:14px;">
+                        <thead>
+                            <tr>
+                                <th>He says</th>
+                                <th>You say</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="color:#00d2a0; font-weight:600;">🟢 "Yes, let's try"</td>
+                                <td>"Great. I'll send you a short onboarding checklist after this call. We'll be live in
+                                    7 days."</td>
+                            </tr>
+                            <tr>
+                                <td style="color:#ffa940; font-weight:600;">🟡 "Interesting, let me think"</td>
+                                <td>"Of course. I'll send you the dashboard demo link and a summary. Take your time —
+                                    whenever it makes sense."</td>
+                            </tr>
+                            <tr>
+                                <td style="color:#ff6b6b; font-weight:600;">🔴 "Not now"</td>
+                                <td>"No problem at all. I'll keep sharing our work. Happy to chat again whenever E-GAP
+                                    needs this."</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="speech" style="margin-top:14px;">Thanks again for your time, Assaad. Really enjoyed the
+                        conversation.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== PAGE 3: PRICING, OBJECTIONS, CHECKLIST ==================== -->
+    <div class="page">
+
+        <!-- REAL PRICING FROM CALYXRA.COM -->
+        <h2><span class="icon">💰</span> Real Pricing (from calyxra.com)</h2>
+
+        <div class="alert alert-orange">
+            <strong>RULE:</strong> Don't lead with pricing. Lead with the free pilot. Only share pricing if he insists.
+            If he asks — show the structure, not exact numbers on call. Say "I'll send you the pricing page after."
+        </div>
+
+        <div class="grid-3" style="margin-top:14px;">
+            <div class="pricing-card">
+                <h4>Agency Pilot</h4>
+                <div class="price">1–2 client stores</div>
+                <ul class="check-list" style="font-size:12px;">
+                    <li>Shopify + Meta + Google</li>
+                    <li>Daily data refresh</li>
+                    <li>Email support</li>
+                    <li>Onboarding in 7 days</li>
+                </ul>
+            </div>
+            <div class="pricing-card" style="border-color:rgba(108,92,231,0.3);">
+                <h4>Agency Scale</h4>
+                <div class="price">3–5 client stores</div>
+                <ul class="check-list" style="font-size:12px;">
+                    <li>+ TikTok + GA4</li>
+                    <li>Data health monitoring</li>
+                    <li>Tracking & QA checks</li>
+                    <li>Slack support (priority)</li>
+                    <li>48h kickoff</li>
+                </ul>
+            </div>
+            <div class="pricing-card">
+                <h4>Agency Pro</h4>
+                <div class="price">6–10+ client stores</div>
+                <ul class="check-list" style="font-size:12px;">
+                    <li>All Scale features</li>
+                    <li>Custom integrations (Klaviyo, CRM)</li>
+                    <li>Auto weekly snapshot reports</li>
+                    <li>Custom KPI layer</li>
+                    <li>Dedicated delivery lane</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section-card" style="margin-top:14px;">
+            <h4>🔍 €349 Source-of-Truth Audit</h4>
+            <p style="font-size:13px; color:#9999b0;">One-time diagnostic. Identifies what's broken in their data.
+                Includes: full data-flow map, reconciliation table, risk assessment, prioritized fix roadmap. Entry
+                point if he's not ready for full setup.</p>
+        </div>
+
+        <div class="section-card">
+            <h4>🎁 Founding Partner Program</h4>
+            <p style="font-size:13px; color:#9999b0;">50% off setup. Limited to 3 agencies. Use this only if he needs a
+                push: <em>"We're onboarding 3 founding partners with 50% off setup. Two spots left."</em></p>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- OBJECTION HANDLING -->
+        <h2><span class="icon">🆘</span> Tough Questions — Exact Answers</h2>
+
+        <div class="section-card">
+            <h4>💬 "What's your pricing?"</h4>
+            <div class="speech">We have three tiers depending on how many stores you manage. The Pilot plan covers 1–2
+                stores. But let's start with the free pilot — you see the value, then we find the right fit.</div>
+        </div>
+
+        <div class="section-card">
+            <h4>💬 "How is this different from Triple Whale / Northbeam?"</h4>
+            <div class="speech">They do attribution — figuring out WHICH ad drove the sale. We do reconciliation —
+                verifying if that revenue actually exists after refunds, fees, and platform inflation. Different layer
+                entirely. And ours is white-label under your brand.</div>
+        </div>
+
+        <div class="section-card">
+            <h4>💬 "Do you have case studies?"</h4>
+            <div class="speech">We're early stage — no case studies yet. That's exactly why the pilot is free. We want
+                to prove the value on your data, not show you a PDF.</div>
+            <div class="alert alert-red" style="margin-top:8px;"><strong>Don't make up clients.</strong> Honesty builds
+                more trust with someone who has 23 years of experience.</div>
+        </div>
+
+        <div class="section-card">
+            <h4>💬 "How long does setup take?"</h4>
+            <div class="speech">For a standard Shopify store with Meta and Google — about 7 days. You share read-only
+                access, we handle the rest. The Pilot plan onboarding is 7 days, Scale is 48 hours kickoff.</div>
+        </div>
+
+        <div class="section-card">
+            <h4>💬 "Who built this? What's your team?"</h4>
+            <div class="speech">There's two of us. I handle the data architecture and client delivery. My co-founder
+                Oleg handles the product and engineering side. We use enterprise tools — BigQuery, dbt, Looker Studio.
+                Built by analysts, not marketers.</div>
+        </div>
+
+        <div class="section-card">
+            <h4>💬 "We already use GA4 / Shopify reports"</h4>
+            <div class="speech">GA4 shows behavior — where users click. Shopify shows orders. Neither shows real profit
+                after refunds, platform fees, and ad spend. That gap is what we reconcile.</div>
+        </div>
+
+        <div class="section-card">
+            <h4>💬 "Can we try with one client first?"</h4>
+            <div class="speech">Absolutely — that's exactly what I'd recommend. One client, one store, full pipeline.
+                You see the value. Then we scale.</div>
+            <div class="alert alert-green" style="margin-top:8px;"><strong>🟢 BEST OUTCOME.</strong> He's ready. Don't
+                overcomplicate it — just say yes and send the onboarding form.</div>
+        </div>
+
+        <div class="section-card">
+            <h4>💬 Something you DON'T KNOW the answer to</h4>
+            <div class="speech">That's a great question. Let me get you a proper answer after the call — I want to make
+                sure I give you the right information.</div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- KEY PHRASES -->
+        <h2><span class="icon">🗣️</span> 5 Key Phrases — Memorize & Practice</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Phrase</th>
+                    <th>When to use</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="color:#a29bfe; font-weight:800;">1</td>
+                    <td><strong>You do growth strategy. We do the numbers underneath.</strong></td>
+                    <td>Opening / positioning</td>
+                </tr>
+                <tr>
+                    <td style="color:#a29bfe; font-weight:800;">2</td>
+                    <td><strong>White-label — your brand, your clients, our infrastructure.</strong></td>
+                    <td>Demo / white-label section</td>
+                </tr>
+                <tr>
+                    <td style="color:#a29bfe; font-weight:800;">3</td>
+                    <td><strong>Platforms claim revenue the brand never received.</strong></td>
+                    <td>Reconciliation demo</td>
+                </tr>
+                <tr>
+                    <td style="color:#a29bfe; font-weight:800;">4</td>
+                    <td><strong>Free pilot. One client. Seven days. Zero risk.</strong></td>
+                    <td>The offer</td>
+                </tr>
+                <tr>
+                    <td style="color:#a29bfe; font-weight:800;">5</td>
+                    <td><strong>Read-only access — 15 minutes from your side.</strong></td>
+                    <td>Closing / reducing friction</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="divider"></div>
+
+        <!-- WHAT NOT TO SAY -->
+        <h2><span class="icon">❌</span> Never Say</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Don't say</th>
+                    <th>Why</th>
+                    <th>Say instead</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="color:#ff6b6b;">"We are a startup"</td>
+                    <td>Kills trust</td>
+                    <td>"We're building this specifically for agencies"</td>
+                </tr>
+                <tr>
+                    <td style="color:#ff6b6b;">"We are cheap"</td>
+                    <td>Kills value</td>
+                    <td>"Free pilot first — then we find the right plan"</td>
+                </tr>
+                <tr>
+                    <td style="color:#ff6b6b;">"I don't know"</td>
+                    <td>Unprofessional</td>
+                    <td>"Great question — let me get back to you"</td>
+                </tr>
+                <tr>
+                    <td style="color:#ff6b6b;">"We are better than X"</td>
+                    <td>Aggressive</td>
+                    <td>"We solve a different problem"</td>
+                </tr>
+                <tr>
+                    <td style="color:#ff6b6b;">"AI" / "machine learning"</td>
+                    <td>He sees through BS</td>
+                    <td>Say specific tools: "BigQuery", "dbt", "automated pipeline"</td>
+                </tr>
+                <tr>
+                    <td style="color:#ff6b6b;">"Maybe" / "I think so"</td>
+                    <td>Weak</td>
+                    <td>"Yes" or "Let me confirm"</td>
+                </tr>
+                <tr>
+                    <td style="color:#ff6b6b;">€99/mo</td>
+                    <td>Doesn't exist</td>
+                    <td>Plans start from Agency Pilot tier</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="divider"></div>
+
+        <!-- WHAT TO SAY OFTEN -->
+        <h2><span class="icon">✅</span> Say Often</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Phrase</th>
+                    <th>When</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>"That's a great question"</td>
+                    <td>When he asks anything</td>
+                </tr>
+                <tr>
+                    <td>"That's exactly what we solve"</td>
+                    <td>When he describes the pain point</td>
+                </tr>
+                <tr>
+                    <td>"Makes sense"</td>
+                    <td>When he explains something</td>
+                </tr>
+                <tr>
+                    <td>"Absolutely"</td>
+                    <td>Instead of weak "yes"</td>
+                </tr>
+                <tr>
+                    <td>"Real P&L" / "real numbers"</td>
+                    <td>When talking about product</td>
+                </tr>
+                <tr>
+                    <td>"Under your brand"</td>
+                    <td>When talking about white-label</td>
+                </tr>
+                <tr>
+                    <td>"Read-only access"</td>
+                    <td>When talking about setup (reduces fear)</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- ==================== PAGE 4: BEFORE, DURING, AFTER ==================== -->
+    <div class="page">
+        <!-- PRE-CALL CHECKLIST -->
+        <h2><span class="icon">✅</span> Pre-Call Checklist</h2>
+
+        <div class="grid-2">
+            <div class="section-card">
+                <h4>🖥️ Tabs to Have Open</h4>
+                <ul class="num-list">
+                    <li><strong>calyxra.com/dashboards</strong> — main demo (screenshare this)</li>
+                    <li><strong>Looker Studio demo</strong> — live dashboard backup</li>
+                    <li><strong>presentation.html</strong> — slides backup (if demo lags)</li>
+                    <li><strong>This document</strong> — to glance at phrases</li>
+                </ul>
+            </div>
+            <div class="section-card">
+                <h4>🧑‍💻 Technical Setup</h4>
+                <ul class="check-list">
+                    <li>Test internet + microphone + camera</li>
+                    <li>Close all notifications</li>
+                    <li>Close Slack, Telegram, email</li>
+                    <li>Have water nearby</li>
+                    <li>Join call 2 minutes early</li>
+                    <li>Good lighting on face</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="alert alert-orange">
+            <strong>SCREENSHARE SETUP:</strong> Before joining, click "Share Screen" once to make sure it works. Some
+            tools need permissions. Don't debug this DURING the call.
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- PRONUNCIATION -->
+        <h2><span class="icon">🗣️</span> Pronunciation — Practice 10x Each</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Word</th>
+                    <th>How to say it</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Reconciliation</td>
+                    <td><strong>re-kon-SILI-EY-shun</strong></td>
+                </tr>
+                <tr>
+                    <td>Profitability</td>
+                    <td><strong>profi-ta-BILI-ti</strong></td>
+                </tr>
+                <tr>
+                    <td>Infrastructure</td>
+                    <td><strong>INFRA-strak-cher</strong></td>
+                </tr>
+                <tr>
+                    <td>Revenue</td>
+                    <td><strong>REV-en-yoo</strong></td>
+                </tr>
+                <tr>
+                    <td>Source of truth</td>
+                    <td><strong>SORS ov TROOTH</strong></td>
+                </tr>
+                <tr>
+                    <td>White-label</td>
+                    <td><strong>WAIT-ley-bel</strong></td>
+                </tr>
+                <tr>
+                    <td>Anonymized</td>
+                    <td><strong>a-NON-i-maizd</strong></td>
+                </tr>
+                <tr>
+                    <td>Onboarding</td>
+                    <td><strong>ON-bor-ding</strong></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="divider"></div>
+
+        <!-- 3 POSSIBLE OUTCOMES -->
+        <h2><span class="icon">🎯</span> 3 Possible Outcomes</h2>
+
+        <div class="section-card" style="border-color:rgba(0,210,160,0.3);">
+            <h4>🥇 Best: "Let's try with one client"</h4>
+            <ul class="check-list">
+                <li>Send onboarding checklist within 30 min</li>
+                <li>Ask for: Shopify Admin API access (read-only), Meta viewer access, Google Ads read-only</li>
+                <li>Set up follow-up call for when dashboard is ready (7 days)</li>
+                <li>Send cal.com link for 30-min review call</li>
+            </ul>
+        </div>
+
+        <div class="section-card" style="border-color:rgba(255,169,64,0.3);">
+            <h4>🥈 Good: "Sounds interesting, let me think"</h4>
+            <ul class="check-list">
+                <li>Send LinkedIn thank-you within 30 min</li>
+                <li>Include: link to calyxra.com/dashboards + presentation.html</li>
+                <li>Follow up in 3–4 days with a short message</li>
+                <li>Don't push — respect his pace</li>
+            </ul>
+        </div>
+
+        <div class="section-card" style="border-color:rgba(255,107,107,0.3);">
+            <h4>🥉 Okay: Nice chat, no clear action</h4>
+            <ul class="check-list">
+                <li>Thank him, stay in network</li>
+                <li>Like/comment his LinkedIn posts weekly</li>
+                <li>Re-engage in 2–3 weeks with new content</li>
+            </ul>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- POST-CALL CHECKLIST -->
+        <h2><span class="icon">📋</span> After The Call — Checklist</h2>
+
+        <div class="section-card">
+            <ul class="num-list">
+                <li>Send LinkedIn thank-you message (within 30 min)</li>
+                <li>Send calyxra.com/dashboards link</li>
+                <li>If 🥇 → send onboarding checklist with access requirements</li>
+                <li>If 🥈 → send presentation.html + short Loom if possible</li>
+                <li>Write notes: what brands he mentioned, how many clients, what reporting he uses now</li>
+                <li>Update lead tracker with call outcome</li>
+                <li>If follow-up agreed → send calendar invite immediately</li>
+            </ul>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- ROLEPLAY -->
+        <h2><span class="icon">🔄</span> Roleplay — Do This Before The Call</h2>
+
+        <div class="section-card">
+            <p style="font-size:13px; color:#9999b0; margin-bottom:14px;">Go through these 7 steps out loud, in English,
+                3 times. By the third time it'll feel natural.</p>
+            <ul class="num-list">
+                <li><strong>Greet:</strong> "Thanks for taking the time, Assaad..."</li>
+                <li><strong>Ask:</strong> "What are you focused on right now with E-GAP?"</li>
+                <li><strong>Bridge:</strong> "Let me share my screen — I want to show you what we deliver."</li>
+                <li><strong>Demo:</strong> Walk through the 4 layers (30 sec each)</li>
+                <li><strong>Pitch:</strong> "You bring the strategy. We bring the data infrastructure."</li>
+                <li><strong>Offer:</strong> "Free pilot. One client. Seven days. Zero risk."</li>
+                <li><strong>Handle:</strong> Answer "What's your pricing?" and "Do you have case studies?"</li>
+            </ul>
+        </div>
+
+        <div class="footer-note">
+            Calyxra Call Prep · Assaad Kassis · March 10, 2026 · Confidential<br>
+            <strong>Print this document:</strong> Ctrl+P → Save as PDF
+        </div>
+    </div>
+
+</body>
+
+</html>

@@ -59,7 +59,7 @@ function DeliverableItem({ text }: { text: string }) {
 
 export default function DemoPage() {
     const calendlyUrl = "https://cal.com/calyxra/15min";
-    const auditUrl = "https://cal.com/calyxra/audit";
+    const auditUrl = "https://cal.com/calyxra/15min";
 
     return (
         <div className="min-h-screen bg-[#FAFAF9] text-stone-900 font-sans selection:bg-emerald-200 selection:text-emerald-900">
@@ -345,7 +345,7 @@ export default function DemoPage() {
                         <div className="grid md:grid-cols-3 gap-6">
                             <div className="bg-stone-50 border border-stone-200 p-6 text-center">
                                 <div className="text-xs font-bold uppercase tracking-widest text-stone-500 mb-3">Variance</div>
-                                <div className="text-3xl font-serif font-medium text-emerald-700 mb-2">€0.00</div>
+                                <div className="text-3xl font-serif font-medium text-emerald-700 mb-2">$0.00</div>
                                 <div className="text-sm text-stone-600">Reconciled across Shopify + Ads + GA4</div>
                             </div>
 
@@ -358,7 +358,7 @@ export default function DemoPage() {
                             <div className="bg-stone-50 border border-stone-200 p-6 text-center">
                                 <div className="text-xs font-bold uppercase tracking-widest text-stone-500 mb-3">Source</div>
                                 <div className="text-3xl font-serif font-medium text-stone-900 mb-2">BQ</div>
-                                <div className="text-sm text-stone-600">Client-Owned BigQuery Warehouse</div>
+                                <div className="text-sm text-stone-600">Client-Owned Calyxra Warehouse</div>
                             </div>
                         </div>
                     </div>
@@ -379,7 +379,7 @@ export default function DemoPage() {
                                 Book 15-min Audit Call
                             </a>
                             <a href={auditUrl} target="_blank" rel="noopener noreferrer" className="px-10 py-5 bg-transparent border border-white/20 text-white font-bold text-sm tracking-widest uppercase hover:bg-white/10 transition-all">
-                                Book Paid Audit — €349
+                                Book Revenue Leak Audit — $249
                             </a>
                         </div>
 
@@ -391,7 +391,7 @@ export default function DemoPage() {
                             </span>
                             <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-stone-800 border border-stone-700 rounded-full text-xs font-medium text-stone-300">
                                 <svg className="w-3.5 h-3.5 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4" /></svg>
-                                BigQuery + Looker/Power BI
+                                Calyxra + Looker/Power BI
                             </span>
                             <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-stone-800 border border-stone-700 rounded-full text-xs font-medium text-stone-300">
                                 <svg className="w-3.5 h-3.5 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>

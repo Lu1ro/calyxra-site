@@ -5,7 +5,7 @@ import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import { TruthContract } from '../../components/dashboard/TruthContract';
 import { LogoStrip } from '../../components/social/LogoStrip';
-import { Testimonials } from '../../components/social/Testimonials';
+
 import { ArrowRight, Database, BarChart3, Layout, CheckCircle2 } from 'lucide-react';
 
 function ModuleCard({ title, subtitle, comparison, image, benefits }: {
@@ -68,16 +68,15 @@ export default function DeliverablesPage() {
                         Infrastructure Output
                     </div>
                     <h1 className="text-4xl md:text-5xl font-serif font-medium text-stone-900 mb-6 max-w-4xl mx-auto leading-tight">
-                        Delivered into your <br className="hidden md:block" />
-                        <span className="text-stone-400">Power BI</span> or <span className="text-stone-400">Looker</span> workspace.
+                        See exactly what your <br className="hidden md:block" />
+                        <span className="text-emerald-700">Revenue Leak Audit</span> reveals.
                     </h1>
                     <p className="text-xl text-stone-500 max-w-2xl mx-auto leading-relaxed mb-10">
-                        We build the warehouse. You own the data.
-                        The dashboards below are simply the output—delivered ready-to-use.
+                        Connect your Shopify + Meta credentials. We reconcile, find the leaks, and deliver a branded report — in 48 hours.
                     </p>
 
-                    <a href="https://cal.com/calyxra/audit" target="_blank" className="inline-flex items-center gap-2 bg-stone-900 hover:bg-stone-800 text-white px-8 py-4 rounded text-xs font-bold uppercase tracking-widest transition-all">
-                        Request Live Warehouse Audit
+                    <a href="https://cal.com/calyxra/15min" target="_blank" className="inline-flex items-center gap-2 bg-stone-900 hover:bg-stone-800 text-white px-8 py-4 rounded text-xs font-bold uppercase tracking-widest transition-all">
+                        Book $249 Audit — 48h Delivery
                         <ArrowRight className="w-4 h-4" />
                     </a>
                 </div>
@@ -103,7 +102,7 @@ export default function DeliverablesPage() {
                                     We Build This
                                 </div>
                                 <div className="text-xs font-bold uppercase tracking-widest mb-2">Warehouse</div>
-                                <div className="font-serif text-stone-900 text-lg">BigQuery + dbt</div>
+                                <div className="font-serif text-stone-900 text-lg">Calyxra Engine</div>
                             </div>
 
                             <ArrowRight className="hidden md:block w-5 h-5 text-stone-300" />
@@ -111,12 +110,12 @@ export default function DeliverablesPage() {
 
                             <div className="text-center">
                                 <div className="text-xs font-bold uppercase tracking-widest mb-2">Delivery</div>
-                                <div className="font-serif text-stone-900">Power BI / Looker</div>
+                                <div className="font-serif text-stone-900">Dashboard + PDF</div>
                             </div>
 
                         </div>
                         <p className="text-center text-xs text-stone-400 mt-8">
-                            * We do not replace your BI tool. We power it with clean, reconciled data.
+                            * We reconcile your data automatically. You get the results.
                         </p>
                     </div>
                 </div>
@@ -125,7 +124,7 @@ export default function DeliverablesPage() {
                 <div className="max-w-7xl mx-auto px-6 mb-24">
                     <div className="text-center mb-12">
                         <h2 className="text-2xl font-serif text-stone-900">Infrastructure Outputs</h2>
-                        <p className="text-stone-500 text-sm mt-2">Standardized reporting modules included with every plan.</p>
+                        <p className="text-stone-500 text-sm mt-2">What you get in every audit and monthly report.</p>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -165,8 +164,6 @@ export default function DeliverablesPage() {
                     </div>
                 </div>
 
-                {/* TESTIMONIALS */}
-                <Testimonials />
 
                 {/* TRUTH CONTRACT SECTION */}
                 <div className="max-w-4xl mx-auto px-6 mb-24">
@@ -174,7 +171,7 @@ export default function DeliverablesPage() {
                         <div className="p-8 md:p-12 text-center border-b border-stone-800">
                             <h2 className="text-2xl font-serif text-white mb-4">Infrastructure Proof</h2>
                             <p className="text-stone-400 text-lg mb-8 max-w-xl mx-auto">
-                                You aren't buying a dashboard. You are buying a guarantee that your profit numbers are mathematically correct.
+                                Your audit is backed by real Shopify data. If the gap is under 5%, you get a full refund.
                             </p>
 
                             <div className="max-w-2xl mx-auto text-left">
@@ -183,7 +180,7 @@ export default function DeliverablesPage() {
                         </div>
                         <div className="bg-stone-950 p-4 text-center">
                             <p className="text-stone-500 text-xs font-mono">
-                                Data is reconciled every 60 minutes via dbt transformations.
+                                Data reconciled from Shopify orders + Meta Ads API. Delivered in 48 hours.
                             </p>
                         </div>
                     </div>

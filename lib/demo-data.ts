@@ -124,7 +124,7 @@ export const generateDemoData = (): DashboardState => {
         severity: 'medium',
         title: 'Scale Signal: Meta Ads',
         description: 'MER is healthy (3.4) while Meta ROAS is >2.8. Room to increase daily budget.',
-        metric: 'Est. +€2k/day',
+        metric: 'Est. +$2k/day',
         actionLabel: 'View Spend'
     });
 

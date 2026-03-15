@@ -58,27 +58,29 @@ export default function AuditOfferSection() {
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                                     </svg>
                                 </div>
-                                <span className="text-stone-700">Written report + fix roadmap delivered in 3 business days</span>
+                                <span className="text-stone-700">Written report + fix roadmap delivered in 48 hours</span>
                             </li>
                         </ul>
 
                         {/* Pricing & CTA */}
                         <div className="bg-white border-2 border-stone-200 p-6 rounded-sm mb-6">
                             <div className="flex items-baseline gap-2 mb-2">
-                                <span className="text-4xl font-serif font-medium text-stone-900">€349</span>
-                                <span className="text-stone-500 text-sm">— paid audit</span>
+                                <span className="text-4xl font-serif font-medium text-stone-900">$249</span>
+                                <span className="text-stone-500 text-sm">— one-time audit</span>
                             </div>
+                            <p className="text-sm text-stone-600 mb-2">
+                                Delivered in 48 hours. Gap under 5% = full refund.
+                            </p>
                             <p className="text-sm text-stone-600 mb-4">
-                                Report delivered in 3 business days<br />
-                                For Shopify brands & agencies doing €300K+/month
+                                For Shopify agencies managing ad spend across multiple brands
                             </p>
                             <a
-                                href="https://cal.com/calyxra/audit"
+                                href="https://cal.com/calyxra/15min"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="block w-full py-4 bg-emerald-700 text-white text-center font-bold text-sm uppercase tracking-widest hover:bg-emerald-800 transition-all shadow-lg hover:shadow-xl"
                             >
-                                Book Audit — €349
+                                Book Audit — $249
                             </a>
                         </div>
 

@@ -54,7 +54,7 @@ export default function DashboardsPage() {
             </p>
 
             <p className="mt-2 text-stone-600 text-xs uppercase tracking-widest font-medium">
-              Anonymized dataset · Source: Shopify → BigQuery · Updated daily
+              Anonymized dataset · Source: Shopify → Calyxra · Updated daily
             </p>
           </div>
         </section>
@@ -100,7 +100,7 @@ export default function DashboardsPage() {
                 </span>
                 <div>
                   <p className="text-stone-200 text-sm font-medium mb-0.5">Phantom Revenue</p>
-                  <p className="text-stone-500 text-xs">€21,761 gap between what platforms claim and Shopify reality</p>
+                  <p className="text-stone-500 text-xs">$21,761 gap between what platforms claim and Shopify reality</p>
                 </div>
               </div>
               <div className="flex items-start gap-3 p-4 bg-stone-900/40 border border-stone-800/60 rounded-xl">
@@ -158,12 +158,12 @@ export default function DashboardsPage() {
                 {/* KPI Cards */}
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 mb-6">
                   {[
-                    { label: 'Net Revenue', value: '€11,680', change: '+41.3%' },
-                    { label: 'Margin', value: '€7,414', change: '+42.1%' },
+                    { label: 'Net Revenue', value: '$11,680', change: '+41.3%' },
+                    { label: 'Margin', value: '$7,414', change: '+42.1%' },
                     { label: 'Orders', value: '107', change: '+40.8%' },
-                    { label: 'AOV', value: '€111.36', change: '+4.8%' },
+                    { label: 'AOV', value: '$111.36', change: '+4.8%' },
                     { label: 'True MER', value: '4.45', change: '+36.1%' },
-                    { label: 'Refunds', value: '€977', change: '+41.7%' },
+                    { label: 'Refunds', value: '$977', change: '+41.7%' },
                   ].map((kpi) => (
                     <div key={kpi.label} className="bg-[#1C1917] border border-stone-700/50 rounded-lg p-3">
                       <div className="text-[10px] text-stone-500 uppercase tracking-wider mb-1">{kpi.label}</div>
@@ -284,10 +284,10 @@ export default function DashboardsPage() {
                       <thead>
                         <tr className="border-b border-stone-700/50 text-stone-500">
                           <th className="text-left px-4 py-2 font-medium">Country</th>
-                          <th className="text-right px-4 py-2 font-medium">Revenue (€)</th>
+                          <th className="text-right px-4 py-2 font-medium">Revenue ($)</th>
                           <th className="text-right px-4 py-2 font-medium">Orders</th>
-                          <th className="text-right px-4 py-2 font-medium hidden md:table-cell">AOV (€)</th>
-                          <th className="text-right px-4 py-2 font-medium hidden lg:table-cell">Margin (€)</th>
+                          <th className="text-right px-4 py-2 font-medium hidden md:table-cell">AOV ($)</th>
+                          <th className="text-right px-4 py-2 font-medium hidden lg:table-cell">Margin ($)</th>
                         </tr>
                       </thead>
                       <tbody className="text-stone-300">
@@ -357,7 +357,7 @@ export default function DashboardsPage() {
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
                   <div className="bg-[#1C1917] border border-stone-700/50 rounded-lg p-3">
                     <div className="text-[10px] text-red-400 uppercase tracking-wider mb-1">Phantom Revenue</div>
-                    <div className="text-xl font-bold text-red-400">€3,813</div>
+                    <div className="text-xl font-bold text-red-400">$3,813</div>
                     <div className="text-xs text-stone-500 mt-1">↓ -8.5%</div>
                   </div>
                   <div className="bg-[#1C1917] border border-stone-700/50 rounded-lg p-3">
@@ -445,11 +445,11 @@ export default function DashboardsPage() {
                     <thead>
                       <tr className="border-b border-stone-700/50 text-stone-500">
                         <th className="text-left px-4 py-2 font-medium">Day</th>
-                        <th className="text-right px-4 py-2 font-medium">Shopify (€)</th>
-                        <th className="text-right px-4 py-2 font-medium">Meta Rep (€)</th>
+                        <th className="text-right px-4 py-2 font-medium">Shopify ($)</th>
+                        <th className="text-right px-4 py-2 font-medium">Meta Rep ($)</th>
                         <th className="text-right px-4 py-2 font-medium hidden md:table-cell">Meta Δ%</th>
-                        <th className="text-right px-4 py-2 font-medium hidden lg:table-cell">Google Rep (€)</th>
-                        <th className="text-right px-4 py-2 font-medium hidden lg:table-cell">Phantom (€)</th>
+                        <th className="text-right px-4 py-2 font-medium hidden lg:table-cell">Google Rep ($)</th>
+                        <th className="text-right px-4 py-2 font-medium hidden lg:table-cell">Phantom ($)</th>
                       </tr>
                     </thead>
                     <tbody className="text-stone-300">
@@ -522,12 +522,12 @@ export default function DashboardsPage() {
                 {/* KPI Cards */}
                 <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3 mb-6">
                   {[
-                    { label: 'Total Spend', value: '€34,473', color: 'text-red-400' },
-                    { label: 'Phantom Revenue', value: '€18,034', color: 'text-red-400' },
-                    { label: 'Cost/Purchase', value: '€40.91', color: 'text-stone-100' },
+                    { label: 'Total Spend', value: '$34,473', color: 'text-red-400' },
+                    { label: 'Phantom Revenue', value: '$18,034', color: 'text-red-400' },
+                    { label: 'Cost/Purchase', value: '$40.91', color: 'text-stone-100' },
                     { label: 'Claimed ROAS', value: '3.11', color: 'text-yellow-400' },
                     { label: 'True ROAS', value: '2.50', color: 'text-emerald-400' },
-                    { label: 'Avg CPC', value: '€1.29', color: 'text-stone-100' },
+                    { label: 'Avg CPC', value: '$1.29', color: 'text-stone-100' },
                     { label: 'Avg CTR', value: '3.93%', color: 'text-stone-100' },
                   ].map((kpi) => (
                     <div key={kpi.label} className="bg-[#1C1917] border border-stone-700/50 rounded-lg p-3">
@@ -597,10 +597,10 @@ export default function DashboardsPage() {
                     </thead>
                     <tbody className="text-stone-300">
                       {[
-                        { p: 'Meta', c: 'Prospecting — Broad Interest', s: '€7,288', ctr: '0.81', cpc: '€1.10', roas: '2.97' },
-                        { p: 'Meta', c: 'Retargeting — Website Visitors', s: '€5,201', ctr: '1.69', cpc: '€0.59', roas: '3.02' },
-                        { p: 'Google', c: 'Shopping — Feed Standard', s: '€4,900', ctr: '6.89', cpc: '€1.73', roas: '3.25' },
-                        { p: 'Google', c: 'Search — Brand Terms', s: '€3,542', ctr: '7.24', cpc: '€1.88', roas: '2.90' },
+                        { p: 'Meta', c: 'Prospecting — Broad Interest', s: '$7,288', ctr: '0.81', cpc: '$1.10', roas: '2.97' },
+                        { p: 'Meta', c: 'Retargeting — Website Visitors', s: '$5,201', ctr: '1.69', cpc: '$0.59', roas: '3.02' },
+                        { p: 'Google', c: 'Shopping — Feed Standard', s: '$4,900', ctr: '6.89', cpc: '$1.73', roas: '3.25' },
+                        { p: 'Google', c: 'Search — Brand Terms', s: '$3,542', ctr: '7.24', cpc: '$1.88', roas: '2.90' },
                       ].map((row) => (
                         <tr key={row.c} className="border-b border-stone-800/50 hover:bg-stone-800/20">
                           <td className="px-4 py-2 font-medium">{row.p}</td>
@@ -674,8 +674,8 @@ export default function DashboardsPage() {
                     { label: 'New Customers', value: '774', color: 'text-emerald-400' },
                     { label: 'Returning', value: '498', color: 'text-blue-400' },
                     { label: 'Repeat Rate', value: '39.3%', color: 'text-yellow-400' },
-                    { label: 'New AOV', value: '€120.09', color: 'text-emerald-400' },
-                    { label: 'Returning AOV', value: '€118.89', color: 'text-blue-400' },
+                    { label: 'New AOV', value: '$120.09', color: 'text-emerald-400' },
+                    { label: 'Returning AOV', value: '$118.89', color: 'text-blue-400' },
                   ].map((kpi) => (
                     <div key={kpi.label} className="bg-[#1C1917] border border-stone-700/50 rounded-lg p-3">
                       <div className="text-[10px] text-stone-500 uppercase tracking-wider mb-1">{kpi.label}</div>
@@ -753,8 +753,8 @@ export default function DashboardsPage() {
                       <tr className="border-b border-stone-700/50 text-stone-500">
                         <th className="text-left px-4 py-2 font-medium">Country</th>
                         <th className="text-right px-4 py-2 font-medium">Customers</th>
-                        <th className="text-right px-4 py-2 font-medium">Revenue (€)</th>
-                        <th className="text-right px-4 py-2 font-medium hidden md:table-cell">AOV (€)</th>
+                        <th className="text-right px-4 py-2 font-medium">Revenue ($)</th>
+                        <th className="text-right px-4 py-2 font-medium hidden md:table-cell">AOV ($)</th>
                         <th className="text-right px-4 py-2 font-medium">Repeat %</th>
                       </tr>
                     </thead>
@@ -811,7 +811,7 @@ export default function DashboardsPage() {
             <span className="text-stone-700">·</span>
             <span className="flex items-center gap-2">
               <Database className="w-4 h-4 text-emerald-600" />
-              BigQuery warehouse
+              Calyxra warehouse
             </span>
             <span className="text-stone-700">·</span>
             <span className="flex items-center gap-2">

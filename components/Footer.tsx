@@ -1,22 +1,22 @@
 export default function Footer() {
     return (
-        <footer className="py-16 px-6 bg-white border-t border-stone-200">
-            <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
-                <div>
-                    <div className="text-xl font-serif font-bold text-stone-900 mb-2">Calyxra.</div>
-                    <p className="text-xs text-stone-400 font-medium max-w-xs leading-relaxed">
-                        Premium reporting infrastructure for high-performance agencies. Built by analysts, not marketers.
-                    </p>
+        <footer className="py-16 px-6 bg-stone-900 text-white border-t border-stone-800">
+            <div className="max-w-4xl mx-auto text-center">
+                <div className="text-2xl font-serif font-bold mb-4">Calyxra<span className="text-emerald-400">.</span></div>
+                <p className="text-stone-400 text-sm mb-8 max-w-xl mx-auto leading-relaxed">
+                    Revenue reconciliation for Shopify brands.
+                    Compare what ad platforms report vs what your bank actually collected.
+                </p>
+                <div className="flex flex-wrap gap-6 text-[10px] font-bold text-stone-500 uppercase tracking-widest justify-center mb-8">
+                    <a href="#calculator" className="hover:text-white transition-colors">Free Scan</a>
+                    <a href="https://cal.com/calyxra/15min" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Book Audit</a>
+                    <a href="/login" className="hover:text-white transition-colors">Login</a>
+                    <a href="mailto:calyxra.team@gmail.com" className="hover:text-white transition-colors">Contact</a>
                 </div>
-                <div className="flex flex-wrap gap-8 text-[10px] font-bold text-stone-500 uppercase tracking-widest justify-center md:justify-end">
-                    <a href="/terms" className="hover:text-stone-900 transition-colors">Terms of Service</a>
-                    <a href="/privacy" className="hover:text-stone-900 transition-colors">Privacy Policy</a>
-                    <a href="/refunds" className="hover:text-stone-900 transition-colors">Refund Policy</a>
-                    <a href="mailto:admin@calyxra.com" className="hover:text-stone-900 transition-colors">Contact Support</a>
-                </div>
+                <p className="text-stone-600 text-xs">calyxra.team@gmail.com</p>
             </div>
-            <div className="max-w-7xl mx-auto mt-12 pt-8 border-t border-stone-100 text-center text-[10px] text-stone-300 uppercase tracking-widest">
-                © 2026 Calyxra Data Systems.
+            <div className="max-w-4xl mx-auto mt-12 pt-8 border-t border-stone-800 text-center text-[10px] text-stone-600 uppercase tracking-widest">
+                © 2026 Calyxra
             </div>
         </footer>
     );

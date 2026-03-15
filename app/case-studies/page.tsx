@@ -83,24 +83,24 @@ export default function UseCasesPage() {
                     <div className="grid md:grid-cols-3 gap-8">
 
                         <UseCaseCard
-                            title="Profit Reconciliation Across Shopify + Ads + GA4"
-                            problem="Revenue numbers differ across Shopify payouts, Meta Ads Manager, Google Ads, and GA4. Teams debate which source is correct, leading to incorrect profit calculations."
-                            fix="BigQuery warehouse with dbt models that reconcile Shopify Finances API, ad platform invoices, and GA4 e-commerce events into one unified profit layer."
-                            deliverable="Single Executive Dashboard showing reconciled net revenue, blended ad spend, and cash-real profit with zero variance."
+                            title="Profit Reconciliation Across Shopify + Ads"
+                            problem="Revenue numbers differ across Shopify payouts, Meta Ads Manager, and Google Ads. Teams debate which source is correct, leading to incorrect profit calculations and wasted ad spend."
+                            fix="Calyxra connects to Shopify and ad platform APIs, reconciles everything automatically, and shows exactly where the gap is — down to individual discount codes and refund patterns."
+                            deliverable="Branded PDF report with reconciled net revenue, phantom revenue breakdown, true ROAS, and campaign-level recommendations."
                         />
 
                         <UseCaseCard
-                            title="Refund-adjusted Margin & ROAS Truth"
-                            problem="Platform metrics show optimistic ROAS because they don't account for post-sale refunds. Marketing teams scale based on inflated numbers."
-                            fix="Warehouse layer applies Shopify refund data retroactively to ad platform conversion events. ROAS recalculated on cash-collected revenue only."
-                            deliverable="Refund-Adjusted ROAS dashboard that shows true performance after refunds are applied, preventing overspend on underperforming campaigns."
+                            title="Refund-adjusted ROAS Truth"
+                            problem="Ad platforms show inflated ROAS because they count refunds, cancelled orders, and test orders as real sales. Marketing teams scale based on phantom numbers."
+                            fix="Calyxra applies Shopify refund data retroactively to ad platform conversions. ROAS is recalculated on cash-collected revenue only — showing the real picture."
+                            deliverable="Refund-adjusted ROAS dashboard with campaign-level flagging (🔴🟡🟢), budget reallocation recommendations, and projected annual savings."
                         />
 
                         <UseCaseCard
-                            title="Multi-client Agency Standardized Warehouse Layer"
-                            problem="Each client has different reporting formats, making it impossible to compare performance across accounts or deliver consistent KPIs."
-                            fix="Standardized dbt schema applied to all client warehouses. Same data model, same KPI definitions, same reconciliation logic—just different client data."
-                            deliverable="One reporting template that works for every client. Onboarding time drops from weeks to days. Team alignment across all accounts."
+                            title="Multi-client Agency Reporting"
+                            problem="Each client has different reporting formats. You're spending hours on spreadsheets instead of strategy. There's no consistent view across accounts."
+                            fix="Calyxra standardizes reconciliation across all your client stores. Same methodology, same KPI definitions, same report template — just different client data."
+                            deliverable="White-label branded reports for every client. Onboarding takes 15 minutes per store. Team alignment across all accounts."
                         />
 
                     </div>
@@ -110,17 +110,17 @@ export default function UseCasesPage() {
                 <div className="max-w-4xl mx-auto px-6">
                     <div className="bg-stone-900 rounded-xl p-12 text-center">
                         <h2 className="text-2xl font-serif text-white mb-4">
-                            Want to see how this applies to your agency?
+                            Want to see the real numbers for your agency?
                         </h2>
                         <p className="text-stone-400 mb-8 max-w-xl mx-auto">
-                            Book a 15-minute warehouse audit. We'll review your current data sources and show you the reconciliation layer.
+                            Book a $249 Revenue Leak Audit. We'll connect your Shopify + Meta, find the phantom revenue, and deliver a branded report in 48 hours.
                         </p>
                         <a
-                            href="https://cal.com/calyxra/audit"
+                            href="https://cal.com/calyxra/15min"
                             target="_blank"
                             className="inline-flex items-center gap-2 bg-emerald-700 hover:bg-emerald-600 text-white px-6 py-3 rounded text-xs font-bold uppercase tracking-widest transition-all"
                         >
-                            Request Live Warehouse Audit
+                            Book $249 Audit — 48h Delivery
                             <ArrowRight className="w-4 h-4" />
                         </a>
                     </div>
