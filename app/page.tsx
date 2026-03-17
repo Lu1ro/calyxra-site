@@ -15,6 +15,7 @@ function FreeScanSection() {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [report, setReport] = useState<any | null>(null);
 
   const set = (key: string, val: string) => setForm(f => ({ ...f, [key]: val }));
 
@@ -22,6 +23,8 @@ function FreeScanSection() {
   // In development you can set NEXT_PUBLIC_RECONCILE_URL to "http://localhost:3000"
   // or your Railway / Vercel deployment URL.
   const toolUrl = process.env.NEXT_PUBLIC_RECONCILE_URL || '';
+  // Helpful debug to ensure env is wired correctly in the browser
+  console.log('FreeScan toolUrl:', toolUrl);
 
   const handleSubmit = async (useSample = false) => {
     if (!toolUrl) {
@@ -31,6 +34,11 @@ function FreeScanSection() {
 
     if (!useSample && (!form.shopifyDomain || !form.shopifyApiKey)) {
       setError('Shopify domain and API key are required.');
+      return;
+    }
+
+    if (!useSample && form.metaAdAccountId && !form.metaAdAccountId.trim().startsWith('act_')) {
+      setError('Ad Account ID must start with act_');
       return;
     }
     setError('');
@@ -52,7 +60,7 @@ function FreeScanSection() {
             dateTo: form.dateTo || undefined,
           };
 
-      const endpoint = `${toolUrl}/api/report`;
+      const endpoint = `${toolUrl}/api/free-scan`;
 
       const res = await fetch(endpoint, {
         method: 'POST',
@@ -84,16 +92,28 @@ function FreeScanSection() {
       }
 
       const data = await res.json();
-      console.log('Report:', data);
-
-      // Redirect to tool with a simple flag so the dashboard can show the report
-      if (toolUrl) {
-        window.open(`${toolUrl}?scan=complete`, '_blank');
-      }
+      setReport(data.report);
+      setTimeout(() => document.getElementById('scan-results')?.scrollIntoView({ behavior: 'smooth' }), 150);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Something went wrong. Try again.');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleCheckout = async (plan: 'audit' | 'monthly') => {
+    try {
+      const res = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ plan }),
+      });
+      const data = await res.json();
+      if (data.url) {
+        window.location.href = data.url;
+      }
+    } catch (err) {
+      console.error('Checkout error:', err);
     }
   };
 
@@ -224,11 +244,138 @@ function FreeScanSection() {
           </div>
         </div>
 
+        {/* Results */}
+        {report && (
+          <div id="scan-results" className="mt-10 space-y-6">
+            {/* Summary */}
+            <div className="bg-stone-800/80 border border-stone-700 rounded-xl p-5 md:p-6">
+              <h3 className="text-lg md:text-xl font-serif mb-3">Summary for this scan</h3>
+              <div className="grid md:grid-cols-3 gap-4 text-sm">
+                <div className="bg-stone-900/40 border border-stone-700 rounded-lg p-4">
+                  <p className="text-[11px] uppercase tracking-widest text-stone-500 mb-1">Ad Platforms Reported</p>
+                  <p className="text-xl font-mono">
+                    ${report.metaReportedRevenue?.toLocaleString()}
+                  </p>
+                  <p className="text-xs text-stone-500 mt-1">
+                    ROAS {report.reportedRoas}× on ${report.totalSpend?.toLocaleString()} spend
+                  </p>
+                </div>
+                <div className="bg-stone-900/40 border border-emerald-700 rounded-lg p-4">
+                  <p className="text-[11px] uppercase tracking-widest text-emerald-400 mb-1">Shopify Net Collected</p>
+                  <p className="text-xl font-mono text-emerald-300">
+                    ${report.shopifyNetRevenue?.toLocaleString()}
+                  </p>
+                  <p className="text-xs text-stone-400 mt-1">
+                    True ROAS {report.trueRoas}× (cash actually collected)
+                  </p>
+                </div>
+                <div className="bg-stone-900/40 border border-red-700 rounded-lg p-4">
+                  <p className="text-[11px] uppercase tracking-widest text-red-400 mb-1">Phantom Revenue Gap</p>
+                  <p className="text-xl font-mono text-red-300">
+                    ${report.phantomRevenue?.toLocaleString()}
+                  </p>
+                  <p className="text-xs text-stone-400 mt-1">
+                    {report.phantomPct}% of reported revenue is not in Shopify.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Campaign list */}
+            <div className="bg-stone-800/60 border border-stone-700 rounded-xl p-5 md:p-6">
+              <h3 className="text-lg md:text-xl font-serif mb-3">Campaigns (headline view)</h3>
+              <p className="text-xs text-stone-400 mb-4">
+                High-level flags only. Full written analysis and playbook are part of the paid audit.
+              </p>
+              <div className="space-y-3">
+                {report.campaigns?.slice(0, 6).map((c: any, idx: number) => {
+                  const borderColor =
+                    c.flagColor === 'red'
+                      ? 'border-red-700'
+                      : c.flagColor === 'amber'
+                      ? 'border-amber-500'
+                      : 'border-emerald-600';
+                  const badgeBg =
+                    c.flagColor === 'red'
+                      ? 'bg-red-950 text-red-300'
+                      : c.flagColor === 'amber'
+                      ? 'bg-amber-950 text-amber-200'
+                      : 'bg-emerald-950 text-emerald-200';
+                  return (
+                    <div
+                      key={idx}
+                      className={`flex flex-col md:flex-row md:items-center md:justify-between gap-2 rounded-lg border ${borderColor} bg-stone-900/40 px-4 py-3`}
+                    >
+                      <div>
+                        <p className="text-sm font-medium">
+                          {c.campaignName}{' '}
+                          <span className="text-[11px] uppercase tracking-widest text-stone-500">
+                            · {c.channel || 'Meta/Google/TikTok'}
+                          </span>
+                        </p>
+                        <p className="text-xs text-stone-400 mt-1">
+                          Spend ${c.spend?.toLocaleString()} · Reported {c.reportedRoas}× ·
+                          True ≈ {c.estimatedTrueRoas}×
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <span className={`text-[11px] font-semibold px-3 py-1 rounded-full ${badgeBg}`}>
+                          {c.flag}
+                        </span>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Blurred teaser */}
+            <div className="relative overflow-hidden rounded-xl border border-stone-700 bg-stone-900/40 p-6">
+              <div style={{ filter: 'blur(4px)', pointerEvents: 'none', userSelect: 'none' }}>
+                <h4 className="text-lg font-serif mb-3">Root Cause Analysis</h4>
+                <p className="text-sm text-stone-400 mb-2">Primary gap driver: Discount codes account for 38% of phantom revenue...</p>
+                <p className="text-sm text-stone-400 mb-4">Secondary driver: Cross-platform overlap contributing 24% of total gap...</p>
+                <h4 className="text-lg font-serif mb-3">Budget Reallocation Plan</h4>
+                <p className="text-sm text-stone-400 mb-2">Pause 2 unprofitable campaigns, freeing $11,452/month...</p>
+                <p className="text-sm text-stone-400">Scale 1 winner → projected +$34,200 in additional revenue...</p>
+                <h4 className="text-lg font-serif mt-4 mb-2">3 Actionable Recommendations</h4>
+                <p className="text-sm text-stone-400">1. Restructure discount attribution model...</p>
+              </div>
+            </div>
+
+            {/* CTA overlay */}
+            <div className="relative overflow-hidden rounded-xl border border-emerald-700 bg-gradient-to-r from-emerald-900/90 to-stone-900/90 p-6 md:p-7">
+              <div className="text-center space-y-3">
+                <p className="text-xs font-mono uppercase tracking-[0.25em] text-emerald-300">
+                  Unlock the full analysis
+                </p>
+                <p className="text-xl md:text-2xl font-serif text-white">
+                  Get root cause breakdown, budget plan, and brand‑ready PDF.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-3 justify-center mt-4">
+                  <button
+                    onClick={() => handleCheckout('audit')}
+                    className="px-6 py-3 bg-emerald-500 text-emerald-950 text-xs font-bold uppercase tracking-[0.25em] rounded hover:bg-emerald-400 transition-colors"
+                  >
+                    Book Audit — $249
+                  </button>
+                  <button
+                    onClick={() => handleCheckout('monthly')}
+                    className="px-6 py-3 bg-transparent text-emerald-300 text-xs font-bold uppercase tracking-[0.25em] rounded border border-emerald-600 hover:bg-emerald-900/50 transition-colors"
+                  >
+                    Monthly Plan — $150/mo
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
         <div className="mt-8 text-center">
           <p className="text-stone-500 text-sm">Don&apos;t want to connect APIs yourself?</p>
-          <a href="https://cal.com/calyxra/15min" target="_blank" rel="noopener noreferrer" className="text-emerald-400 font-semibold hover:underline">
+          <button onClick={() => handleCheckout('audit')} className="text-emerald-400 font-semibold hover:underline">
             Book a Revenue Leak Audit — $249 →
-          </a>
+          </button>
           <p className="text-stone-600 text-xs mt-1">We run it for you. Full branded report in 48 hours.</p>
         </div>
       </div>

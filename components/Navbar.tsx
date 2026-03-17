@@ -1,12 +1,30 @@
 'use client';
 
 import { useState } from 'react';
+import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import Image from 'next/image';
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const calendlyUrl = "https://cal.com/calyxra/15min";
+  const { data: session } = useSession();
+  const toolUrl = process.env.NEXT_PUBLIC_TOOL_URL || 'http://localhost:3001';
+
+  const handleCheckout = async () => {
+    try {
+      const res = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ plan: 'audit' }),
+      });
+      const data = await res.json();
+      if (data.url) {
+        window.location.href = data.url;
+      }
+    } catch (err) {
+      console.error('Checkout error:', err);
+    }
+  };
 
   return (
     <nav className="fixed w-full z-50 bg-[#FAFAF9]/90 backdrop-blur-md border-b border-stone-200">
@@ -29,20 +47,27 @@ export default function Navbar() {
         </Link>
 
         <div className="hidden md:flex items-center gap-3">
-          <a
-            href="/login"
-            className="px-5 py-3 text-stone-600 text-xs font-bold uppercase tracking-wide hover:text-stone-900 transition-all"
-          >
-            Login
-          </a>
-          <a
-            href={calendlyUrl}
-            target="_blank"
-            rel="noopener noreferrer"
+          {session ? (
+            <a
+              href={toolUrl}
+              className="px-5 py-3 text-emerald-700 text-xs font-bold uppercase tracking-wide hover:text-emerald-900 transition-all"
+            >
+              Dashboard →
+            </a>
+          ) : (
+            <a
+              href="/login"
+              className="px-5 py-3 text-stone-600 text-xs font-bold uppercase tracking-wide hover:text-stone-900 transition-all"
+            >
+              Login
+            </a>
+          )}
+          <button
+            onClick={handleCheckout}
             className="px-6 py-3 bg-emerald-700 text-white text-xs font-bold uppercase tracking-wide hover:bg-emerald-800 transition-all hover:shadow-lg hover:shadow-emerald-700/30 active:scale-95"
           >
             Book Audit — $249
-          </a>
+          </button>
         </div>
 
         {/* Mobile Menu Button */}
@@ -66,22 +91,32 @@ export default function Navbar() {
       {isMobileMenuOpen && (
         <div className="md:hidden absolute top-20 left-0 w-full bg-[#FAFAF9] border-b border-stone-200 p-6 flex flex-col gap-6 shadow-xl">
           <div className="flex flex-col gap-3">
-            <a
-              href="/login"
-              className="w-full py-3 bg-stone-100 text-stone-900 text-center text-xs font-bold uppercase tracking-wide"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              Login
-            </a>
-            <a
-              href={calendlyUrl}
-              target="_blank"
-              rel="noopener noreferrer"
+            {session ? (
+              <a
+                href={toolUrl}
+                className="w-full py-3 bg-stone-100 text-stone-900 text-center text-xs font-bold uppercase tracking-wide"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Dashboard →
+              </a>
+            ) : (
+              <a
+                href="/login"
+                className="w-full py-3 bg-stone-100 text-stone-900 text-center text-xs font-bold uppercase tracking-wide"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Login
+              </a>
+            )}
+            <button
+              onClick={() => {
+                setIsMobileMenuOpen(false);
+                handleCheckout();
+              }}
               className="w-full py-3 bg-emerald-700 text-white text-center text-xs font-bold uppercase tracking-wide"
-              onClick={() => setIsMobileMenuOpen(false)}
             >
               Book Audit — $249
-            </a>
+            </button>
           </div>
         </div>
       )}

@@ -7,11 +7,17 @@ export default function Footer() {
                     Revenue reconciliation for Shopify brands.
                     Compare what ad platforms report vs what your bank actually collected.
                 </p>
-                <div className="flex flex-wrap gap-6 text-[10px] font-bold text-stone-500 uppercase tracking-widest justify-center mb-8">
+                <div className="flex flex-wrap gap-6 text-[10px] font-bold text-stone-500 uppercase tracking-widest justify-center mb-6">
                     <a href="#calculator" className="hover:text-white transition-colors">Free Scan</a>
-                    <a href="https://cal.com/calyxra/15min" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Book Audit</a>
+                    <a href="/#pricing" className="hover:text-white transition-colors">Book Audit</a>
                     <a href="/login" className="hover:text-white transition-colors">Login</a>
                     <a href="mailto:calyxra.team@gmail.com" className="hover:text-white transition-colors">Contact</a>
+                </div>
+                <div className="flex flex-wrap gap-6 text-[10px] text-stone-600 uppercase tracking-widest justify-center mb-8">
+                    <a href="/privacy" className="hover:text-stone-400 transition-colors">Privacy Policy</a>
+                    <a href="/terms" className="hover:text-stone-400 transition-colors">Terms of Service</a>
+                    <a href="/refunds" className="hover:text-stone-400 transition-colors">Refund Policy</a>
+                    <a href="/security" className="hover:text-stone-400 transition-colors">Security</a>
                 </div>
                 <p className="text-stone-600 text-xs">calyxra.team@gmail.com</p>
             </div>

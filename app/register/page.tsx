@@ -6,33 +6,51 @@ import { signIn } from 'next-auth/react';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 
-export default function LoginPage() {
+export default function RegisterPage() {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-    setLoading(true);
 
+    if (password !== confirmPassword) {
+      setError('Passwords do not match.');
+      return;
+    }
+
+    setLoading(true);
     try {
+      const res = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setError(data.error || 'Registration failed.');
+        setLoading(false);
+        return;
+      }
+
+      // Auto sign-in after successful registration
       const result = await signIn('credentials', {
         email,
         password,
         redirect: false,
       });
-
       if (result?.error) {
-        setError(result.error || 'Invalid credentials.');
+        setError(result.error || 'Login failed after registration.');
       } else {
         const toolUrl = process.env.NEXT_PUBLIC_TOOL_URL || 'http://localhost:3001';
         router.push(toolUrl);
       }
     } catch (err) {
-      setError('Login failed. Please try again.');
+      setError('Registration failed. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -46,10 +64,10 @@ export default function LoginPage() {
         <div className="max-w-md mx-auto">
           <div className="mb-8 text-center">
             <h1 className="text-3xl md:text-4xl font-serif font-medium text-stone-900 mb-2">
-              Login to Calyxra
+              Create your Calyxra account
             </h1>
             <p className="text-sm text-stone-500">
-              Access your reconciliation dashboards and client reports.
+              Use this account to access your reconciliation dashboard.
             </p>
           </div>
 
@@ -83,11 +101,27 @@ export default function LoginPage() {
                 <input
                   type="password"
                   required
-                  autoComplete="current-password"
+                  minLength={8}
+                  autoComplete="new-password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="w-full px-4 py-3 rounded border border-stone-300 bg-white text-sm text-stone-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-                  placeholder="••••••••"
+                  placeholder="At least 8 characters"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-stone-600 mb-1.5 uppercase tracking-wide">
+                  Confirm Password
+                </label>
+                <input
+                  type="password"
+                  required
+                  autoComplete="new-password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  className="w-full px-4 py-3 rounded border border-stone-300 bg-white text-sm text-stone-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                  placeholder="Repeat password"
                 />
               </div>
 
@@ -96,17 +130,14 @@ export default function LoginPage() {
                 disabled={loading}
                 className="w-full py-3.5 mt-2 rounded bg-emerald-700 text-white text-xs font-bold uppercase tracking-widest hover:bg-emerald-800 disabled:opacity-60 disabled:cursor-not-allowed transition-colors"
               >
-                {loading ? 'Signing in…' : 'Sign In'}
+                {loading ? 'Creating account…' : 'Create Account'}
               </button>
             </form>
 
             <p className="mt-4 text-xs text-stone-500 text-center">
-              Don&apos;t have an account yet?{' '}
-              <a
-                href="/register"
-                className="font-semibold text-emerald-700 hover:underline"
-              >
-                Create one
+              Already have an account?{' '}
+              <a href="/login" className="font-semibold text-emerald-700 hover:underline">
+                Log in
               </a>
               .
             </p>
