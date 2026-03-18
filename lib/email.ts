@@ -1,11 +1,14 @@
 // lib/email.ts | Resend email client + branded templates
+// Resend is lazy-initialized to prevent Vercel build crash
 
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 const FROM = "Calyxra <hello@calyxra.com>";
 const GREEN = "#1B6B45";
+
+function getResend() {
+  return new Resend(process.env.RESEND_API_KEY);
+}
 
 interface EmailPayload {
   to: string;
@@ -14,6 +17,7 @@ interface EmailPayload {
 }
 
 export async function sendEmail({ to, subject, html }: EmailPayload) {
+  const resend = getResend();
   return resend.emails.send({ from: FROM, to, subject, html });
 }
 

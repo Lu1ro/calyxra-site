@@ -6,6 +6,7 @@ import bcrypt from "bcryptjs";
 import { prisma } from "../../../../lib/db";
 
 export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
 export const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,

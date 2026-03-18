@@ -1,9 +1,14 @@
 import { NextResponse } from 'next/server';
 import OpenAI from 'openai';
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+
+function getOpenAI() {
+  return new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY,
+  });
+}
 
 export async function POST(req: Request) {
   try {
@@ -21,12 +26,12 @@ export async function POST(req: Request) {
       return NextResponse.json({ reply: "Error: No message provided." }, { status: 400 });
     }
 
+    const openai = getOpenAI();
     const completion = await openai.chat.completions.create({
       model: "gpt-4o-mini",
       messages: [
         {
           role: "system",
-          // 👇 ЯКЩО ВІН ПОМИЛЯЄТЬСЯ, МИ ПИШЕМО ЙОМУ ЦЕ ЯК ЗАКОН 👇
           content: `
           You are the AI Sales Assistant for "Calyxra", a premium B2B analytics agency.
           
@@ -56,13 +61,13 @@ export async function POST(req: Request) {
         },
       ],
       max_tokens: 300,
-      temperature: 0.5, // Я знизив температуру з 0.7 до 0.5, щоб він менше фантазував і був точнішим
+      temperature: 0.5,
     });
 
     const reply = completion.choices[0].message.content;
     return NextResponse.json({ reply });
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('OpenAI Error:', error);
     return NextResponse.json(
       { reply: "System busy. Please try again later." },

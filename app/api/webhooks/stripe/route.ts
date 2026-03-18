@@ -11,11 +11,10 @@ import {
 } from "../../../../lib/email";
 
 export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
 function getStripe() {
-  return new Stripe(process.env.STRIPE_SECRET_KEY!, {
-    apiVersion: "2024-12-18.acacia",
-  });
+  return new Stripe(process.env.STRIPE_SECRET_KEY!);
 }
 
 export async function POST(req: NextRequest) {
