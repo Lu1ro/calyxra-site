@@ -5,9 +5,11 @@ import Stripe from "stripe";
 
 export const runtime = "nodejs";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2024-12-18.acacia",
-});
+function getStripe() {
+  return new Stripe(process.env.STRIPE_SECRET_KEY!, {
+    apiVersion: "2024-12-18.acacia",
+  });
+}
 
 export async function POST(req: NextRequest) {
   try {
@@ -28,6 +30,7 @@ export async function POST(req: NextRequest) {
 
     const baseUrl = process.env.NEXTAUTH_URL || "http://localhost:3000";
 
+    const stripe = getStripe();
     const session = await stripe.checkout.sessions.create({
       mode: plan === "audit" ? "payment" : "subscription",
       line_items: [{ price: priceId, quantity: 1 }],
