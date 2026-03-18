@@ -4,6 +4,12 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  webpack: (config, { isServer }) => {
+    if (isServer) {
+      config.externals = [...(config.externals || []), '@prisma/client'];
+    }
+    return config;
+  },
   async redirects() {
     return [
       {
