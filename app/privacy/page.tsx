@@ -14,7 +14,7 @@ export default function PrivacyPage() {
       <article className="pt-36 pb-20 px-6">
         <div className="max-w-2xl mx-auto">
           <h1 className="text-3xl md:text-4xl font-serif font-bold text-stone-900 mb-2">Privacy Policy</h1>
-          <p className="text-sm text-stone-400 mb-10">Last updated: March 17, 2026</p>
+          <p className="text-sm text-stone-400 mb-10">Last updated: March 19, 2026</p>
 
           <div className="space-y-10 text-stone-700 leading-relaxed">
             {/* 1 */}
@@ -23,8 +23,9 @@ export default function PrivacyPage() {
               <p>
                 Calyxra (&quot;we&quot;, &quot;our&quot;, &quot;us&quot;) is a revenue reconciliation service for Shopify brands.
               </p>
-              <p className="mt-2">Contact: <a href="mailto:calyxra.team@gmail.com" className="text-emerald-700 hover:underline">calyxra.team@gmail.com</a></p>
-              <p className="mt-1">Address: Zolota 12, Dubno, Rivne Oblast, Ukraine</p>
+              <p className="mt-2"><strong>Operator:</strong> FOP Kononchuk Oleksandr Yaroslavovych</p>
+              <p className="mt-1"><strong>Contact:</strong> <a href="mailto:calyxra.team@gmail.com" className="text-emerald-700 hover:underline">calyxra.team@gmail.com</a></p>
+              <p className="mt-1"><strong>Address:</strong> Zolota 12, Dubno, Rivne Oblast, Ukraine</p>
             </section>
 
             {/* 2 */}
@@ -48,7 +49,7 @@ export default function PrivacyPage() {
 
               <h3 className="font-semibold text-stone-800 mt-4 mb-2">Payment Processing</h3>
               <ul className="list-disc list-inside space-y-1 text-sm">
-                <li>Handled entirely by Fondy/Gumroad</li>
+                <li>Handled by Fondy (fondy.eu)</li>
                 <li>We never see or store credit card data</li>
               </ul>
             </section>

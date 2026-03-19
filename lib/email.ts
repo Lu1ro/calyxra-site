@@ -7,7 +7,7 @@ const FROM = "Calyxra <hello@calyxra.com>";
 const GREEN = "#1B6B45";
 
 function getResend() {
-  return new Resend(process.env.RESEND_API_KEY);
+  return new Resend(process.env.RESEND_API_KEY || '');
 }
 
 interface EmailPayload {

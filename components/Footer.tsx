@@ -18,6 +18,7 @@ export default function Footer() {
                     <a href="/terms" className="hover:text-stone-400 transition-colors">Terms of Service</a>
                     <a href="/refunds" className="hover:text-stone-400 transition-colors">Refund Policy</a>
                     <a href="/security" className="hover:text-stone-400 transition-colors">Security</a>
+                    <a href="/contact" className="hover:text-stone-400 transition-colors">Contact</a>
                 </div>
                 <p className="text-stone-600 text-xs">calyxra.team@gmail.com</p>
             </div>

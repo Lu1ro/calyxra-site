@@ -14,7 +14,7 @@ export default function RefundsPage() {
       <article className="pt-36 pb-20 px-6">
         <div className="max-w-2xl mx-auto">
           <h1 className="text-3xl md:text-4xl font-serif font-bold text-stone-900 mb-2">Refund Policy</h1>
-          <p className="text-sm text-stone-400 mb-10">Last updated: March 17, 2026</p>
+          <p className="text-sm text-stone-400 mb-10">Last updated: March 19, 2026</p>
 
           <div className="space-y-10 text-stone-700 leading-relaxed">
             {/* Guarantee */}
