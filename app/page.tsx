@@ -327,10 +327,10 @@ export default function Home() {
       if (data.checkout_url) {
         window.location.href = data.checkout_url;
       } else {
-        alert('Something went wrong. Contact team@calyxra.com');
+        alert('Error: ' + (data.error || 'Unknown error') + (data.error_code ? ' (code: ' + data.error_code + ')' : ''));
       }
-    } catch {
-      alert('Something went wrong. Contact team@calyxra.com');
+    } catch (err) {
+      alert('Error: ' + (err instanceof Error ? err.message : 'Network error. Check your connection.'));
     } finally {
       setCheckoutLoading(null);
     }

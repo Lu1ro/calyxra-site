@@ -24,6 +24,7 @@ function generateSignature(params: Record<string, string | number>, paymentKey: 
     .map(([, value]) => value);
 
   const signatureString = `${paymentKey}|${sorted.join('|')}`;
+  console.log('[Fondy] Signature string (before SHA1):', signatureString);
   return crypto.createHash('sha1').update(signatureString).digest('hex');
 }
 
@@ -31,6 +32,8 @@ export async function POST(req: Request) {
   try {
     const body = await req.json();
     const { product } = body as { product: 'audit' | 'monthly'; email?: string };
+
+    console.log('[Fondy] Checkout request received:', { product });
 
     if (!product || !PRODUCTS[product]) {
       return NextResponse.json(
@@ -42,10 +45,15 @@ export async function POST(req: Request) {
     const merchantId = process.env.FONDY_MERCHANT_ID;
     const paymentKey = process.env.FONDY_PAYMENT_KEY;
 
+    console.log('[Fondy] merchant_id:', merchantId);
+    console.log('[Fondy] payment_key exists:', !!paymentKey);
+    console.log('[Fondy] payment_key length:', paymentKey?.length);
+
     if (!merchantId || !paymentKey) {
-      console.error('Fondy checkout: Missing FONDY_MERCHANT_ID or FONDY_PAYMENT_KEY');
+      const missing = !merchantId ? 'FONDY_MERCHANT_ID' : 'FONDY_PAYMENT_KEY';
+      console.error(`[Fondy] Missing env var: ${missing}`);
       return NextResponse.json(
-        { error: 'Payment system is not configured.' },
+        { error: `Payment system not configured: missing ${missing}` },
         { status: 500 }
       );
     }
@@ -55,8 +63,9 @@ export async function POST(req: Request) {
 
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://calyxra.com';
 
+    // merchant_id must be a string for Fondy
     const requestParams: Record<string, string | number> = {
-      merchant_id: merchantId,
+      merchant_id: String(merchantId),
       order_id: orderId,
       order_desc,
       amount,
@@ -67,32 +76,65 @@ export async function POST(req: Request) {
 
     const signature = generateSignature(requestParams, paymentKey);
 
+    const fondyPayload = {
+      request: {
+        ...requestParams,
+        signature,
+      },
+    };
+
+    console.log('[Fondy] Sending to Fondy API:', JSON.stringify(fondyPayload, null, 2));
+
     const fondyResponse = await fetch('https://pay.fondy.eu/api/checkout/url/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        request: {
-          ...requestParams,
-          signature,
-        },
-      }),
+      body: JSON.stringify(fondyPayload),
     });
 
-    const fondyData = await fondyResponse.json();
+    const fondyRawText = await fondyResponse.text();
+    console.log('[Fondy] Response status:', fondyResponse.status);
+    console.log('[Fondy] Response body:', fondyRawText);
+
+    let fondyData;
+    try {
+      fondyData = JSON.parse(fondyRawText);
+    } catch {
+      console.error('[Fondy] Failed to parse response as JSON');
+      return NextResponse.json(
+        { error: `Fondy returned non-JSON response (status ${fondyResponse.status}): ${fondyRawText.slice(0, 200)}` },
+        { status: 500 }
+      );
+    }
 
     if (fondyData.response?.checkout_url) {
+      console.log('[Fondy] Success! Checkout URL:', fondyData.response.checkout_url);
       return NextResponse.json({ checkout_url: fondyData.response.checkout_url });
     }
 
-    console.error('Fondy checkout error:', fondyData);
+    const errorCode = fondyData.response?.error_code;
+    const errorMessage = fondyData.response?.error_message;
+    const requestId = fondyData.response?.request_id;
+
+    console.error('[Fondy] Checkout failed:', {
+      error_code: errorCode,
+      error_message: errorMessage,
+      request_id: requestId,
+      full_response: fondyData,
+    });
+
     return NextResponse.json(
-      { error: fondyData.response?.error_message || 'Failed to create checkout session.' },
+      {
+        error: errorMessage || 'Failed to create checkout session.',
+        error_code: errorCode || null,
+        request_id: requestId || null,
+      },
       { status: 500 }
     );
   } catch (error: unknown) {
-    console.error('Fondy checkout error:', error);
+    const message = error instanceof Error ? error.message : String(error);
+    console.error('[Fondy] Unexpected error:', message);
     return NextResponse.json(
-      { error: 'Internal server error.' },
+      { error: `Internal server error: ${message}` },
       { status: 500 }
     );
   }
