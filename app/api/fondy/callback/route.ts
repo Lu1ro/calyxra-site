@@ -39,7 +39,7 @@ export async function POST(req: Request) {
     }
 
     // Verify HMAC SHA1 signature
-    const fondyKey = process.env.FONDY_PAYMENT_KEY;
+    const fondyKey = process.env.FONDY_PAYMENT_KEY?.trim();
     if (!fondyKey) {
       console.error('Fondy callback: FONDY_PAYMENT_KEY not configured');
       return NextResponse.json({ error: 'Server configuration error' }, { status: 500 });

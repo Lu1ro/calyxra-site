@@ -39,8 +39,8 @@ export async function POST(req: Request) {
       );
     }
 
-    const merchantId = process.env.FONDY_MERCHANT_ID;
-    const paymentKey = process.env.FONDY_PAYMENT_KEY;
+    const merchantId = process.env.FONDY_MERCHANT_ID?.trim();
+    const paymentKey = process.env.FONDY_PAYMENT_KEY?.trim();
 
     if (!merchantId || !paymentKey) {
       return NextResponse.json(
@@ -52,7 +52,7 @@ export async function POST(req: Request) {
     const { amount, currency, order_desc } = PRODUCTS[product];
     const orderId = `calyxra_${Date.now()}_${Math.random().toString(36).slice(2)}`;
 
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://calyxra.com';
+    const baseUrl = (process.env.NEXT_PUBLIC_BASE_URL || 'https://calyxra.com').trim().replace(/\/+$/, '');
 
     // All values MUST be strings for correct Fondy signature
     const requestParams: Record<string, string> = {
