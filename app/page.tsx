@@ -313,6 +313,28 @@ function FreeScanSection() {
 /* ─── Main Page ─────────────────────────────────────────────── */
 export default function Home() {
   const calendlyUrl = "https://cal.com/calyxra/15min";
+  const [checkoutLoading, setCheckoutLoading] = useState<string | null>(null);
+
+  async function handleCheckout(product: 'audit' | 'monthly') {
+    setCheckoutLoading(product);
+    try {
+      const res = await fetch('/api/fondy/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ product }),
+      });
+      const data = await res.json();
+      if (data.checkout_url) {
+        window.location.href = data.checkout_url;
+      } else {
+        alert('Something went wrong. Contact team@calyxra.com');
+      }
+    } catch {
+      alert('Something went wrong. Contact team@calyxra.com');
+    } finally {
+      setCheckoutLoading(null);
+    }
+  }
 
   const faqItems = [
     {
@@ -506,9 +528,13 @@ export default function Home() {
                   <li className="flex items-start gap-3 text-sm text-[#2d3436]"><span className="text-[#00b894] mt-0.5">✅</span> PDF report + 3 recommendations</li>
                   <li className="flex items-start gap-3 text-sm text-[#2d3436]"><span className="text-[#00b894] mt-0.5">✅</span> 30-min walkthrough call</li>
                 </ul>
-                <a href={calendlyUrl} target="_blank" rel="noopener noreferrer" className="block text-center px-6 py-4 bg-[#00b894] text-white font-bold text-sm uppercase tracking-widest hover:bg-[#007a65] transition-all rounded-lg">
-                  Book Audit →
-                </a>
+                <button
+                  onClick={() => handleCheckout('audit')}
+                  disabled={checkoutLoading === 'audit'}
+                  className="w-full py-3 bg-[#00b894] text-white font-bold text-sm uppercase tracking-widest hover:bg-[#007a65] transition-all rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {checkoutLoading === 'audit' ? 'Processing...' : 'Get Audit — $249'}
+                </button>
               </div>
 
               {/* Monthly Reconciliation */}
@@ -529,9 +555,13 @@ export default function Home() {
                   <li className="flex items-start gap-3 text-sm text-[#2d3436]"><span className="text-[#00b894] mt-0.5">✅</span> Action Engine recommendations</li>
                   <li className="flex items-start gap-3 text-sm text-[#2d3436]"><span className="text-[#00b894] mt-0.5">✅</span> White-label PDF for clients</li>
                 </ul>
-                <a href={calendlyUrl} target="_blank" rel="noopener noreferrer" className="block text-center px-6 py-4 bg-[#00b894] text-white font-bold text-sm uppercase tracking-widest hover:bg-[#007a65] transition-all rounded-lg shadow-lg">
-                  Start Free Pilot →
-                </a>
+                <button
+                  onClick={() => handleCheckout('monthly')}
+                  disabled={checkoutLoading === 'monthly'}
+                  className="w-full py-3 bg-[#00b894] text-white font-bold text-sm uppercase tracking-widest hover:bg-[#007a65] transition-all rounded-lg shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {checkoutLoading === 'monthly' ? 'Processing...' : 'Start Monthly — $150/mo'}
+                </button>
               </div>
             </div>
           </div>
