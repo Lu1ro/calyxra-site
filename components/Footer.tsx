@@ -11,7 +11,7 @@ export default function Footer() {
                     <a href="#calculator" className="hover:text-white transition-colors">Free Scan</a>
                     <a href="/#pricing" className="hover:text-white transition-colors">Book Audit</a>
                     <a href="/login" className="hover:text-white transition-colors">Login</a>
-                    <a href="mailto:calyxra.team@gmail.com" className="hover:text-white transition-colors">Contact</a>
+                    <a href="mailto:team@calyxra.com" className="hover:text-white transition-colors">Contact</a>
                 </div>
                 <div className="flex flex-wrap gap-6 text-[10px] text-stone-600 uppercase tracking-widest justify-center mb-8">
                     <a href="/privacy" className="hover:text-stone-400 transition-colors">Privacy Policy</a>
@@ -20,7 +20,7 @@ export default function Footer() {
                     <a href="/security" className="hover:text-stone-400 transition-colors">Security</a>
                     <a href="/contact" className="hover:text-stone-400 transition-colors">Contact</a>
                 </div>
-                <p className="text-stone-600 text-xs">calyxra.team@gmail.com</p>
+                <p className="text-stone-600 text-xs">team@calyxra.com</p>
             </div>
             <div className="max-w-4xl mx-auto mt-12 pt-8 border-t border-stone-800 text-center text-[10px] text-stone-600 uppercase tracking-widest">
                 © 2026 Calyxra

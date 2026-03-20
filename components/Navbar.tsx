@@ -62,12 +62,14 @@ export default function Navbar() {
               Login
             </a>
           )}
-          <button
-            onClick={handleCheckout}
-            className="px-6 py-3 bg-emerald-700 text-white text-xs font-bold uppercase tracking-wide hover:bg-emerald-800 transition-all hover:shadow-lg hover:shadow-emerald-700/30 active:scale-95"
+          <a
+            href="https://cal.com/calyxra/15min"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-6 py-3 bg-[#00b894] text-white text-xs font-bold uppercase tracking-wide hover:bg-[#007a65] transition-all hover:shadow-lg hover:shadow-[#00b894]/30 active:scale-95 rounded-lg"
           >
-            Book Audit — $249
-          </button>
+            Book a Call
+          </a>
         </div>
 
         {/* Mobile Menu Button */}
@@ -108,15 +110,15 @@ export default function Navbar() {
                 Login
               </a>
             )}
-            <button
-              onClick={() => {
-                setIsMobileMenuOpen(false);
-                handleCheckout();
-              }}
-              className="w-full py-3 bg-emerald-700 text-white text-center text-xs font-bold uppercase tracking-wide"
+            <a
+              href="https://cal.com/calyxra/15min"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="w-full py-3 bg-[#00b894] text-white text-center text-xs font-bold uppercase tracking-wide rounded-lg block"
             >
-              Book Audit — $249
-            </button>
+              Book a Call
+            </a>
           </div>
         </div>
       )}

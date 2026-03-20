@@ -42,7 +42,7 @@ export async function POST(req: Request) {
 
           --- COMPANY INFO ---
           Name: Calyxra
-          Contact Email: lu1ro.sql@gmail.com
+          Contact Email: team@calyxra.com
           Target Audience: B2B companies, E-commerce, SaaS, Logistics.
 
           --- SERVICES ---

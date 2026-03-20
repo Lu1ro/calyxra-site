@@ -24,7 +24,7 @@ export default function PrivacyPage() {
                 Calyxra (&quot;we&quot;, &quot;our&quot;, &quot;us&quot;) is a revenue reconciliation service for Shopify brands.
               </p>
               <p className="mt-2"><strong>Operator:</strong> FOP Kononchuk Oleksandr Yaroslavovych</p>
-              <p className="mt-1"><strong>Contact:</strong> <a href="mailto:calyxra.team@gmail.com" className="text-emerald-700 hover:underline">calyxra.team@gmail.com</a></p>
+              <p className="mt-1"><strong>Contact:</strong> <a href="mailto:team@calyxra.com" className="text-emerald-700 hover:underline">team@calyxra.com</a></p>
               <p className="mt-1"><strong>Address:</strong> Zolota 12, Dubno, Rivne Oblast, Ukraine</p>
             </section>
 
@@ -100,7 +100,7 @@ export default function PrivacyPage() {
                 <li>Export your data</li>
                 <li>Withdraw consent at any time</li>
               </ul>
-              <p className="mt-3 text-sm">To exercise these rights: <a href="mailto:calyxra.team@gmail.com" className="text-emerald-700 hover:underline">calyxra.team@gmail.com</a></p>
+              <p className="mt-3 text-sm">To exercise these rights: <a href="mailto:team@calyxra.com" className="text-emerald-700 hover:underline">team@calyxra.com</a></p>
             </section>
 
             {/* 7 */}
@@ -129,7 +129,7 @@ export default function PrivacyPage() {
             <section>
               <h2 className="text-xl font-serif font-semibold text-stone-900 mb-3">10. Changes</h2>
               <p className="text-sm">We will notify you of material changes via email. Continued use constitutes acceptance.</p>
-              <p className="mt-3 text-sm">Contact: <a href="mailto:calyxra.team@gmail.com" className="text-emerald-700 hover:underline">calyxra.team@gmail.com</a></p>
+              <p className="mt-3 text-sm">Contact: <a href="mailto:team@calyxra.com" className="text-emerald-700 hover:underline">team@calyxra.com</a></p>
             </section>
           </div>
         </div>

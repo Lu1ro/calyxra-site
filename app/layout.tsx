@@ -7,10 +7,10 @@ import { Providers } from "./providers";
 export const metadata: Metadata = {
   title: "Calyxra | Revenue Reconciliation for Shopify Brands",
   description:
-    "Calyxra reconciles ad platform revenue against Shopify net revenue so you can see true ROAS, phantom revenue, and real profit per campaign.",
+    "Your ad platforms report phantom revenue. Calyxra shows you the gap between what Meta/Google claim and what Shopify actually collected. Free scan available.",
   openGraph: {
-    title: "Calyxra | Agency Reporting Infrastructure",
-    description: "Premium White-Label Analytics. We turn messy Shopify data into reliable financial assets.",
+    title: "Calyxra | Revenue Reconciliation for Shopify Brands",
+    description: "Your ad platforms report phantom revenue. Calyxra shows you the gap between what Meta/Google claim and what Shopify actually collected. Free scan available.",
     url: "https://www.calyxra.com",
     siteName: "Calyxra",
     images: [
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
         url: "/logo.png",
         width: 1200,
         height: 630,
-        alt: "Calyxra | Executive Reporting",
+        alt: "Calyxra — Revenue Reconciliation for Shopify Brands",
       },
     ],
     locale: "en_US",

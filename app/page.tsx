@@ -4,6 +4,87 @@ import { useState } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
+/* ─── Gap Calculator ───────────────────────────────────────── */
+function GapCalculator() {
+  const [metaRevenue, setMetaRevenue] = useState('');
+  const [shopifyRevenue, setShopifyRevenue] = useState('');
+  const [adSpend, setAdSpend] = useState('');
+  const [result, setResult] = useState<null | {
+    phantom: number; platformRoas: number; realRoas: number; gapPct: number;
+  }>(null);
+
+  const calculate = () => {
+    const meta = parseFloat(metaRevenue.replace(/[^0-9.]/g, ''));
+    const shopify = parseFloat(shopifyRevenue.replace(/[^0-9.]/g, ''));
+    const spend = parseFloat(adSpend.replace(/[^0-9.]/g, ''));
+    if (!meta || !shopify || !spend) return;
+    const phantom = meta - shopify;
+    const platformRoas = meta / spend;
+    const realRoas = shopify / spend;
+    const gapPct = (phantom / meta) * 100;
+    setResult({ phantom, platformRoas, realRoas, gapPct });
+  };
+
+  const fmt = (n: number) => '$' + n.toLocaleString('en-US', { maximumFractionDigits: 0 });
+  const inputClass = "w-full px-4 py-3 border border-stone-300 text-[#2d3436] text-sm rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00b894]/30 focus:border-[#00b894] transition-all";
+
+  return (
+    <section className="py-20 px-6 bg-white border-y border-stone-200">
+      <div className="max-w-xl mx-auto text-center">
+        <h2 className="text-3xl md:text-4xl font-serif font-medium text-[#2d3436] mb-3">
+          Find your phantom revenue in 30 seconds
+        </h2>
+        <p className="text-[#636e72] mb-8">Enter your numbers — no login needed.</p>
+        <div className="space-y-4 text-left">
+          <div>
+            <label className="block text-sm font-semibold text-[#2d3436] mb-1.5">Meta reported revenue (last 30 days)</label>
+            <input className={inputClass} placeholder="$142,800" value={metaRevenue} onChange={e => setMetaRevenue(e.target.value)} />
+          </div>
+          <div>
+            <label className="block text-sm font-semibold text-[#2d3436] mb-1.5">Shopify net revenue (last 30 days)</label>
+            <input className={inputClass} placeholder="$118,340" value={shopifyRevenue} onChange={e => setShopifyRevenue(e.target.value)} />
+          </div>
+          <div>
+            <label className="block text-sm font-semibold text-[#2d3436] mb-1.5">Monthly ad spend</label>
+            <input className={inputClass} placeholder="$47,000" value={adSpend} onChange={e => setAdSpend(e.target.value)} />
+          </div>
+          <button onClick={calculate} className="w-full py-4 bg-[#00b894] text-white font-bold text-sm uppercase tracking-widest hover:bg-[#007a65] hover:shadow-lg hover:shadow-[#00b894]/20 transition-all rounded-lg">
+            Calculate →
+          </button>
+        </div>
+
+        {result && (
+          <div className="mt-8 bg-[#f8f9fa] border border-stone-200 rounded-xl p-6 text-left space-y-3">
+            <div className="flex justify-between items-center py-2 border-b border-stone-200">
+              <span className="text-sm text-[#636e72]">Phantom Revenue</span>
+              <span className="text-lg font-bold text-red-500">{fmt(result.phantom)}</span>
+            </div>
+            <div className="flex justify-between items-center py-2 border-b border-stone-200">
+              <span className="text-sm text-[#636e72]">Platform ROAS</span>
+              <span className="text-lg font-bold text-[#2d3436]">{result.platformRoas.toFixed(1)}×</span>
+            </div>
+            <div className="flex justify-between items-center py-2 border-b border-stone-200">
+              <span className="text-sm text-[#636e72]">Real ROAS</span>
+              <span className="text-lg font-bold text-[#00b894]">{result.realRoas.toFixed(1)}×</span>
+            </div>
+            <div className="flex justify-between items-center py-2">
+              <span className="text-sm text-[#636e72]">Gap</span>
+              <span className="text-lg font-bold text-red-500">{result.gapPct.toFixed(1)}%</span>
+            </div>
+            <p className="text-sm text-red-600 font-semibold pt-2 text-center">
+              You may be overpaying by {result.gapPct.toFixed(0)}%
+            </p>
+            <a href="https://cal.com/calyxra/15min" target="_blank" rel="noopener noreferrer"
+              className="block text-center mt-4 px-6 py-3 bg-[#00b894] text-white font-bold text-sm uppercase tracking-widest hover:bg-[#007a65] transition-all rounded-lg">
+              See exactly where this comes from → Get $249 Audit
+            </a>
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}
+
 /* ─── Free Scan — API Connection Form ───────────────────────── */
 function FreeScanSection() {
   const [form, setForm] = useState({
@@ -15,16 +96,10 @@ function FreeScanSection() {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [report, setReport] = useState<any | null>(null);
 
   const set = (key: string, val: string) => setForm(f => ({ ...f, [key]: val }));
 
-  // Base URL of the reconciliation tool backend (Next.js app with /api/report).
-  // In development you can set NEXT_PUBLIC_RECONCILE_URL to "http://localhost:3000"
-  // or your Railway / Vercel deployment URL.
   const toolUrl = process.env.NEXT_PUBLIC_RECONCILE_URL || '';
-  // Helpful debug to ensure env is wired correctly in the browser
-  console.log('FreeScan toolUrl:', toolUrl);
 
   const handleSubmit = async (useSample = false) => {
     if (!toolUrl) {
@@ -34,11 +109,6 @@ function FreeScanSection() {
 
     if (!useSample && (!form.shopifyDomain || !form.shopifyApiKey)) {
       setError('Shopify domain and API key are required.');
-      return;
-    }
-
-    if (!useSample && form.metaAdAccountId && !form.metaAdAccountId.trim().startsWith('act_')) {
-      setError('Ad Account ID must start with act_');
       return;
     }
     setError('');
@@ -60,7 +130,7 @@ function FreeScanSection() {
             dateTo: form.dateTo || undefined,
           };
 
-      const endpoint = `${toolUrl}/api/free-scan`;
+      const endpoint = `${toolUrl}/api/report`;
 
       const res = await fetch(endpoint, {
         method: 'POST',
@@ -80,7 +150,6 @@ function FreeScanSection() {
           hasTikTok: !!body.tiktokAccessToken,
           body: text,
         });
-        // Try to surface a meaningful message if backend returned JSON
         try {
           const maybeJson = JSON.parse(text);
           const msg = maybeJson?.error || maybeJson?.message;
@@ -92,8 +161,11 @@ function FreeScanSection() {
       }
 
       const data = await res.json();
-      setReport(data.report);
-      setTimeout(() => document.getElementById('scan-results')?.scrollIntoView({ behavior: 'smooth' }), 150);
+      console.log('Report:', data);
+
+      if (toolUrl) {
+        window.open(`${toolUrl}?scan=complete`, '_blank');
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Something went wrong. Try again.');
     } finally {
@@ -101,43 +173,27 @@ function FreeScanSection() {
     }
   };
 
-  const handleCheckout = async (plan: 'audit' | 'monthly') => {
-    try {
-      const res = await fetch('/api/checkout', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ plan }),
-      });
-      const data = await res.json();
-      if (data.url) {
-        window.location.href = data.url;
-      }
-    } catch (err) {
-      console.error('Checkout error:', err);
-    }
-  };
-
-  const inputClass = "w-full px-4 py-3 bg-stone-800 border border-stone-700 text-white text-sm font-mono focus:outline-none focus:border-emerald-500 transition-colors rounded placeholder:text-stone-600";
+  const inputClass = "w-full px-4 py-3 bg-stone-800 border border-stone-700 text-white text-sm font-mono focus:outline-none focus:border-[#00b894] focus:ring-1 focus:ring-[#00b894]/30 transition-colors rounded-lg placeholder:text-stone-600";
 
   return (
     <section id="calculator" className="py-20 px-6 bg-stone-900 text-white">
       <div className="max-w-2xl mx-auto">
         <div className="text-center mb-8">
           <h2 className="text-3xl md:text-4xl font-serif font-medium mb-4">Run a free scan right now</h2>
-          <div className="h-1 w-20 bg-emerald-500 mx-auto mb-4"></div>
+          <div className="h-1 w-20 bg-[#00b894] mx-auto mb-4"></div>
           <p className="text-stone-400">Paste your API credentials and see your phantom revenue gap in 10 seconds. No account needed.</p>
         </div>
 
         {/* Security notice */}
-        <div className="bg-stone-800 border-l-4 border-emerald-500 p-4 rounded-r-lg mb-6">
-          <p className="text-xs font-bold text-emerald-400 mb-1">🔒 Security &amp; Privacy Guarantee</p>
+        <div className="bg-stone-800 border-l-4 border-[#00b894] p-4 rounded-r-lg mb-6">
+          <p className="text-xs font-bold text-[#00d2a0] mb-1">🔒 Security &amp; Privacy Guarantee</p>
           <p className="text-xs text-stone-400">Read-only access only. Data is processed entirely in-memory and is <strong className="text-stone-300">never stored</strong> on our servers.</p>
         </div>
 
         <div className="space-y-5">
           {/* Shopify */}
-          <div className="bg-emerald-950/50 border border-emerald-800 rounded-lg p-5">
-            <p className="text-sm font-bold text-emerald-400 mb-4">🛒 SHOPIFY</p>
+          <div className="bg-[#00b894]/10 border border-[#00b894]/30 rounded-lg p-5">
+            <p className="text-sm font-bold text-[#00d2a0] mb-4">🛒 SHOPIFY</p>
             <div className="grid gap-3">
               <div>
                 <label className="block text-xs font-medium text-stone-400 mb-1.5">Store Domain</label>
@@ -168,14 +224,25 @@ function FreeScanSection() {
             </div>
           </div>
 
+          {/* Date Range */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label className="block text-xs font-medium text-stone-400 mb-1.5">Date From</label>
+              <input className={inputClass} type="date" value={form.dateFrom} onChange={e => set('dateFrom', e.target.value)} />
+            </div>
+            <div>
+              <label className="block text-xs font-medium text-stone-400 mb-1.5">Date To</label>
+              <input className={inputClass} type="date" value={form.dateTo} onChange={e => set('dateTo', e.target.value)} />
+            </div>
+          </div>
+
           {/* Google + TikTok (collapsible) */}
           <details className="group">
             <summary className="cursor-pointer text-sm font-bold text-stone-500 hover:text-stone-300 transition-colors flex items-center gap-2">
-              <svg className="w-4 h-4 transition-transform group-open:rotate-90" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
-              Google Ads &amp; TikTok Ads (Optional)
+              <svg className="w-4 h-4 transition-transform duration-200 group-open:rotate-90" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+              + Add Google Ads or TikTok Ads
             </summary>
             <div className="mt-4 space-y-4">
-              {/* Google */}
               <div className="bg-pink-950/20 border border-pink-900/50 rounded-lg p-5">
                 <p className="text-sm font-bold text-pink-400 mb-4">🔍 GOOGLE ADS</p>
                 <div className="grid gap-3">
@@ -189,7 +256,6 @@ function FreeScanSection() {
                   </div>
                 </div>
               </div>
-              {/* TikTok */}
               <div className="bg-stone-800/50 border border-stone-700 rounded-lg p-5">
                 <p className="text-sm font-bold text-stone-300 mb-4">📱 TIKTOK ADS</p>
                 <div className="grid gap-3">
@@ -206,18 +272,6 @@ function FreeScanSection() {
             </div>
           </details>
 
-          {/* Date Range */}
-          <div className="grid grid-cols-2 gap-3">
-            <div>
-              <label className="block text-xs font-medium text-stone-400 mb-1.5">Date From</label>
-              <input className={inputClass} type="date" value={form.dateFrom} onChange={e => set('dateFrom', e.target.value)} />
-            </div>
-            <div>
-              <label className="block text-xs font-medium text-stone-400 mb-1.5">Date To</label>
-              <input className={inputClass} type="date" value={form.dateTo} onChange={e => set('dateTo', e.target.value)} />
-            </div>
-          </div>
-
           {/* Error */}
           {error && (
             <div className="bg-red-950/50 border border-red-800 rounded-lg p-3 text-center">
@@ -230,152 +284,25 @@ function FreeScanSection() {
             <button
               onClick={() => handleSubmit(false)}
               disabled={loading}
-              className="w-full py-4 bg-emerald-600 text-white font-bold text-sm uppercase tracking-widest hover:bg-emerald-500 transition-all rounded disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full py-4 bg-[#00b894] text-white font-bold text-sm uppercase tracking-widest hover:bg-[#007a65] hover:scale-[1.01] hover:shadow-lg hover:shadow-[#00b894]/20 transition-all rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {loading ? 'Fetching data…' : 'Generate Report →'}
+              {loading ? 'Fetching data…' : 'Run Free Scan →'}
             </button>
             <button
               onClick={() => handleSubmit(true)}
               disabled={loading}
-              className="w-full py-3.5 bg-transparent text-emerald-400 font-bold text-sm uppercase tracking-widest hover:bg-stone-800 transition-all rounded border border-emerald-700 disabled:opacity-50"
+              className="w-full py-3.5 bg-transparent text-[#00d2a0] font-bold text-sm uppercase tracking-widest hover:bg-stone-800 transition-all rounded-lg border border-[#00b894]/40 disabled:opacity-50"
             >
               Try with sample data
             </button>
           </div>
         </div>
 
-        {/* Results */}
-        {report && (
-          <div id="scan-results" className="mt-10 space-y-6">
-            {/* Summary */}
-            <div className="bg-stone-800/80 border border-stone-700 rounded-xl p-5 md:p-6">
-              <h3 className="text-lg md:text-xl font-serif mb-3">Summary for this scan</h3>
-              <div className="grid md:grid-cols-3 gap-4 text-sm">
-                <div className="bg-stone-900/40 border border-stone-700 rounded-lg p-4">
-                  <p className="text-[11px] uppercase tracking-widest text-stone-500 mb-1">Ad Platforms Reported</p>
-                  <p className="text-xl font-mono">
-                    ${report.metaReportedRevenue?.toLocaleString()}
-                  </p>
-                  <p className="text-xs text-stone-500 mt-1">
-                    ROAS {report.reportedRoas}× on ${report.totalSpend?.toLocaleString()} spend
-                  </p>
-                </div>
-                <div className="bg-stone-900/40 border border-emerald-700 rounded-lg p-4">
-                  <p className="text-[11px] uppercase tracking-widest text-emerald-400 mb-1">Shopify Net Collected</p>
-                  <p className="text-xl font-mono text-emerald-300">
-                    ${report.shopifyNetRevenue?.toLocaleString()}
-                  </p>
-                  <p className="text-xs text-stone-400 mt-1">
-                    True ROAS {report.trueRoas}× (cash actually collected)
-                  </p>
-                </div>
-                <div className="bg-stone-900/40 border border-red-700 rounded-lg p-4">
-                  <p className="text-[11px] uppercase tracking-widest text-red-400 mb-1">Phantom Revenue Gap</p>
-                  <p className="text-xl font-mono text-red-300">
-                    ${report.phantomRevenue?.toLocaleString()}
-                  </p>
-                  <p className="text-xs text-stone-400 mt-1">
-                    {report.phantomPct}% of reported revenue is not in Shopify.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Campaign list */}
-            <div className="bg-stone-800/60 border border-stone-700 rounded-xl p-5 md:p-6">
-              <h3 className="text-lg md:text-xl font-serif mb-3">Campaigns (headline view)</h3>
-              <p className="text-xs text-stone-400 mb-4">
-                High-level flags only. Full written analysis and playbook are part of the paid audit.
-              </p>
-              <div className="space-y-3">
-                {report.campaigns?.slice(0, 6).map((c: any, idx: number) => {
-                  const borderColor =
-                    c.flagColor === 'red'
-                      ? 'border-red-700'
-                      : c.flagColor === 'amber'
-                      ? 'border-amber-500'
-                      : 'border-emerald-600';
-                  const badgeBg =
-                    c.flagColor === 'red'
-                      ? 'bg-red-950 text-red-300'
-                      : c.flagColor === 'amber'
-                      ? 'bg-amber-950 text-amber-200'
-                      : 'bg-emerald-950 text-emerald-200';
-                  return (
-                    <div
-                      key={idx}
-                      className={`flex flex-col md:flex-row md:items-center md:justify-between gap-2 rounded-lg border ${borderColor} bg-stone-900/40 px-4 py-3`}
-                    >
-                      <div>
-                        <p className="text-sm font-medium">
-                          {c.campaignName}{' '}
-                          <span className="text-[11px] uppercase tracking-widest text-stone-500">
-                            · {c.channel || 'Meta/Google/TikTok'}
-                          </span>
-                        </p>
-                        <p className="text-xs text-stone-400 mt-1">
-                          Spend ${c.spend?.toLocaleString()} · Reported {c.reportedRoas}× ·
-                          True ≈ {c.estimatedTrueRoas}×
-                        </p>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <span className={`text-[11px] font-semibold px-3 py-1 rounded-full ${badgeBg}`}>
-                          {c.flag}
-                        </span>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Blurred teaser */}
-            <div className="relative overflow-hidden rounded-xl border border-stone-700 bg-stone-900/40 p-6">
-              <div style={{ filter: 'blur(4px)', pointerEvents: 'none', userSelect: 'none' }}>
-                <h4 className="text-lg font-serif mb-3">Root Cause Analysis</h4>
-                <p className="text-sm text-stone-400 mb-2">Primary gap driver: Discount codes account for 38% of phantom revenue...</p>
-                <p className="text-sm text-stone-400 mb-4">Secondary driver: Cross-platform overlap contributing 24% of total gap...</p>
-                <h4 className="text-lg font-serif mb-3">Budget Reallocation Plan</h4>
-                <p className="text-sm text-stone-400 mb-2">Pause 2 unprofitable campaigns, freeing $11,452/month...</p>
-                <p className="text-sm text-stone-400">Scale 1 winner → projected +$34,200 in additional revenue...</p>
-                <h4 className="text-lg font-serif mt-4 mb-2">3 Actionable Recommendations</h4>
-                <p className="text-sm text-stone-400">1. Restructure discount attribution model...</p>
-              </div>
-            </div>
-
-            {/* CTA overlay */}
-            <div className="relative overflow-hidden rounded-xl border border-emerald-700 bg-gradient-to-r from-emerald-900/90 to-stone-900/90 p-6 md:p-7">
-              <div className="text-center space-y-3">
-                <p className="text-xs font-mono uppercase tracking-[0.25em] text-emerald-300">
-                  Unlock the full analysis
-                </p>
-                <p className="text-xl md:text-2xl font-serif text-white">
-                  Get root cause breakdown, budget plan, and brand‑ready PDF.
-                </p>
-                <div className="flex flex-col sm:flex-row gap-3 justify-center mt-4">
-                  <button
-                    onClick={() => handleCheckout('audit')}
-                    className="px-6 py-3 bg-emerald-500 text-emerald-950 text-xs font-bold uppercase tracking-[0.25em] rounded hover:bg-emerald-400 transition-colors"
-                  >
-                    Book Audit — $249
-                  </button>
-                  <button
-                    onClick={() => handleCheckout('monthly')}
-                    className="px-6 py-3 bg-transparent text-emerald-300 text-xs font-bold uppercase tracking-[0.25em] rounded border border-emerald-600 hover:bg-emerald-900/50 transition-colors"
-                  >
-                    Monthly Plan — $150/mo
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
         <div className="mt-8 text-center">
           <p className="text-stone-500 text-sm">Don&apos;t want to connect APIs yourself?</p>
-          <button onClick={() => handleCheckout('audit')} className="text-emerald-400 font-semibold hover:underline">
+          <a href="https://cal.com/calyxra/15min" target="_blank" rel="noopener noreferrer" className="text-[#00d2a0] font-semibold hover:underline">
             Book a Revenue Leak Audit — $249 →
-          </button>
+          </a>
           <p className="text-stone-600 text-xs mt-1">We run it for you. Full branded report in 48 hours.</p>
         </div>
       </div>
@@ -383,52 +310,75 @@ function FreeScanSection() {
   );
 }
 
-
-/* ─── FAQ Item ──────────────────────────────────────────────── */
-function FAQItem({ question, answer }: { question: string; answer: string }) {
-  const [open, setOpen] = useState(false);
-  return (
-    <div className="border-b border-stone-200 last:border-0">
-      <button onClick={() => setOpen(!open)} className="w-full py-5 flex items-center justify-between text-left">
-        <span className="font-semibold text-stone-900 pr-4">{question}</span>
-        <svg className={`w-5 h-5 text-stone-400 flex-shrink-0 transition-transform ${open ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-        </svg>
-      </button>
-      {open && <p className="pb-5 text-stone-600 leading-relaxed">{answer}</p>}
-    </div>
-  );
-}
-
 /* ─── Main Page ─────────────────────────────────────────────── */
 export default function Home() {
   const calendlyUrl = "https://cal.com/calyxra/15min";
 
+  const faqItems = [
+    {
+      q: "How is this different from Triple Whale?",
+      a: "Triple Whale is an attribution platform — it tells you which ads drove conversions. Calyxra is a reconciliation tool — it tells you whether the revenue those ads generated actually landed in your bank. They're complementary, not competitors."
+    },
+    {
+      q: "Can't I just check Shopify myself?",
+      a: "You can. But matching Shopify orders against Meta/Google campaign data, accounting for refunds, chargebacks, discount codes, and taxes across dozens of campaigns manually takes hours. We do it in 10 seconds."
+    },
+    {
+      q: "Is my data safe?",
+      a: "Yes. We use read-only API access — we literally cannot modify your store or ad accounts. All data is processed in-memory and never stored on our servers."
+    },
+    {
+      q: "What do I need to connect?",
+      a: "A Shopify Admin API access token and optionally a Meta Ads access token. Takes 2 minutes."
+    },
+    {
+      q: "What if my gap is small?",
+      a: "If your phantom revenue gap is under 5%, we refund the full $249. No questions asked."
+    },
+    {
+      q: "How long does it take?",
+      a: "The free scan runs in ~10 seconds. The full Revenue Leak Audit is delivered within 48 hours as a branded PDF report."
+    },
+  ];
+
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqItems.map(item => ({
+      "@type": "Question",
+      "name": item.q,
+      "acceptedAnswer": { "@type": "Answer", "text": item.a },
+    })),
+  };
+
   return (
-    <div className="min-h-screen bg-[#FAFAF9] text-stone-900 font-sans selection:bg-emerald-200">
+    <div className="min-h-screen bg-[#FAFAF9] text-[#2d3436] font-sans selection:bg-[#00b894]/20" style={{ lineHeight: 1.6 }}>
       <Navbar />
+
+      {/* FAQPage JSON-LD */}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
 
       <main className="pt-32">
 
         {/* ═══ HERO ═══ */}
-        <section className="px-6 pb-20 bg-[#FAFAF9]">
+        <section className="px-6 pt-16 pb-28 bg-[#FAFAF9]">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl md:text-6xl font-serif font-medium text-stone-900 mb-6 leading-[1.1]">
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-serif font-medium text-[#2d3436] mb-6 leading-[1.08]">
               Your ad platforms are hiding revenue.<br />
-              <span className="text-emerald-700">We find it.</span>
+              <span className="text-[#00b894]">We find it.</span>
             </h1>
-            <p className="text-xl text-stone-500 mb-8 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-xl text-[#636e72] mb-8 max-w-2xl mx-auto leading-relaxed">
               Meta says $100K. Shopify collected $78K. We show you where the $22K went — per campaign — in 48 hours.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4 mb-6">
-              <a href="#calculator" className="px-8 py-4 bg-emerald-700 text-white font-bold text-sm uppercase tracking-widest hover:bg-emerald-800 transition-all shadow-lg rounded">
+              <a href="#calculator" className="px-8 py-4 bg-[#00b894] text-white font-bold text-sm uppercase tracking-widest hover:bg-[#007a65] hover:scale-[1.03] hover:shadow-xl hover:shadow-[#00b894]/25 transition-all rounded-lg">
                 Run Free Scan →
               </a>
-              <a href={calendlyUrl} target="_blank" rel="noopener noreferrer" className="px-8 py-4 bg-transparent border-2 border-stone-300 text-stone-900 font-bold text-sm uppercase tracking-widest hover:bg-stone-100 transition-all rounded">
-                Book Revenue Leak Audit — $249
+              <a href={calendlyUrl} target="_blank" rel="noopener noreferrer" className="px-8 py-4 bg-transparent border-2 border-[#b2bec3] text-[#2d3436] font-bold text-sm uppercase tracking-widest hover:bg-stone-100 transition-all rounded-lg">
+                Book a Call
               </a>
             </div>
-            <p className="text-sm text-stone-500">
+            <p className="text-sm text-[#636e72]">
               🔒 Read-only access. Your data is never stored. If the gap is under 5% — full refund.
             </p>
           </div>
@@ -437,24 +387,24 @@ export default function Home() {
         {/* ═══ THE PROBLEM (3 cards) ═══ */}
         <section className="py-20 px-6 bg-white border-y border-stone-200">
           <div className="max-w-5xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-serif font-medium text-stone-900 text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-serif font-medium text-[#2d3436] text-center mb-12">
               The numbers don&apos;t match. Here&apos;s why.
             </h2>
             <div className="grid md:grid-cols-3 gap-6">
-              <div className="bg-blue-50 border border-blue-200 p-8 rounded-lg">
+              <div className="bg-blue-50 border border-blue-200 p-8 rounded-lg hover:-translate-y-1 hover:shadow-md transition-all duration-200">
                 <div className="text-2xl mb-3">📘</div>
-                <h3 className="text-xl font-serif font-bold text-stone-900 mb-3">Meta says $100K</h3>
-                <p className="text-stone-600 leading-relaxed">The pixel fires at checkout. Counts the full order value. Never looks back.</p>
+                <h3 className="text-xl font-serif font-bold text-[#2d3436] mb-3">Meta says $100K</h3>
+                <p className="text-[#636e72] leading-relaxed">The pixel fires at checkout. Counts the full order value. Never looks back.</p>
               </div>
-              <div className="bg-amber-50 border border-amber-200 p-8 rounded-lg">
+              <div className="bg-amber-50 border border-amber-200 p-8 rounded-lg hover:-translate-y-1 hover:shadow-md transition-all duration-200">
                 <div className="text-2xl mb-3">🛒</div>
-                <h3 className="text-xl font-serif font-bold text-stone-900 mb-3">Shopify collected $78K</h3>
-                <p className="text-stone-600 leading-relaxed">Refunds settled 3 weeks later. Discount codes ate 20%. Chargebacks hit. The real number dropped.</p>
+                <h3 className="text-xl font-serif font-bold text-[#2d3436] mb-3">Shopify collected $78K</h3>
+                <p className="text-[#636e72] leading-relaxed">Refunds settled 3 weeks later. Discount codes ate 20%. Chargebacks hit. The real number dropped.</p>
               </div>
-              <div className="bg-red-50 border border-red-200 p-8 rounded-lg">
+              <div className="bg-red-50 border-2 border-red-300 p-8 rounded-lg hover:-translate-y-1 hover:shadow-md transition-all duration-200">
                 <div className="text-2xl mb-3">❓</div>
-                <h3 className="text-xl font-serif font-bold text-stone-900 mb-3">Where&apos;s the $22K?</h3>
-                <p className="text-stone-600 leading-relaxed">It&apos;s phantom revenue — counted by ad platforms, never deposited in your bank. Most brands don&apos;t even know it exists.</p>
+                <h3 className="text-xl font-serif font-bold text-[#2d3436] mb-3">Where&apos;s the $22K?</h3>
+                <p className="text-[#636e72] leading-relaxed">It&apos;s phantom revenue — counted by ad platforms, never deposited in your bank. Most brands don&apos;t even know it exists.</p>
               </div>
             </div>
           </div>
@@ -463,167 +413,233 @@ export default function Home() {
         {/* ═══ HOW IT WORKS (3 steps) ═══ */}
         <section className="py-20 px-6 bg-[#FAFAF9]">
           <div className="max-w-5xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-serif font-medium text-stone-900 text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-serif font-medium text-[#2d3436] text-center mb-12">
               How it works
             </h2>
             <div className="grid md:grid-cols-3 gap-8">
-              <div className="text-center">
-                <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl font-serif font-bold text-emerald-700">1</span>
+              <div className="text-center hover:-translate-y-1 transition-all duration-200">
+                <div className="w-16 h-16 bg-[#00b894]/15 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl font-serif font-bold text-[#00b894]">1</span>
                 </div>
-                <h3 className="text-lg font-serif font-bold text-stone-900 mb-2">Connect <span className="text-stone-400 text-sm font-sans">(2 minutes)</span></h3>
-                <p className="text-stone-600">Paste your Shopify API key and Meta access token. Read-only — we can&apos;t modify anything.</p>
+                <h3 className="text-lg font-serif font-bold text-[#2d3436] mb-2">Connect <span className="text-[#636e72] text-sm font-sans">(2 minutes)</span></h3>
+                <p className="text-[#636e72]">Paste your Shopify API key and Meta access token. Read-only — we can&apos;t modify anything.</p>
               </div>
-              <div className="text-center">
-                <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl font-serif font-bold text-emerald-700">2</span>
+              <div className="text-center hover:-translate-y-1 transition-all duration-200">
+                <div className="w-16 h-16 bg-[#00b894]/15 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl font-serif font-bold text-[#00b894]">2</span>
                 </div>
-                <h3 className="text-lg font-serif font-bold text-stone-900 mb-2">Reconcile <span className="text-stone-400 text-sm font-sans">(10 seconds)</span></h3>
-                <p className="text-stone-600">We pull your actual Shopify revenue and compare it against what ad platforms reported. Per campaign.</p>
+                <h3 className="text-lg font-serif font-bold text-[#2d3436] mb-2">Reconcile <span className="text-[#636e72] text-sm font-sans">(10 seconds)</span></h3>
+                <p className="text-[#636e72]">We pull your actual Shopify revenue and compare it against what ad platforms reported. Per campaign.</p>
               </div>
-              <div className="text-center">
-                <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl font-serif font-bold text-emerald-700">3</span>
+              <div className="text-center hover:-translate-y-1 transition-all duration-200">
+                <div className="w-16 h-16 bg-[#00b894]/15 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl font-serif font-bold text-[#00b894]">3</span>
                 </div>
-                <h3 className="text-lg font-serif font-bold text-stone-900 mb-2">Act <span className="text-stone-400 text-sm font-sans">(your next move)</span></h3>
-                <p className="text-stone-600">See which campaigns are truly profitable, which are phantom, and exactly where to reallocate budget.</p>
+                <h3 className="text-lg font-serif font-bold text-[#2d3436] mb-2">Act <span className="text-[#636e72] text-sm font-sans">(your next move)</span></h3>
+                <p className="text-[#636e72]">See which campaigns are truly profitable, which are phantom, and exactly where to reallocate budget.</p>
               </div>
             </div>
+          </div>
+        </section>
+
+        {/* ═══ CASE STUDY — "See what you get" ═══ */}
+        <section className="py-20 px-6 bg-white border-y border-stone-200">
+          <div className="max-w-3xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-serif font-medium text-[#2d3436] text-center mb-12">
+              See what you get
+            </h2>
+            <div className="bg-[#1a1a2e] rounded-xl p-8 border border-[#00b894]/20 shadow-lg shadow-[#00b894]/5">
+              <p className="text-sm text-[#636e72] mb-6 font-mono">DTC Skincare Brand · $47K/mo Meta spend</p>
+              <div className="space-y-4 font-mono text-sm">
+                <div className="flex justify-between items-center py-2 border-b border-white/10">
+                  <span className="text-stone-400">Reported Revenue (Meta)</span>
+                  <span className="text-white text-lg font-bold">$142,800</span>
+                </div>
+                <div className="flex justify-between items-center py-2 border-b border-white/10">
+                  <span className="text-stone-400">Actual Revenue (Shopify)</span>
+                  <span className="text-[#00d2a0] text-lg font-bold">$118,340 ✓</span>
+                </div>
+                <div className="flex justify-between items-center py-2 border-b border-white/10">
+                  <span className="text-stone-400">Phantom Revenue</span>
+                  <span className="text-red-400 text-lg font-bold">$24,460 (17.1%) ⚠</span>
+                </div>
+                <div className="pt-4">
+                  <p className="text-stone-500 text-xs uppercase tracking-wider mb-3">Top leaks:</p>
+                  <div className="space-y-2">
+                    <div className="flex justify-between"><span className="text-stone-400">Refunds not deducted</span><span className="text-red-400 font-bold">$11,200</span></div>
+                    <div className="flex justify-between"><span className="text-stone-400">Discount codes</span><span className="text-red-400 font-bold">$8,740</span></div>
+                    <div className="flex justify-between"><span className="text-stone-400">Chargebacks</span><span className="text-red-400 font-bold">$4,520</span></div>
+                  </div>
+                </div>
+                <div className="pt-4 mt-4 border-t border-white/10 space-y-2">
+                  <div className="flex justify-between"><span className="text-stone-400">True ROAS</span><span className="text-[#00d2a0] font-bold text-lg">2.52× <span className="text-stone-500 text-xs">(vs 3.04× reported)</span></span></div>
+                  <div className="flex justify-between"><span className="text-stone-400">Annual phantom revenue</span><span className="text-red-400 font-bold text-lg">~$293K</span></div>
+                </div>
+              </div>
+            </div>
+            <p className="text-center text-sm text-[#636e72] mt-6">
+              Based on anonymized sample data. Your audit will include full campaign-level breakdown + PDF report.
+            </p>
           </div>
         </section>
 
         {/* ═══ FREE SCAN TOOL ═══ */}
         <FreeScanSection />
 
-        {/* ═══ WHAT YOU GET (comparison) ═══ */}
-        <section className="py-20 px-6 bg-[#FAFAF9]">
+        {/* ═══ PRICING (2 cards) ═══ */}
+        <section id="pricing" className="py-20 px-6 bg-[#FAFAF9]">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-serif font-medium text-stone-900 text-center mb-12">
-              What&apos;s in the Revenue Leak Audit
+            <h2 className="text-3xl md:text-4xl font-serif font-medium text-[#2d3436] text-center mb-12">
+              Pricing
             </h2>
             <div className="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">
-              {/* Free Scan column */}
-              <div className="bg-white p-8 border border-stone-200 rounded-lg">
-                <p className="text-[10px] font-bold text-stone-500 uppercase tracking-widest mb-3">Free Scan</p>
-                <div className="flex items-baseline gap-1 mb-6">
-                  <span className="text-4xl font-serif font-medium text-stone-900">$0</span>
+              {/* Source-of-Truth Audit */}
+              <div className="bg-white p-8 border border-stone-200 rounded-xl hover:-translate-y-1 hover:shadow-md transition-all duration-200">
+                <p className="text-[10px] font-bold text-[#636e72] uppercase tracking-widest mb-3">Source-of-Truth Audit</p>
+                <div className="flex items-baseline gap-1 mb-2">
+                  <span className="text-4xl font-serif font-medium text-[#2d3436]">$249</span>
+                  <span className="text-sm text-[#636e72]">one-time</span>
                 </div>
-                <ul className="space-y-3 mb-6">
-                  <li className="flex items-start gap-3 text-sm text-stone-700"><span className="text-emerald-600 mt-0.5">✅</span> Phantom revenue total</li>
-                  <li className="flex items-start gap-3 text-sm text-stone-700"><span className="text-emerald-600 mt-0.5">✅</span> Gap percentage</li>
-                  <li className="flex items-start gap-3 text-sm text-stone-700"><span className="text-emerald-600 mt-0.5">✅</span> Campaign flags (red/amber/green)</li>
-                  <li className="flex items-start gap-3 text-sm text-stone-700"><span className="text-emerald-600 mt-0.5">✅</span> True ROAS per campaign</li>
-                  <li className="flex items-start gap-3 text-sm text-stone-700"><span className="text-emerald-600 mt-0.5">✅</span> Gap decomposition chart</li>
-                  <li className="flex items-start gap-3 text-sm text-stone-500"><span className="text-stone-400 mt-0.5">✗</span> No commentary</li>
-                  <li className="flex items-start gap-3 text-sm text-stone-500"><span className="text-stone-400 mt-0.5">✗</span> No recommendations</li>
-                  <li className="flex items-start gap-3 text-sm text-stone-500"><span className="text-stone-400 mt-0.5">✗</span> No PDF report</li>
+                <ul className="space-y-3 my-6">
+                  <li className="flex items-start gap-3 text-sm text-[#2d3436]"><span className="text-[#00b894] mt-0.5">✅</span> Full Shopify + Meta reconciliation</li>
+                  <li className="flex items-start gap-3 text-sm text-[#2d3436]"><span className="text-[#00b894] mt-0.5">✅</span> Exact phantom revenue breakdown</li>
+                  <li className="flex items-start gap-3 text-sm text-[#2d3436]"><span className="text-[#00b894] mt-0.5">✅</span> PDF report + 3 recommendations</li>
+                  <li className="flex items-start gap-3 text-sm text-[#2d3436]"><span className="text-[#00b894] mt-0.5">✅</span> 30-min walkthrough call</li>
                 </ul>
-                <a href="#calculator" className="block text-center px-6 py-4 border-2 border-stone-300 text-stone-700 font-bold text-sm uppercase tracking-widest hover:bg-stone-50 transition-all rounded">
-                  Run Free Scan →
+                <a href={calendlyUrl} target="_blank" rel="noopener noreferrer" className="block text-center px-6 py-4 bg-[#00b894] text-white font-bold text-sm uppercase tracking-widest hover:bg-[#007a65] transition-all rounded-lg">
+                  Book Audit →
                 </a>
               </div>
 
-              {/* Revenue Leak Audit column */}
-              <div className="bg-white p-8 border-2 border-emerald-700 rounded-lg relative shadow-xl shadow-emerald-500/10">
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-emerald-700 text-white px-4 py-1 text-[10px] font-bold uppercase tracking-widest rounded">
+              {/* Monthly Reconciliation */}
+              <div className="bg-white p-8 border-2 border-[#00b894] rounded-xl relative shadow-xl shadow-[#00b894]/10 scale-[1.02] hover:-translate-y-1 hover:shadow-2xl hover:shadow-[#00b894]/15 transition-all duration-200">
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#00b894] text-white px-4 py-1 text-[10px] font-bold uppercase tracking-widest rounded-full">
                   Recommended
                 </div>
-                <p className="text-[10px] font-bold text-emerald-700 uppercase tracking-widest mb-3">Revenue Leak Audit</p>
-                <div className="flex items-baseline gap-1 mb-2">
-                  <span className="text-4xl font-serif font-medium text-stone-900">$249</span>
+                <p className="text-[10px] font-bold text-[#00b894] uppercase tracking-widest mb-3">Monthly Reconciliation</p>
+                <div className="flex items-baseline gap-1 mb-1">
+                  <span className="text-4xl font-serif font-medium text-[#2d3436]">$150</span>
+                  <span className="text-sm text-[#636e72]">/month</span>
                 </div>
-                <div className="flex gap-2 mb-6">
-                  <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-1 rounded border border-emerald-200">⚡ 48h delivery</span>
-                  <span className="text-[10px] font-bold text-amber-700 bg-amber-50 px-2 py-1 rounded border border-amber-200">🛡️ Refund guarantee</span>
-                </div>
+                <span className="text-[10px] font-bold text-[#00b894] bg-[#00b894]/10 px-2 py-1 rounded border border-[#00b894]/20">FIRST 5 AGENCIES ONLY</span>
+                <p className="text-xs text-[#636e72] mt-1 mb-4">Early access</p>
                 <ul className="space-y-3 mb-6">
-                  <li className="flex items-start gap-3 text-sm text-stone-700"><span className="text-emerald-600 mt-0.5">✅</span> Everything in free scan</li>
-                  <li className="flex items-start gap-3 text-sm text-stone-700"><span className="text-emerald-600 mt-0.5">✅</span> Written analysis &amp; commentary</li>
-                  <li className="flex items-start gap-3 text-sm text-stone-700"><span className="text-emerald-600 mt-0.5">✅</span> Root cause breakdown</li>
-                  <li className="flex items-start gap-3 text-sm text-stone-700"><span className="text-emerald-600 mt-0.5">✅</span> Campaign-level recommendations</li>
-                  <li className="flex items-start gap-3 text-sm text-stone-700"><span className="text-emerald-600 mt-0.5">✅</span> Budget reallocation plan</li>
-                  <li className="flex items-start gap-3 text-sm text-stone-700"><span className="text-emerald-600 mt-0.5">✅</span> Branded PDF report</li>
-                  <li className="flex items-start gap-3 text-sm text-stone-700"><span className="text-emerald-600 mt-0.5">✅</span> Projected annual impact</li>
-                  <li className="flex items-start gap-3 text-sm text-stone-700"><span className="text-emerald-600 mt-0.5">✅</span> 48-hour delivery</li>
+                  <li className="flex items-start gap-3 text-sm text-[#2d3436]"><span className="text-[#00b894] mt-0.5">✅</span> Everything in audit</li>
+                  <li className="flex items-start gap-3 text-sm text-[#2d3436]"><span className="text-[#00b894] mt-0.5">✅</span> Monthly monitoring + alerts</li>
+                  <li className="flex items-start gap-3 text-sm text-[#2d3436]"><span className="text-[#00b894] mt-0.5">✅</span> Action Engine recommendations</li>
+                  <li className="flex items-start gap-3 text-sm text-[#2d3436]"><span className="text-[#00b894] mt-0.5">✅</span> White-label PDF for clients</li>
                 </ul>
-                <p className="text-center text-xs text-stone-500 mb-4">🛡️ Gap under 5% = full refund</p>
-                <a href={calendlyUrl} target="_blank" rel="noopener noreferrer" className="block text-center px-6 py-4 bg-emerald-700 text-white font-bold text-sm uppercase tracking-widest hover:bg-emerald-800 transition-all rounded shadow-lg">
-                  Book Revenue Leak Audit — $249
+                <a href={calendlyUrl} target="_blank" rel="noopener noreferrer" className="block text-center px-6 py-4 bg-[#00b894] text-white font-bold text-sm uppercase tracking-widest hover:bg-[#007a65] transition-all rounded-lg shadow-lg">
+                  Start Free Pilot →
                 </a>
               </div>
             </div>
           </div>
         </section>
 
-        {/* ═══ WHO IT'S FOR (3 cards) ═══ */}
+        {/* ═══ ONGOING MONITORING TEASER ═══ */}
         <section className="py-20 px-6 bg-white border-y border-stone-200">
+          <div className="max-w-5xl mx-auto text-center">
+            <h2 className="text-3xl md:text-4xl font-serif font-medium text-[#2d3436] mb-3">
+              Don&apos;t just audit once. Monitor continuously.
+            </h2>
+            <p className="text-[#636e72] max-w-2xl mx-auto mb-12">
+              After your audit, keep tracking phantom revenue automatically. Get alerts when gaps spike, monthly reconciliation reports, and always know your true ROAS.
+            </p>
+            <div className="grid md:grid-cols-3 gap-8">
+              <div className="bg-[#f8f9fa] p-8 rounded-xl border border-stone-200 hover:-translate-y-1 hover:shadow-md transition-all duration-200">
+                <div className="text-3xl mb-4">📊</div>
+                <h3 className="text-lg font-serif font-bold text-[#2d3436] mb-2">Monthly Reports</h3>
+                <p className="text-[#636e72] text-sm">Automated reconciliation delivered to your inbox every month</p>
+              </div>
+              <div className="bg-[#f8f9fa] p-8 rounded-xl border border-stone-200 hover:-translate-y-1 hover:shadow-md transition-all duration-200">
+                <div className="text-3xl mb-4">⚡</div>
+                <h3 className="text-lg font-serif font-bold text-[#2d3436] mb-2">Gap Alerts</h3>
+                <p className="text-[#636e72] text-sm">Get notified when phantom revenue exceeds your threshold</p>
+              </div>
+              <div className="bg-[#f8f9fa] p-8 rounded-xl border border-stone-200 hover:-translate-y-1 hover:shadow-md transition-all duration-200">
+                <div className="text-3xl mb-4">📈</div>
+                <h3 className="text-lg font-serif font-bold text-[#2d3436] mb-2">True ROAS Tracking</h3>
+                <p className="text-[#636e72] text-sm">Always know your real return — not what Meta tells you</p>
+              </div>
+            </div>
+            <a href="mailto:team@calyxra.com?subject=Ongoing%20Monitoring" className="inline-block mt-10 px-8 py-4 bg-transparent border-2 border-[#00b894] text-[#00b894] font-bold text-sm uppercase tracking-widest hover:bg-[#00b894] hover:text-white transition-all rounded-lg">
+              Ask about ongoing monitoring →
+            </a>
+          </div>
+        </section>
+
+        {/* ═══ GAP CALCULATOR ═══ */}
+        <GapCalculator />
+
+        {/* ═══ WHO IT'S FOR (3 cards) ═══ */}
+        <section className="py-20 px-6 bg-[#FAFAF9]">
           <div className="max-w-5xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-serif font-medium text-stone-900 text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-serif font-medium text-[#2d3436] text-center mb-12">
               Built for brands and agencies running Shopify + paid ads
             </h2>
             <div className="grid md:grid-cols-3 gap-6">
-              <div className="bg-stone-50 p-8 rounded-lg border border-stone-200">
-                <h3 className="text-lg font-serif font-bold text-stone-900 mb-3">DTC Brand Owners</h3>
-                <p className="text-stone-600 leading-relaxed">Spending $20K+/month on Meta or Google? If your reported ROAS is driving scaling decisions, you need to know if those numbers are real.</p>
+              <div className="bg-white p-8 rounded-xl border border-stone-200 hover:-translate-y-1 hover:shadow-md transition-all duration-200">
+                <h3 className="text-lg font-serif font-bold text-[#2d3436] mb-3">DTC Brand Owners</h3>
+                <p className="text-[#636e72] leading-relaxed">Spending $20K+/month on Meta or Google? If your reported ROAS is driving scaling decisions, you need to know if those numbers are real.</p>
               </div>
-              <div className="bg-stone-50 p-8 rounded-lg border border-stone-200">
-                <h3 className="text-lg font-serif font-bold text-stone-900 mb-3">Performance Agencies</h3>
-                <p className="text-stone-600 leading-relaxed">Managing 3+ Shopify clients? Stop manually reconciling spreadsheets every month. Show clients the real numbers before they ask.</p>
+              <div className="bg-white p-8 rounded-xl border border-stone-200 hover:-translate-y-1 hover:shadow-md transition-all duration-200">
+                <h3 className="text-lg font-serif font-bold text-[#2d3436] mb-3">Performance Agencies</h3>
+                <p className="text-[#636e72] leading-relaxed">Managing 3+ Shopify clients? Stop manually reconciling spreadsheets every month. Show clients the real numbers before they ask.</p>
               </div>
-              <div className="bg-stone-50 p-8 rounded-lg border border-stone-200">
-                <h3 className="text-lg font-serif font-bold text-stone-900 mb-3">Media Buyers</h3>
-                <p className="text-stone-600 leading-relaxed">Optimizing campaigns daily? You can&apos;t optimize what you can&apos;t measure. True ROAS ≠ reported ROAS.</p>
+              <div className="bg-white p-8 rounded-xl border border-stone-200 hover:-translate-y-1 hover:shadow-md transition-all duration-200">
+                <h3 className="text-lg font-serif font-bold text-[#2d3436] mb-3">Media Buyers</h3>
+                <p className="text-[#636e72] leading-relaxed">Optimizing campaigns daily? You can&apos;t optimize what you can&apos;t measure. True ROAS ≠ reported ROAS.</p>
               </div>
             </div>
           </div>
         </section>
 
-        {/* ═══ FAQ ═══ */}
+        {/* ═══ ABOUT ═══ */}
+        <section className="py-20 px-6 bg-white border-y border-stone-200">
+          <div className="max-w-3xl mx-auto text-center">
+            <h2 className="text-3xl md:text-4xl font-serif font-medium text-[#2d3436] mb-6">
+              Built by operators, not consultants.
+            </h2>
+            <p className="text-[#636e72] text-lg leading-relaxed">
+              We built Calyxra because we kept seeing the same problem: agencies and brands making scaling decisions based on ad platform numbers that didn&apos;t match reality. Calyxra automates what used to take hours of spreadsheet reconciliation — and gives you the truth in seconds.
+            </p>
+          </div>
+        </section>
+
+        {/* ═══ FAQ (semantic HTML + JSON-LD) ═══ */}
         <section className="py-20 px-6 bg-[#FAFAF9]">
           <div className="max-w-3xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-serif font-medium text-stone-900 text-center mb-12">Questions</h2>
+            <h2 className="text-3xl md:text-4xl font-serif font-medium text-[#2d3436] text-center mb-12">Questions</h2>
             <div className="bg-white rounded-xl shadow-sm border border-stone-200">
               <div className="px-6">
-                <FAQItem
-                  question="How is this different from Triple Whale?"
-                  answer="Triple Whale re-attributes conversions — it changes who gets credit for a sale. We don't touch attribution. We show whether the revenue was actually collected after refunds, chargebacks, and discounts settled. Different problem. Complementary tools."
-                />
-                <FAQItem
-                  question="Can't I just check Shopify myself?"
-                  answer="You can see the total gap. But which of your 20 campaigns is lying? Which should you pause vs scale? That campaign-level breakdown is what takes 3-5 hours manually. We do it in 10 seconds."
-                />
-                <FAQItem
-                  question="Is my data safe?"
-                  answer="Yes. Read-only API access only. Data is processed in memory and never stored on our servers. We can't modify anything in your Shopify store or ad accounts."
-                />
-                <FAQItem
-                  question="What do I need to connect?"
-                  answer="Shopify Admin API token (read-only, takes 2 minutes to create) and a Meta access token. Google and TikTok are optional."
-                />
-                <FAQItem
-                  question="What if my gap is small?"
-                  answer="If the gap is under 5%, you get a full refund on the paid audit. We're that confident."
-                />
-                <FAQItem
-                  question="How long does it take?"
-                  answer="Free scan: 10 seconds. Paid audit: delivered within 48 hours."
-                />
+                {faqItems.map((item, i) => (
+                  <details key={i} className="border-b border-stone-200 last:border-0 group">
+                    <summary className="w-full py-5 flex items-center justify-between text-left cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+                      <span className="font-semibold text-[#2d3436] pr-4 group-hover:text-[#00b894] transition-colors">{item.q}</span>
+                      <svg className="w-5 h-5 text-stone-400 flex-shrink-0 transition-transform duration-200 group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </summary>
+                    <p className="pb-5 text-[#636e72] leading-relaxed">{item.a}</p>
+                  </details>
+                ))}
               </div>
             </div>
           </div>
         </section>
 
         {/* ═══ FINAL CTA ═══ */}
-        <section className="py-24 px-6 bg-emerald-900 text-white text-center">
+        <section className="py-24 px-6 bg-[#007a65] text-white text-center">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-3xl md:text-5xl font-serif font-medium mb-4">Your actual revenue is lower than reported.</h2>
-            <h3 className="text-2xl md:text-3xl font-serif font-medium text-emerald-300 mb-10">Find out by how much.</h3>
+            <h3 className="text-2xl md:text-3xl font-serif font-medium text-[#00d2a0] mb-10">Find out by how much.</h3>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <a href="#calculator" className="px-8 py-5 bg-white text-emerald-900 font-bold text-sm uppercase tracking-widest hover:bg-emerald-50 transition-all rounded shadow-xl">
+              <a href="#calculator" className="px-8 py-5 bg-white text-[#007a65] font-bold text-sm uppercase tracking-widest hover:bg-[#f0f0f0] transition-all rounded-lg shadow-xl">
                 Run Free Scan →
               </a>
-              <a href={calendlyUrl} target="_blank" rel="noopener noreferrer" className="px-8 py-5 bg-transparent border-2 border-white/30 text-white font-bold text-sm uppercase tracking-widest hover:bg-white/10 transition-all rounded">
-                Book Revenue Leak Audit — $249 →
+              <a href={calendlyUrl} target="_blank" rel="noopener noreferrer" className="px-8 py-5 bg-transparent border-2 border-white/30 text-white font-bold text-sm uppercase tracking-widest hover:bg-white/10 transition-all rounded-lg">
+                Book a Call →
               </a>
             </div>
           </div>
