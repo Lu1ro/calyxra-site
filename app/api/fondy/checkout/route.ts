@@ -4,36 +4,33 @@ import crypto from 'crypto';
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-const PRODUCTS = {
+const PRODUCTS: Record<string, { amount: string; currency: string; order_desc: string }> = {
   audit: {
-    amount: 24900,
+    amount: '24900',
     currency: 'USD',
     order_desc: 'Calyxra Source-of-Truth Audit',
   },
   monthly: {
-    amount: 15000,
+    amount: '15000',
     currency: 'USD',
     order_desc: 'Calyxra Monthly Reconciliation',
   },
-} as const;
+};
 
-function generateSignature(params: Record<string, string | number>, paymentKey: string): string {
+function generateSignature(params: Record<string, string>, paymentKey: string): string {
   const sorted = Object.entries(params)
     .filter(([, value]) => value !== '' && value !== undefined && value !== null)
     .sort(([a], [b]) => a.localeCompare(b))
     .map(([, value]) => value);
 
   const signatureString = `${paymentKey}|${sorted.join('|')}`;
-  console.log('[Fondy] Signature string (before SHA1):', signatureString);
   return crypto.createHash('sha1').update(signatureString).digest('hex');
 }
 
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { product } = body as { product: 'audit' | 'monthly'; email?: string };
-
-    console.log('[Fondy] Checkout request received:', { product });
+    const { product } = body as { product: string; email?: string };
 
     if (!product || !PRODUCTS[product]) {
       return NextResponse.json(
@@ -45,15 +42,9 @@ export async function POST(req: Request) {
     const merchantId = process.env.FONDY_MERCHANT_ID;
     const paymentKey = process.env.FONDY_PAYMENT_KEY;
 
-    console.log('[Fondy] merchant_id:', merchantId);
-    console.log('[Fondy] payment_key exists:', !!paymentKey);
-    console.log('[Fondy] payment_key length:', paymentKey?.length);
-
     if (!merchantId || !paymentKey) {
-      const missing = !merchantId ? 'FONDY_MERCHANT_ID' : 'FONDY_PAYMENT_KEY';
-      console.error(`[Fondy] Missing env var: ${missing}`);
       return NextResponse.json(
-        { error: `Payment system not configured: missing ${missing}` },
+        { error: 'Payment system is not configured.' },
         { status: 500 }
       );
     }
@@ -63,8 +54,8 @@ export async function POST(req: Request) {
 
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://calyxra.com';
 
-    // merchant_id must be a string for Fondy
-    const requestParams: Record<string, string | number> = {
+    // All values MUST be strings for correct Fondy signature
+    const requestParams: Record<string, string> = {
       merchant_id: String(merchantId),
       order_id: orderId,
       order_desc,
@@ -76,58 +67,26 @@ export async function POST(req: Request) {
 
     const signature = generateSignature(requestParams, paymentKey);
 
-    const fondyPayload = {
-      request: {
-        ...requestParams,
-        signature,
-      },
-    };
-
-    console.log('[Fondy] Sending to Fondy API:', JSON.stringify(fondyPayload, null, 2));
-
     const fondyResponse = await fetch('https://pay.fondy.eu/api/checkout/url/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(fondyPayload),
+      body: JSON.stringify({
+        request: {
+          ...requestParams,
+          signature,
+        },
+      }),
     });
 
-    const fondyRawText = await fondyResponse.text();
-    console.log('[Fondy] Response status:', fondyResponse.status);
-    console.log('[Fondy] Response body:', fondyRawText);
-
-    let fondyData;
-    try {
-      fondyData = JSON.parse(fondyRawText);
-    } catch {
-      console.error('[Fondy] Failed to parse response as JSON');
-      return NextResponse.json(
-        { error: `Fondy returned non-JSON response (status ${fondyResponse.status}): ${fondyRawText.slice(0, 200)}` },
-        { status: 500 }
-      );
-    }
+    const fondyData = await fondyResponse.json();
 
     if (fondyData.response?.checkout_url) {
-      console.log('[Fondy] Success! Checkout URL:', fondyData.response.checkout_url);
       return NextResponse.json({ checkout_url: fondyData.response.checkout_url });
     }
 
-    const errorCode = fondyData.response?.error_code;
-    const errorMessage = fondyData.response?.error_message;
-    const requestId = fondyData.response?.request_id;
-
-    console.error('[Fondy] Checkout failed:', {
-      error_code: errorCode,
-      error_message: errorMessage,
-      request_id: requestId,
-      full_response: fondyData,
-    });
-
+    console.error('[Fondy] Checkout failed:', fondyData);
     return NextResponse.json(
-      {
-        error: errorMessage || 'Failed to create checkout session.',
-        error_code: errorCode || null,
-        request_id: requestId || null,
-      },
+      { error: fondyData.response?.error_message || 'Failed to create checkout session.' },
       { status: 500 }
     );
   } catch (error: unknown) {
