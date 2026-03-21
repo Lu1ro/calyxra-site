@@ -10,7 +10,7 @@ import {
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-const TOOL_URL = process.env.NEXT_PUBLIC_TOOL_URL || 'https://calyxra-tool-production.up.railway.app';
+const TOOL_URL = process.env.NEXT_PUBLIC_TOOL_URL || 'https://app.calyxra.com';
 
 /**
  * Fondy payment callback webhook
