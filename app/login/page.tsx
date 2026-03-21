@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 
 export default function LoginPage() {
   const router = useRouter();
-  const toolUrl = process.env.NEXT_PUBLIC_TOOL_URL || 'https://app.calyxra.com';
+  const toolUrl = process.env.NEXT_PUBLIC_TOOL_URL || 'https://calyxra-tool.up.railway.app';
 
   useEffect(() => {
     window.location.href = `${toolUrl}/login`;

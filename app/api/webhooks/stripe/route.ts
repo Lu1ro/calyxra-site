@@ -74,7 +74,7 @@ export async function POST(req: NextRequest) {
           const tempPassword = crypto.randomBytes(16).toString("hex");
 
           // Create account on tool (3001)
-          const toolUrl = process.env.NEXT_PUBLIC_TOOL_URL || "https://app.calyxra.com";
+          const toolUrl = process.env.NEXT_PUBLIC_TOOL_URL || "https://calyxra-tool.up.railway.app";
           try {
             const registerRes = await fetch(`${toolUrl}/api/auth/register`, {
               method: "POST",
@@ -115,7 +115,7 @@ export async function POST(req: NextRequest) {
             : subscription.customer.id;
 
         // Fire and forget — disable account on tool
-        const toolUrl = process.env.NEXT_PUBLIC_TOOL_URL || "https://app.calyxra.com";
+        const toolUrl = process.env.NEXT_PUBLIC_TOOL_URL || "https://calyxra-tool.up.railway.app";
         fetch(`${toolUrl}/api/agencies/disable`, {
           method: "POST",
           headers: {
