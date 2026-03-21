@@ -95,7 +95,7 @@ export default function DashboardDemoPage() {
                                                         fontSize: '12px',
                                                         boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.05)'
                                                     }}
-                                                    formatter={(value: number) => [`$${value.toFixed(0)}`, 'Profit']}
+                                                    formatter={(value?: number) => [`$${(value ?? 0).toFixed(0)}`, 'Profit']}
                                                 />
                                                 <Area type="monotone" dataKey="net_profit" stroke="#1c1917" strokeWidth={2} fillOpacity={1} fill="url(#colorProfit)" />
                                                 <Area type="monotone" dataKey="gross_margin" stroke="#a8a29e" strokeWidth={1} strokeDasharray="4 4" fill="transparent" />
