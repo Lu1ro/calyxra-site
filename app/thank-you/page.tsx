@@ -9,7 +9,7 @@ function ThankYouContent() {
   const searchParams = useSearchParams();
   const plan = searchParams.get('plan');
 
-  const toolUrl = process.env.NEXT_PUBLIC_TOOL_URL || 'https://calyxra-tool.up.railway.app';
+  const toolUrl = process.env.NEXT_PUBLIC_TOOL_URL || 'https://calyxra-tool-production.up.railway.app';
 
   return (
     <main className="min-h-screen bg-[#FAFAF9]">

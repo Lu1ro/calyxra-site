@@ -8,7 +8,7 @@ import Image from 'next/image';
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { data: session } = useSession();
-  const toolUrl = process.env.NEXT_PUBLIC_TOOL_URL || 'https://calyxra-tool.up.railway.app';
+  const toolUrl = process.env.NEXT_PUBLIC_TOOL_URL || 'https://calyxra-tool-production.up.railway.app';
 
   const handleCheckout = async () => {
     try {

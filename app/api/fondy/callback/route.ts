@@ -1,20 +1,26 @@
 import { NextResponse } from 'next/server';
 import crypto from 'crypto';
+import {
+  sendEmail,
+  auditNotificationEmail,
+  auditConfirmationEmail,
+  monthlyWelcomeEmail,
+} from '../../../../lib/email';
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
+const TOOL_URL = process.env.NEXT_PUBLIC_TOOL_URL || 'https://calyxra-tool-production.up.railway.app';
+
 /**
  * Fondy payment callback webhook
- * Accepts POST with application/x-www-form-urlencoded or JSON body
- * Verifies HMAC SHA1 signature using FONDY_PAYMENT_KEY
+ * Verifies HMAC SHA1 signature, sends emails, creates account for monthly plan
  */
 export async function POST(req: Request) {
   try {
     const contentType = req.headers.get('content-type') || '';
     let params: Record<string, string> = {};
 
-    // Parse body based on content type
     if (contentType.includes('application/x-www-form-urlencoded')) {
       const text = await req.text();
       const urlParams = new URLSearchParams(text);
@@ -22,36 +28,27 @@ export async function POST(req: Request) {
         params[key] = value;
       });
     } else {
-      // JSON body
       const body = await req.json();
-      // Fondy may wrap data in a "response" key
       const data = body.response || body;
       for (const [key, value] of Object.entries(data)) {
         params[key] = String(value);
       }
     }
 
-    const { order_id, order_status, amount, currency, signature } = params;
+    const { order_id, order_status, amount, currency, signature, sender_email } = params;
 
     if (!signature) {
       console.error('Fondy callback: Missing signature');
       return NextResponse.json({ error: 'Missing signature' }, { status: 400 });
     }
 
-    // Verify HMAC SHA1 signature
+    // Verify signature
     const fondyKey = process.env.FONDY_PAYMENT_KEY?.trim();
     if (!fondyKey) {
       console.error('Fondy callback: FONDY_PAYMENT_KEY not configured');
       return NextResponse.json({ error: 'Server configuration error' }, { status: 500 });
     }
 
-    // Build signature string:
-    // 1. Exclude 'signature' and 'response_signature_string' from params
-    // 2. Sort remaining params alphabetically by key
-    // 3. Filter out empty values
-    // 4. Join values with '|'
-    // 5. Prepend payment key + '|'
-    // 6. SHA1 hash the result
     const signatureParams = Object.entries(params)
       .filter(([key]) => key !== 'signature' && key !== 'response_signature_string')
       .filter(([, value]) => value !== '' && value !== undefined && value !== null)
@@ -73,22 +70,90 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Invalid signature' }, { status: 403 });
     }
 
-    // Signature valid — log the payment result
+    // Signature valid
+    const amountNum = amount ? parseInt(amount) : 0;
+    const customerEmail = sender_email || params.sender_email || '';
+
     console.log('Fondy callback: Payment verified', {
       order_id,
       order_status,
-      amount: amount ? (parseInt(amount) / 100).toFixed(2) : 'N/A',
+      amount: amountNum ? (amountNum / 100).toFixed(2) : 'N/A',
       currency,
+      customerEmail,
     });
 
-    // Handle payment status
     if (order_status === 'approved') {
-      console.log(`Fondy: Payment approved for order ${order_id}`);
-      // TODO: Add business logic here (e.g., send confirmation emails, update database)
+      console.log(`Fondy: Payment APPROVED for order ${order_id}`);
+
+      // Determine product from order_id (format: calyxra_{product}_{timestamp})
+      const isMonthly = order_id?.includes('monthly');
+      const isAudit = order_id?.includes('audit');
+
+      // 1. Send notification to team
+      try {
+        const teamEmail = auditNotificationEmail(
+          customerEmail || 'unknown',
+          amountNum,
+          order_id || 'N/A'
+        );
+        await sendEmail(teamEmail);
+        console.log('Fondy: Team notification email sent');
+      } catch (emailErr) {
+        console.error('Fondy: Failed to send team notification:', emailErr);
+      }
+
+      // 2. Send confirmation to customer
+      if (customerEmail) {
+        try {
+          if (isMonthly) {
+            // For monthly plan: create account on SaaS platform and send credentials
+            const tempPassword = crypto.randomBytes(8).toString('hex');
+
+            // Create account on the SaaS platform
+            try {
+              const internalSecret = process.env.INTERNAL_API_SECRET;
+              const registerRes = await fetch(`${TOOL_URL}/api/auth/register`, {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  ...(internalSecret ? { 'x-internal-secret': internalSecret } : {}),
+                },
+                body: JSON.stringify({
+                  email: customerEmail,
+                  password: tempPassword,
+                  name: customerEmail.split('@')[0],
+                  tier: 'pilot',
+                }),
+              });
+
+              if (registerRes.ok) {
+                console.log(`Fondy: Account created for ${customerEmail}`);
+              } else {
+                const errText = await registerRes.text();
+                console.error(`Fondy: Account creation failed: ${errText}`);
+              }
+            } catch (regErr) {
+              console.error('Fondy: Account creation request failed:', regErr);
+            }
+
+            // Send welcome email with credentials
+            const welcomeEmail = monthlyWelcomeEmail(customerEmail, tempPassword, TOOL_URL);
+            await sendEmail(welcomeEmail);
+            console.log('Fondy: Welcome email sent to customer');
+          } else {
+            // For audit: send confirmation email
+            const confirmEmail = auditConfirmationEmail(customerEmail);
+            await sendEmail(confirmEmail);
+            console.log('Fondy: Confirmation email sent to customer');
+          }
+        } catch (emailErr) {
+          console.error('Fondy: Failed to send customer email:', emailErr);
+        }
+      }
     } else if (order_status === 'declined') {
-      console.log(`Fondy: Payment declined for order ${order_id}`);
+      console.log(`Fondy: Payment DECLINED for order ${order_id}`);
     } else if (order_status === 'expired') {
-      console.log(`Fondy: Payment expired for order ${order_id}`);
+      console.log(`Fondy: Payment EXPIRED for order ${order_id}`);
     } else {
       console.log(`Fondy: Unknown status "${order_status}" for order ${order_id}`);
     }

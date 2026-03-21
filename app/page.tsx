@@ -118,7 +118,7 @@ function FreeScanSection({ onSampleData }: { onSampleData: () => void }) {
 
   const set = (key: string, val: string) => setForm(f => ({ ...f, [key]: val }));
 
-  const toolUrl = process.env.NEXT_PUBLIC_RECONCILE_URL || '';
+  const toolUrl = process.env.NEXT_PUBLIC_RECONCILE_URL || 'https://calyxra-tool-production.up.railway.app';
 
   const handleSubmit = async () => {
     if (!toolUrl) {
