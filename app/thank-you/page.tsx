@@ -9,7 +9,7 @@ function ThankYouContent() {
   const searchParams = useSearchParams();
   const plan = searchParams.get('plan');
 
-  const toolUrl = process.env.NEXT_PUBLIC_TOOL_URL || 'http://localhost:3001';
+  const toolUrl = process.env.NEXT_PUBLIC_TOOL_URL || 'https://app.calyxra.com';
 
   return (
     <main className="min-h-screen bg-[#FAFAF9]">

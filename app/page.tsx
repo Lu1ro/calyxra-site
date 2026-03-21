@@ -5,13 +5,32 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
 /* ─── Gap Calculator ───────────────────────────────────────── */
-function GapCalculator() {
+function GapCalculator({ prefill }: { prefill?: { meta: string; shopify: string; adSpend: string } | null }) {
   const [metaRevenue, setMetaRevenue] = useState('');
   const [shopifyRevenue, setShopifyRevenue] = useState('');
   const [adSpend, setAdSpend] = useState('');
   const [result, setResult] = useState<null | {
     phantom: number; platformRoas: number; realRoas: number; gapPct: number;
   }>(null);
+  const [lastPrefill, setLastPrefill] = useState<typeof prefill>(null);
+
+  // Auto-fill and calculate when prefill changes
+  if (prefill && prefill !== lastPrefill) {
+    setMetaRevenue(prefill.meta);
+    setShopifyRevenue(prefill.shopify);
+    setAdSpend(prefill.adSpend);
+    setLastPrefill(prefill);
+    const meta = parseFloat(prefill.meta.replace(/[^0-9.]/g, ''));
+    const shopify = parseFloat(prefill.shopify.replace(/[^0-9.]/g, ''));
+    const spend = parseFloat(prefill.adSpend.replace(/[^0-9.]/g, ''));
+    if (meta && shopify && spend) {
+      const phantom = meta - shopify;
+      const platformRoas = meta / spend;
+      const realRoas = shopify / spend;
+      const gapPct = (phantom / meta) * 100;
+      setResult({ phantom, platformRoas, realRoas, gapPct });
+    }
+  }
 
   const calculate = () => {
     const meta = parseFloat(metaRevenue.replace(/[^0-9.]/g, ''));
@@ -86,7 +105,7 @@ function GapCalculator() {
 }
 
 /* ─── Free Scan — API Connection Form ───────────────────────── */
-function FreeScanSection() {
+function FreeScanSection({ onSampleData }: { onSampleData: () => void }) {
   const [form, setForm] = useState({
     shopifyDomain: '', shopifyApiKey: '',
     metaAccessToken: '', metaAdAccountId: '',
@@ -101,13 +120,13 @@ function FreeScanSection() {
 
   const toolUrl = process.env.NEXT_PUBLIC_RECONCILE_URL || '';
 
-  const handleSubmit = async (useSample = false) => {
+  const handleSubmit = async () => {
     if (!toolUrl) {
       setError('Scan backend is not configured. Set NEXT_PUBLIC_RECONCILE_URL to your tool URL.');
       return;
     }
 
-    if (!useSample && (!form.shopifyDomain || !form.shopifyApiKey)) {
+    if (!form.shopifyDomain || !form.shopifyApiKey) {
       setError('Shopify domain and API key are required.');
       return;
     }
@@ -115,20 +134,18 @@ function FreeScanSection() {
     setLoading(true);
 
     try {
-      const body = useSample
-        ? { useSampleData: true }
-        : {
-            shopifyDomain: form.shopifyDomain.trim(),
-            shopifyApiKey: form.shopifyApiKey.trim(),
-            metaAccessToken: form.metaAccessToken.trim() || undefined,
-            metaAdAccountId: form.metaAdAccountId.trim() || undefined,
-            googleAdsDeveloperToken: form.googleDeveloperToken.trim() || undefined,
-            googleAdsCustomerId: form.googleCustomerId.trim() || undefined,
-            tiktokAccessToken: form.tiktokAccessToken.trim() || undefined,
-            tiktokAdvertiserId: form.tiktokAdvertiserId.trim() || undefined,
-            dateFrom: form.dateFrom || undefined,
-            dateTo: form.dateTo || undefined,
-          };
+      const body = {
+        shopifyDomain: form.shopifyDomain.trim(),
+        shopifyApiKey: form.shopifyApiKey.trim(),
+        metaAccessToken: form.metaAccessToken.trim() || undefined,
+        metaAdAccountId: form.metaAdAccountId.trim() || undefined,
+        googleAdsDeveloperToken: form.googleDeveloperToken.trim() || undefined,
+        googleAdsCustomerId: form.googleCustomerId.trim() || undefined,
+        tiktokAccessToken: form.tiktokAccessToken.trim() || undefined,
+        tiktokAdvertiserId: form.tiktokAdvertiserId.trim() || undefined,
+        dateFrom: form.dateFrom || undefined,
+        dateTo: form.dateTo || undefined,
+      };
 
       const endpoint = `${toolUrl}/api/report`;
 
@@ -144,11 +161,6 @@ function FreeScanSection() {
           status: res.status,
           statusText: res.statusText,
           endpoint,
-          shopifyDomain: body.shopifyDomain,
-          hasMeta: !!body.metaAccessToken,
-          hasGoogle: !!body.googleAdsDeveloperToken,
-          hasTikTok: !!body.tiktokAccessToken,
-          body: text,
         });
         try {
           const maybeJson = JSON.parse(text);
@@ -282,14 +294,14 @@ function FreeScanSection() {
           {/* Buttons */}
           <div className="grid gap-3">
             <button
-              onClick={() => handleSubmit(false)}
+              onClick={() => handleSubmit()}
               disabled={loading}
               className="w-full py-4 bg-[#00b894] text-white font-bold text-sm uppercase tracking-widest hover:bg-[#007a65] hover:scale-[1.01] hover:shadow-lg hover:shadow-[#00b894]/20 transition-all rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? 'Fetching data…' : 'Run Free Scan →'}
             </button>
             <button
-              onClick={() => handleSubmit(true)}
+              onClick={onSampleData}
               disabled={loading}
               className="w-full py-3.5 bg-transparent text-[#00d2a0] font-bold text-sm uppercase tracking-widest hover:bg-stone-800 transition-all rounded-lg border border-[#00b894]/40 disabled:opacity-50"
             >
@@ -314,6 +326,15 @@ function FreeScanSection() {
 export default function Home() {
   const calendlyUrl = "https://cal.com/calyxra/15min";
   const [checkoutLoading, setCheckoutLoading] = useState<string | null>(null);
+  const [samplePrefill, setSamplePrefill] = useState<{ meta: string; shopify: string; adSpend: string } | null>(null);
+
+  function handleSampleData() {
+    setSamplePrefill({ meta: '142800', shopify: '118340', adSpend: '47000' });
+    // Scroll to calculator section
+    setTimeout(() => {
+      document.getElementById('gap-calculator')?.scrollIntoView({ behavior: 'smooth' });
+    }, 100);
+  }
 
   async function handleCheckout(product: 'audit' | 'monthly') {
     setCheckoutLoading(product);
@@ -327,7 +348,7 @@ export default function Home() {
       if (data.checkout_url) {
         window.location.href = data.checkout_url;
       } else {
-        alert('Error: ' + (data.error || 'Unknown error') + (data.error_code ? ' (code: ' + data.error_code + ')' : ''));
+        alert('Checkout error: ' + (data.error || data.message || 'Unknown error') + (data.error_code ? ' (code: ' + data.error_code + ')' : ''));
       }
     } catch (err) {
       alert('Error: ' + (err instanceof Error ? err.message : 'Network error. Check your connection.'));
@@ -506,7 +527,7 @@ export default function Home() {
         </section>
 
         {/* ═══ FREE SCAN TOOL ═══ */}
-        <FreeScanSection />
+        <FreeScanSection onSampleData={handleSampleData} />
 
         {/* ═══ PRICING (2 cards) ═══ */}
         <section id="pricing" className="py-20 px-6 bg-[#FAFAF9]">
@@ -600,7 +621,9 @@ export default function Home() {
         </section>
 
         {/* ═══ GAP CALCULATOR ═══ */}
-        <GapCalculator />
+        <div id="gap-calculator">
+          <GapCalculator prefill={samplePrefill} />
+        </div>
 
         {/* ═══ WHO IT'S FOR (3 cards) ═══ */}
         <section className="py-20 px-6 bg-[#FAFAF9]">

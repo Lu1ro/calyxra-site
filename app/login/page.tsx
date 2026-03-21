@@ -1,13 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { signIn } from 'next-auth/react';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 
 export default function LoginPage() {
-  const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -19,18 +16,10 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      const result = await signIn('credentials', {
-        email,
-        password,
-        redirect: false,
-      });
-
-      if (result?.error) {
-        setError(result.error || 'Invalid credentials.');
-      } else {
-        const toolUrl = process.env.NEXT_PUBLIC_TOOL_URL || 'http://localhost:3001';
-        router.push(toolUrl);
-      }
+      // Placeholder: wire up to real auth later
+      console.log('Login attempted', { email });
+      // Simulate short delay for nicer UX
+      await new Promise((resolve) => setTimeout(resolve, 500));
     } catch (err) {
       setError('Login failed. Please try again.');
     } finally {
@@ -103,12 +92,14 @@ export default function LoginPage() {
             <p className="mt-4 text-xs text-stone-500 text-center">
               Don&apos;t have an account yet?{' '}
               <a
-                href="/register"
+                href="https://cal.com/calyxra/15min"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="font-semibold text-emerald-700 hover:underline"
               >
-                Create one
-              </a>
-              .
+                Book a call
+              </a>{' '}
+              to get access.
             </p>
           </div>
         </div>

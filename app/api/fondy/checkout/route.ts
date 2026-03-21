@@ -17,16 +17,6 @@ const PRODUCTS: Record<string, { amount: string; currency: string; order_desc: s
   },
 };
 
-function generateSignature(params: Record<string, string>, paymentKey: string): string {
-  const sorted = Object.entries(params)
-    .filter(([, value]) => value !== '' && value !== undefined && value !== null)
-    .sort(([a], [b]) => a.localeCompare(b))
-    .map(([, value]) => value);
-
-  const signatureString = `${paymentKey}|${sorted.join('|')}`;
-  return crypto.createHash('sha1').update(signatureString).digest('hex');
-}
-
 export async function POST(req: Request) {
   try {
     const body = await req.json();
@@ -42,9 +32,12 @@ export async function POST(req: Request) {
     const merchantId = process.env.FONDY_MERCHANT_ID?.trim();
     const paymentKey = process.env.FONDY_PAYMENT_KEY?.trim();
 
+    console.log('[Fondy] merchant_id:', merchantId);
+    console.log('[Fondy] payment_key exists:', !!paymentKey);
+
     if (!merchantId || !paymentKey) {
       return NextResponse.json(
-        { error: 'Payment system is not configured.' },
+        { error: 'Payment system is not configured. Missing FONDY_MERCHANT_ID or FONDY_PAYMENT_KEY.' },
         { status: 500 }
       );
     }
@@ -52,48 +45,61 @@ export async function POST(req: Request) {
     const { amount, currency, order_desc } = PRODUCTS[product];
     const orderId = `calyxra_${Date.now()}_${Math.random().toString(36).slice(2)}`;
 
-    const baseUrl = (process.env.NEXT_PUBLIC_BASE_URL || 'https://calyxra.com').trim().replace(/\/+$/, '');
-
-    // All values MUST be strings for correct Fondy signature
-    const requestParams: Record<string, string> = {
+    const params: Record<string, string> = {
       merchant_id: String(merchantId),
       order_id: orderId,
       order_desc,
       amount,
       currency,
-      response_url: `${baseUrl}/thank-you?plan=${product}`,
-      server_callback_url: `${baseUrl}/api/fondy/callback`,
+      response_url: `https://calyxra.com/thank-you?plan=${product}`,
+      server_callback_url: 'https://calyxra.com/api/fondy/callback',
     };
 
-    const signature = generateSignature(requestParams, paymentKey);
+    // Fondy signature: sort keys alphabetically, filter empty, join VALUES with |, prepend key|
+    const sorted = Object.keys(params)
+      .sort()
+      .filter(k => params[k] !== '' && params[k] !== null && params[k] !== undefined)
+      .map(k => params[k]);
+
+    const str = paymentKey + '|' + sorted.join('|');
+    console.log('[Fondy] signature string:', str);
+    const signature = crypto.createHash('sha1').update(str).digest('hex');
+    console.log('[Fondy] signature:', signature);
+
+    const fondyPayload = {
+      request: {
+        ...params,
+        signature,
+      },
+    };
+
+    console.log('[Fondy] request payload:', JSON.stringify(fondyPayload));
 
     const fondyResponse = await fetch('https://pay.fondy.eu/api/checkout/url/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        request: {
-          ...requestParams,
-          signature,
-        },
-      }),
+      body: JSON.stringify(fondyPayload),
     });
 
     const fondyData = await fondyResponse.json();
+    console.log('[Fondy] response:', JSON.stringify(fondyData));
 
     if (fondyData.response?.checkout_url) {
       return NextResponse.json({ checkout_url: fondyData.response.checkout_url });
     }
 
-    console.error('[Fondy] Checkout failed:', fondyData);
+    const errorMsg = fondyData.response?.error_message || 'Failed to create checkout session.';
+    const errorCode = fondyData.response?.error_code;
+    console.error('[Fondy] Checkout failed:', errorMsg, 'code:', errorCode);
     return NextResponse.json(
-      { error: fondyData.response?.error_message || 'Failed to create checkout session.' },
+      { error: errorMsg, error_code: errorCode },
       { status: 500 }
     );
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : String(error);
     console.error('[Fondy] Unexpected error:', message);
     return NextResponse.json(
-      { error: `Internal server error: ${message}` },
+      { error: message },
       { status: 500 }
     );
   }
