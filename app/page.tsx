@@ -486,41 +486,150 @@ export default function Home() {
         </section>
 
         {/* ═══ CASE STUDY — "See what you get" ═══ */}
-        <section className="py-20 px-6 bg-white border-y border-stone-200">
-          <div className="max-w-3xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-serif font-medium text-[#2d3436] text-center mb-12">
-              See what you get
-            </h2>
-            <div className="bg-[#1a1a2e] rounded-xl p-8 border border-[#00b894]/20 shadow-lg shadow-[#00b894]/5">
-              <p className="text-sm text-[#636e72] mb-6 font-mono">DTC Skincare Brand · $47K/mo Meta spend</p>
-              <div className="space-y-4 font-mono text-sm">
-                <div className="flex justify-between items-center py-2 border-b border-white/10">
-                  <span className="text-stone-400">Reported Revenue (Meta)</span>
-                  <span className="text-white text-lg font-bold">$142,800</span>
+        <section className="py-24 px-6 bg-white border-y border-stone-200">
+          <div className="max-w-5xl mx-auto">
+            <div className="text-center mb-16">
+              <p className="text-[10px] font-bold text-[#00b894] uppercase tracking-[0.2em] mb-3">Real results</p>
+              <h2 className="text-3xl md:text-4xl font-serif font-medium text-[#2d3436] mb-3">
+                See what Calyxra reveals
+              </h2>
+              <p className="text-[#636e72] max-w-lg mx-auto">
+                Here&apos;s what a typical reconciliation report looks like for a DTC brand spending $47K/mo on Meta ads.
+              </p>
+            </div>
+
+            {/* Dashboard-style preview */}
+            <div className="bg-[#0f172a] rounded-2xl p-1 shadow-2xl shadow-black/20 border border-white/5">
+              {/* Browser bar */}
+              <div className="flex items-center gap-2 px-4 py-3 border-b border-white/5">
+                <div className="flex gap-1.5">
+                  <div className="w-3 h-3 rounded-full bg-red-500/70"></div>
+                  <div className="w-3 h-3 rounded-full bg-yellow-500/70"></div>
+                  <div className="w-3 h-3 rounded-full bg-green-500/70"></div>
                 </div>
-                <div className="flex justify-between items-center py-2 border-b border-white/10">
-                  <span className="text-stone-400">Actual Revenue (Shopify)</span>
-                  <span className="text-[#00d2a0] text-lg font-bold">$118,340 ✓</span>
+                <div className="flex-1 flex justify-center">
+                  <div className="bg-white/5 rounded-md px-4 py-1 text-xs text-stone-500 font-mono">app.calyxra.com/dashboard/stores/example</div>
                 </div>
-                <div className="flex justify-between items-center py-2 border-b border-white/10">
-                  <span className="text-stone-400">Phantom Revenue</span>
-                  <span className="text-red-400 text-lg font-bold">$24,460 (17.1%) ⚠</span>
-                </div>
-                <div className="pt-4">
-                  <p className="text-stone-500 text-xs uppercase tracking-wider mb-3">Top leaks:</p>
-                  <div className="space-y-2">
-                    <div className="flex justify-between"><span className="text-stone-400">Refunds not deducted</span><span className="text-red-400 font-bold">$11,200</span></div>
-                    <div className="flex justify-between"><span className="text-stone-400">Discount codes</span><span className="text-red-400 font-bold">$8,740</span></div>
-                    <div className="flex justify-between"><span className="text-stone-400">Chargebacks</span><span className="text-red-400 font-bold">$4,520</span></div>
+              </div>
+
+              <div className="p-6 md:p-8">
+                {/* Store header */}
+                <div className="flex items-center justify-between mb-6">
+                  <div>
+                    <p className="text-white/40 text-xs font-mono uppercase tracking-wider mb-1">DTC Skincare Brand</p>
+                    <p className="text-white/20 text-xs font-mono">Report period: Feb 20 — Mar 22, 2026</p>
+                  </div>
+                  <div className="flex gap-2">
+                    <span className="px-3 py-1 rounded-md bg-white/5 text-white/50 text-xs font-medium">Demo Run</span>
+                    <span className="px-3 py-1 rounded-md bg-[#00b894] text-white text-xs font-bold">Run Reconciliation</span>
                   </div>
                 </div>
-                <div className="pt-4 mt-4 border-t border-white/10 space-y-2">
-                  <div className="flex justify-between"><span className="text-stone-400">True ROAS</span><span className="text-[#00d2a0] font-bold text-lg">2.52× <span className="text-stone-500 text-xs">(vs 3.04× reported)</span></span></div>
-                  <div className="flex justify-between"><span className="text-stone-400">Annual phantom revenue</span><span className="text-red-400 font-bold text-lg">~$293K</span></div>
+
+                {/* KPI Cards Row */}
+                <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-6">
+                  {[
+                    { label: 'Phantom Revenue', value: '$24,460', sub: '17.1% overstated', color: '#ef4444', bg: 'rgba(239,68,68,0.08)', border: 'rgba(239,68,68,0.15)' },
+                    { label: 'True ROAS', value: '2.52×', sub: 'vs 3.04× reported', color: '#10b981', bg: 'rgba(16,185,129,0.08)', border: 'rgba(16,185,129,0.15)' },
+                    { label: 'Net Revenue', value: '$118,340', sub: 'Shopify verified', color: '#ffffff', bg: 'rgba(255,255,255,0.04)', border: 'rgba(255,255,255,0.08)' },
+                    { label: 'Gross Revenue', value: '$142,800', sub: 'Before deductions', color: '#ffffff', bg: 'rgba(255,255,255,0.04)', border: 'rgba(255,255,255,0.08)' },
+                    { label: 'Total Ad Spend', value: '$47,000', sub: 'Meta Ads', color: '#ffffff', bg: 'rgba(255,255,255,0.04)', border: 'rgba(255,255,255,0.08)' },
+                  ].map((kpi, i) => (
+                    <div key={i} className="rounded-xl p-4" style={{ background: kpi.bg, border: `1px solid ${kpi.border}` }}>
+                      <p className="text-[10px] font-bold uppercase tracking-wider mb-2" style={{ color: `${kpi.color}99` }}>{kpi.label}</p>
+                      <p className="text-2xl font-bold tabular-nums" style={{ color: kpi.color }}>{kpi.value}</p>
+                      <p className="text-xs mt-1" style={{ color: `${kpi.color}60` }}>{kpi.sub}</p>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Revenue Leak Alert */}
+                <div className="rounded-xl p-5 mb-6" style={{ background: 'rgba(239,68,68,0.06)', border: '1px solid rgba(239,68,68,0.12)' }}>
+                  <div className="flex items-start gap-3">
+                    <div className="w-8 h-8 rounded-lg bg-red-500/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                    </div>
+                    <div>
+                      <p className="text-red-400 font-bold text-sm mb-1">Meta is overstating revenue by 17.1%</p>
+                      <p className="text-red-400/60 text-xs">$24,460 in phantom revenue this month — approximately $293K annualized</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Two columns: Leak breakdown + Revenue comparison */}
+                <div className="grid md:grid-cols-2 gap-4 mb-6">
+                  {/* Where revenue leaks */}
+                  <div className="rounded-xl p-5" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}>
+                    <p className="text-white/50 text-xs font-bold uppercase tracking-wider mb-4">Where Revenue Leaks</p>
+                    <div className="space-y-3">
+                      {[
+                        { label: 'Refunds not deducted', value: '$11,200', pct: 46, color: '#ef4444' },
+                        { label: 'Discount code gaps', value: '$8,740', pct: 36, color: '#f59e0b' },
+                        { label: 'Chargebacks', value: '$4,520', pct: 18, color: '#8b5cf6' },
+                      ].map((leak, i) => (
+                        <div key={i}>
+                          <div className="flex justify-between items-center mb-1.5">
+                            <span className="text-white/70 text-sm">{leak.label}</span>
+                            <span className="font-bold text-sm tabular-nums" style={{ color: leak.color }}>{leak.value}</span>
+                          </div>
+                          <div className="h-2 rounded-full bg-white/5 overflow-hidden">
+                            <div className="h-full rounded-full transition-all" style={{ width: `${leak.pct}%`, background: leak.color }} />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Reported vs Actual */}
+                  <div className="rounded-xl p-5" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}>
+                    <p className="text-white/50 text-xs font-bold uppercase tracking-wider mb-4">Reported vs Actual</p>
+                    <div className="space-y-4">
+                      <div>
+                        <div className="flex justify-between mb-1.5">
+                          <span className="text-white/50 text-xs">Meta Reports</span>
+                          <span className="text-white/70 font-bold text-sm">$142,800</span>
+                        </div>
+                        <div className="h-8 rounded-lg overflow-hidden" style={{ background: 'repeating-linear-gradient(45deg, rgba(239,68,68,0.15), rgba(239,68,68,0.15) 8px, rgba(239,68,68,0.08) 8px, rgba(239,68,68,0.08) 16px)' }}>
+                          <div className="h-full flex items-center justify-end pr-3">
+                            <span className="text-red-400 text-[10px] font-bold">INFLATED</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div>
+                        <div className="flex justify-between mb-1.5">
+                          <span className="text-white/50 text-xs">Shopify Verified</span>
+                          <span className="text-[#00d2a0] font-bold text-sm">$118,340</span>
+                        </div>
+                        <div className="h-8 rounded-lg bg-[#00b894] overflow-hidden" style={{ width: '83%' }}>
+                          <div className="h-full flex items-center justify-end pr-3">
+                            <span className="text-white text-[10px] font-bold">ACTUAL ✓</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="mt-4 pt-4 border-t border-white/5 flex justify-between">
+                      <span className="text-white/40 text-sm">Annual phantom revenue</span>
+                      <span className="text-red-400 font-bold text-lg">~$293K</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Bottom action bar */}
+                <div className="flex items-center justify-between rounded-xl p-4" style={{ background: 'rgba(0,184,148,0.06)', border: '1px solid rgba(0,184,148,0.15)' }}>
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-lg bg-[#00b894]/15 flex items-center justify-center">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00b894" strokeWidth="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                    </div>
+                    <div>
+                      <p className="text-white/80 text-sm font-bold">Action Engine found 4 campaign optimizations</p>
+                      <p className="text-white/40 text-xs">Estimated additional revenue: +$8,400/mo</p>
+                    </div>
+                  </div>
+                  <span className="px-4 py-2 rounded-lg bg-[#00b894] text-white text-xs font-bold">View Actions</span>
                 </div>
               </div>
             </div>
-            <p className="text-center text-sm text-[#636e72] mt-6">
+
+            <p className="text-center text-sm text-[#636e72] mt-8">
               Based on anonymized sample data. Your audit will include full campaign-level breakdown + PDF report.
             </p>
           </div>
