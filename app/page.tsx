@@ -653,18 +653,20 @@ export default function Home() {
                   <span className="text-sm text-[#636e72]">one-time</span>
                 </div>
                 <ul className="space-y-3 my-6">
-                  <li className="flex items-start gap-3 text-sm text-[#2d3436]"><span className="text-[#00b894] mt-0.5">✅</span> Full Shopify + Meta reconciliation</li>
-                  <li className="flex items-start gap-3 text-sm text-[#2d3436]"><span className="text-[#00b894] mt-0.5">✅</span> Exact phantom revenue breakdown</li>
-                  <li className="flex items-start gap-3 text-sm text-[#2d3436]"><span className="text-[#00b894] mt-0.5">✅</span> PDF report + 3 recommendations</li>
-                  <li className="flex items-start gap-3 text-sm text-[#2d3436]"><span className="text-[#00b894] mt-0.5">✅</span> 30-min walkthrough call</li>
+                  <li className="flex items-start gap-3 text-sm text-[#2d3436]"><span className="w-1.5 h-1.5 rounded-full bg-[#00b894] mt-2 flex-shrink-0"></span> Full Shopify + Meta reconciliation</li>
+                  <li className="flex items-start gap-3 text-sm text-[#2d3436]"><span className="w-1.5 h-1.5 rounded-full bg-[#00b894] mt-2 flex-shrink-0"></span> Exact phantom revenue breakdown</li>
+                  <li className="flex items-start gap-3 text-sm text-[#2d3436]"><span className="w-1.5 h-1.5 rounded-full bg-[#00b894] mt-2 flex-shrink-0"></span> PDF report + 3 recommendations</li>
+                  <li className="flex items-start gap-3 text-sm text-[#2d3436]"><span className="w-1.5 h-1.5 rounded-full bg-[#00b894] mt-2 flex-shrink-0"></span> 30-min walkthrough call</li>
                 </ul>
-                <button
-                  onClick={() => handleCheckout('audit')}
-                  disabled={checkoutLoading === 'audit'}
-                  className="w-full py-3 bg-[#00b894] text-white font-bold text-sm uppercase tracking-widest hover:bg-[#007a65] transition-all rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                <a
+                  href="https://cal.com/calyxra/15min"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block w-full py-3 bg-[#00b894] text-white font-bold text-sm uppercase tracking-widest hover:bg-[#007a65] transition-all rounded-lg text-center"
                 >
-                  {checkoutLoading === 'audit' ? 'Processing...' : 'Get Audit — $249'}
-                </button>
+                  Book Audit Call — $249
+                </a>
+                <p className="text-xs text-[#636e72] text-center mt-2">15-min call &rarr; we run the audit &rarr; PDF delivered in 48h</p>
               </div>
 
               {/* Monthly Reconciliation */}
@@ -680,20 +682,26 @@ export default function Home() {
                 <span className="text-[10px] font-bold text-[#00b894] bg-[#00b894]/10 px-2 py-1 rounded border border-[#00b894]/20">FIRST 5 AGENCIES ONLY</span>
                 <p className="text-xs text-[#636e72] mt-1 mb-4">Early access</p>
                 <ul className="space-y-3 mb-6">
-                  <li className="flex items-start gap-3 text-sm text-[#2d3436]"><span className="text-[#00b894] mt-0.5">✅</span> Everything in audit</li>
-                  <li className="flex items-start gap-3 text-sm text-[#2d3436]"><span className="text-[#00b894] mt-0.5">✅</span> Monthly monitoring + alerts</li>
-                  <li className="flex items-start gap-3 text-sm text-[#2d3436]"><span className="text-[#00b894] mt-0.5">✅</span> Action Engine recommendations</li>
-                  <li className="flex items-start gap-3 text-sm text-[#2d3436]"><span className="text-[#00b894] mt-0.5">✅</span> White-label PDF for clients</li>
+                  <li className="flex items-start gap-3 text-sm text-[#2d3436]"><span className="w-1.5 h-1.5 rounded-full bg-[#00b894] mt-2 flex-shrink-0"></span> Everything in audit</li>
+                  <li className="flex items-start gap-3 text-sm text-[#2d3436]"><span className="w-1.5 h-1.5 rounded-full bg-[#00b894] mt-2 flex-shrink-0"></span> Monthly monitoring + alerts</li>
+                  <li className="flex items-start gap-3 text-sm text-[#2d3436]"><span className="w-1.5 h-1.5 rounded-full bg-[#00b894] mt-2 flex-shrink-0"></span> Action Engine recommendations</li>
+                  <li className="flex items-start gap-3 text-sm text-[#2d3436]"><span className="w-1.5 h-1.5 rounded-full bg-[#00b894] mt-2 flex-shrink-0"></span> White-label PDF for clients</li>
                 </ul>
-                <button
-                  onClick={() => handleCheckout('monthly')}
-                  disabled={checkoutLoading === 'monthly'}
-                  className="w-full py-3 bg-[#00b894] text-white font-bold text-sm uppercase tracking-widest hover:bg-[#007a65] transition-all rounded-lg shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                <a
+                  href="https://cal.com/calyxra/15min"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block w-full py-3 bg-[#00b894] text-white font-bold text-sm uppercase tracking-widest hover:bg-[#007a65] transition-all rounded-lg shadow-lg text-center"
                 >
-                  {checkoutLoading === 'monthly' ? 'Processing...' : 'Start Monthly — $150/mo'}
-                </button>
+                  Start Free Trial
+                </a>
+                <p className="text-xs text-[#636e72] text-center mt-2">No credit card needed &middot; payment setup in progress</p>
               </div>
             </div>
+            <p className="text-center text-sm text-[#636e72] mt-6">
+              Prefer email? Reach us at{' '}
+              <a href="mailto:team@calyxra.com?subject=I want to start with Calyxra" className="text-[#00b894] font-semibold hover:underline">team@calyxra.com</a>
+            </p>
           </div>
         </section>
 
