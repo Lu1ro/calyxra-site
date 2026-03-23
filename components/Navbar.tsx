@@ -42,7 +42,7 @@ export default function Navbar() {
             <div className="absolute -inset-2 bg-emerald-500/5 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity" />
           </div>
           <div className="text-2xl font-serif font-bold tracking-tight text-stone-900 flex items-center">
-            Calyxra<span className="text-emerald-700">.</span>
+            Calyxra<span className="text-[#064E3B]">.</span>
           </div>
         </Link>
 
@@ -50,7 +50,7 @@ export default function Navbar() {
           {session ? (
             <a
               href={toolUrl}
-              className="px-5 py-3 text-emerald-700 text-xs font-bold uppercase tracking-wide hover:text-emerald-900 transition-all"
+              className="px-5 py-3 text-[#064E3B] text-xs font-bold uppercase tracking-wide hover:text-[#043927] transition-all"
             >
               Dashboard →
             </a>
@@ -66,7 +66,7 @@ export default function Navbar() {
             href="https://cal.com/calyxra/15min"
             target="_blank"
             rel="noopener noreferrer"
-            className="px-6 py-3 bg-[#00b894] text-white text-xs font-bold uppercase tracking-wide hover:bg-[#007a65] transition-all hover:shadow-lg hover:shadow-[#00b894]/30 active:scale-95 rounded-lg"
+            className="px-6 py-3 bg-[#064E3B] text-white text-xs font-bold uppercase tracking-wide hover:bg-[#043927] transition-all hover:shadow-lg hover:shadow-[#064E3B]/30 active:scale-95 rounded-lg"
           >
             Book a Call
           </a>
@@ -115,7 +115,7 @@ export default function Navbar() {
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="w-full py-3 bg-[#00b894] text-white text-center text-xs font-bold uppercase tracking-wide rounded-lg block"
+              className="w-full py-3 bg-[#064E3B] text-white text-center text-xs font-bold uppercase tracking-wide rounded-lg block"
             >
               Book a Call
             </a>

@@ -45,29 +45,29 @@ function GapCalculator({ prefill }: { prefill?: { meta: string; shopify: string;
   };
 
   const fmt = (n: number) => '$' + n.toLocaleString('en-US', { maximumFractionDigits: 0 });
-  const inputClass = "w-full px-4 py-3 border border-stone-300 text-[#2d3436] text-sm rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00b894]/30 focus:border-[#00b894] transition-all";
+  const inputClass = "w-full px-4 py-3 border border-stone-300 text-[#1C1917] text-sm rounded-lg focus:outline-none focus:ring-2 focus:ring-[#064E3B]/30 focus:border-[#064E3B] transition-all";
 
   return (
     <section className="py-20 px-6 bg-white border-y border-stone-200">
       <div className="max-w-xl mx-auto text-center">
-        <h2 className="text-3xl md:text-4xl font-serif font-medium text-[#2d3436] mb-3">
+        <h2 className="text-3xl md:text-4xl font-serif font-medium text-[#1C1917] mb-3">
           Find your phantom revenue in 30 seconds
         </h2>
-        <p className="text-[#636e72] mb-8">Enter your numbers — no login needed.</p>
+        <p className="text-[#78716C] mb-8">Enter your numbers — no login needed.</p>
         <div className="space-y-4 text-left">
           <div>
-            <label className="block text-sm font-semibold text-[#2d3436] mb-1.5">Meta reported revenue (last 30 days)</label>
+            <label className="block text-sm font-semibold text-[#1C1917] mb-1.5">Meta reported revenue (last 30 days)</label>
             <input className={inputClass} placeholder="$142,800" value={metaRevenue} onChange={e => setMetaRevenue(e.target.value)} />
           </div>
           <div>
-            <label className="block text-sm font-semibold text-[#2d3436] mb-1.5">Shopify net revenue (last 30 days)</label>
+            <label className="block text-sm font-semibold text-[#1C1917] mb-1.5">Shopify net revenue (last 30 days)</label>
             <input className={inputClass} placeholder="$118,340" value={shopifyRevenue} onChange={e => setShopifyRevenue(e.target.value)} />
           </div>
           <div>
-            <label className="block text-sm font-semibold text-[#2d3436] mb-1.5">Monthly ad spend</label>
+            <label className="block text-sm font-semibold text-[#1C1917] mb-1.5">Monthly ad spend</label>
             <input className={inputClass} placeholder="$47,000" value={adSpend} onChange={e => setAdSpend(e.target.value)} />
           </div>
-          <button onClick={calculate} className="w-full py-4 bg-[#00b894] text-white font-bold text-sm uppercase tracking-widest hover:bg-[#007a65] hover:shadow-lg hover:shadow-[#00b894]/20 transition-all rounded-lg">
+          <button onClick={calculate} className="w-full py-4 bg-[#064E3B] text-white font-bold text-sm uppercase tracking-widest hover:bg-[#043927] hover:shadow-lg hover:shadow-[#064E3B]/20 transition-all rounded-lg">
             Calculate →
           </button>
         </div>
@@ -75,26 +75,26 @@ function GapCalculator({ prefill }: { prefill?: { meta: string; shopify: string;
         {result && (
           <div className="mt-8 bg-[#f8f9fa] border border-stone-200 rounded-xl p-6 text-left space-y-3">
             <div className="flex justify-between items-center py-2 border-b border-stone-200">
-              <span className="text-sm text-[#636e72]">Phantom Revenue</span>
+              <span className="text-sm text-[#78716C]">Phantom Revenue</span>
               <span className="text-lg font-bold text-red-500">{fmt(result.phantom)}</span>
             </div>
             <div className="flex justify-between items-center py-2 border-b border-stone-200">
-              <span className="text-sm text-[#636e72]">Platform ROAS</span>
-              <span className="text-lg font-bold text-[#2d3436]">{result.platformRoas.toFixed(1)}×</span>
+              <span className="text-sm text-[#78716C]">Platform ROAS</span>
+              <span className="text-lg font-bold text-[#1C1917]">{result.platformRoas.toFixed(1)}×</span>
             </div>
             <div className="flex justify-between items-center py-2 border-b border-stone-200">
-              <span className="text-sm text-[#636e72]">Real ROAS</span>
-              <span className="text-lg font-bold text-[#00b894]">{result.realRoas.toFixed(1)}×</span>
+              <span className="text-sm text-[#78716C]">Real ROAS</span>
+              <span className="text-lg font-bold text-[#064E3B]">{result.realRoas.toFixed(1)}×</span>
             </div>
             <div className="flex justify-between items-center py-2">
-              <span className="text-sm text-[#636e72]">Gap</span>
+              <span className="text-sm text-[#78716C]">Gap</span>
               <span className="text-lg font-bold text-red-500">{result.gapPct.toFixed(1)}%</span>
             </div>
             <p className="text-sm text-red-600 font-semibold pt-2 text-center">
               You may be overpaying by {result.gapPct.toFixed(0)}%
             </p>
             <a href="https://cal.com/calyxra/15min" target="_blank" rel="noopener noreferrer"
-              className="block text-center mt-4 px-6 py-3 bg-[#00b894] text-white font-bold text-sm uppercase tracking-widest hover:bg-[#007a65] transition-all rounded-lg">
+              className="block text-center mt-4 px-6 py-3 bg-[#064E3B] text-white font-bold text-sm uppercase tracking-widest hover:bg-[#043927] transition-all rounded-lg">
               See exactly where this comes from → Get $249 Audit
             </a>
           </div>
@@ -185,27 +185,27 @@ function FreeScanSection({ onSampleData }: { onSampleData: () => void }) {
     }
   };
 
-  const inputClass = "w-full px-4 py-3 bg-stone-800 border border-stone-700 text-white text-sm font-mono focus:outline-none focus:border-[#00b894] focus:ring-1 focus:ring-[#00b894]/30 transition-colors rounded-lg placeholder:text-stone-600";
+  const inputClass = "w-full px-4 py-3 bg-stone-800 border border-stone-700 text-white text-sm font-mono focus:outline-none focus:border-[#064E3B] focus:ring-1 focus:ring-[#064E3B]/30 transition-colors rounded-lg placeholder:text-stone-600";
 
   return (
     <section id="calculator" className="py-20 px-6 bg-stone-900 text-white">
       <div className="max-w-2xl mx-auto">
         <div className="text-center mb-8">
           <h2 className="text-3xl md:text-4xl font-serif font-medium mb-4">Run a free scan right now</h2>
-          <div className="h-1 w-20 bg-[#00b894] mx-auto mb-4"></div>
+          <div className="h-1 w-20 bg-[#064E3B] mx-auto mb-4"></div>
           <p className="text-stone-400">Paste your API credentials and see your phantom revenue gap in 10 seconds. No account needed.</p>
         </div>
 
         {/* Security notice */}
-        <div className="bg-stone-800 border-l-4 border-[#00b894] p-4 rounded-r-lg mb-6">
-          <p className="text-xs font-bold text-[#00d2a0] mb-1">🔒 Security &amp; Privacy Guarantee</p>
+        <div className="bg-stone-800 border-l-4 border-[#064E3B] p-4 rounded-r-lg mb-6">
+          <p className="text-xs font-bold text-[#065F46] mb-1">🔒 Security &amp; Privacy Guarantee</p>
           <p className="text-xs text-stone-400">Read-only access only. Data is processed entirely in-memory and is <strong className="text-stone-300">never stored</strong> on our servers.</p>
         </div>
 
         <div className="space-y-5">
           {/* Shopify */}
-          <div className="bg-[#00b894]/10 border border-[#00b894]/30 rounded-lg p-5">
-            <p className="text-sm font-bold text-[#00d2a0] mb-4">🛒 SHOPIFY</p>
+          <div className="bg-[#064E3B]/10 border border-[#064E3B]/30 rounded-lg p-5">
+            <p className="text-sm font-bold text-[#065F46] mb-4">🛒 SHOPIFY</p>
             <div className="grid gap-3">
               <div>
                 <label className="block text-xs font-medium text-stone-400 mb-1.5">Store Domain</label>
@@ -296,14 +296,14 @@ function FreeScanSection({ onSampleData }: { onSampleData: () => void }) {
             <button
               onClick={() => handleSubmit()}
               disabled={loading}
-              className="w-full py-4 bg-[#00b894] text-white font-bold text-sm uppercase tracking-widest hover:bg-[#007a65] hover:scale-[1.01] hover:shadow-lg hover:shadow-[#00b894]/20 transition-all rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full py-4 bg-[#064E3B] text-white font-bold text-sm uppercase tracking-widest hover:bg-[#043927] hover:scale-[1.01] hover:shadow-lg hover:shadow-[#064E3B]/20 transition-all rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? 'Fetching data…' : 'Run Free Scan →'}
             </button>
             <button
               onClick={onSampleData}
               disabled={loading}
-              className="w-full py-3.5 bg-transparent text-[#00d2a0] font-bold text-sm uppercase tracking-widest hover:bg-stone-800 transition-all rounded-lg border border-[#00b894]/40 disabled:opacity-50"
+              className="w-full py-3.5 bg-transparent text-[#065F46] font-bold text-sm uppercase tracking-widest hover:bg-stone-800 transition-all rounded-lg border border-[#064E3B]/40 disabled:opacity-50"
             >
               Try with sample data
             </button>
@@ -312,7 +312,7 @@ function FreeScanSection({ onSampleData }: { onSampleData: () => void }) {
 
         <div className="mt-8 text-center">
           <p className="text-stone-500 text-sm">Don&apos;t want to connect APIs yourself?</p>
-          <a href="https://cal.com/calyxra/15min" target="_blank" rel="noopener noreferrer" className="text-[#00d2a0] font-semibold hover:underline">
+          <a href="https://cal.com/calyxra/15min" target="_blank" rel="noopener noreferrer" className="text-[#065F46] font-semibold hover:underline">
             Book a Revenue Leak Audit — $249 →
           </a>
           <p className="text-stone-600 text-xs mt-1">We run it for you. Full branded report in 48 hours.</p>
@@ -395,7 +395,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FAFAF9] text-[#2d3436] font-sans selection:bg-[#00b894]/20" style={{ lineHeight: 1.6 }}>
+    <div className="min-h-screen bg-[#FAFAF9] text-[#1C1917] font-sans selection:bg-[#064E3B]/20" style={{ lineHeight: 1.6 }}>
       <Navbar />
 
       {/* FAQPage JSON-LD */}
@@ -406,22 +406,22 @@ export default function Home() {
         {/* ═══ HERO ═══ */}
         <section className="px-6 pt-16 pb-28 bg-[#FAFAF9]">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-serif font-medium text-[#2d3436] mb-6 leading-[1.08]">
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-serif font-medium text-[#1C1917] mb-6 leading-[1.08]">
               Your ad platforms are hiding revenue.<br />
-              <span className="text-[#00b894]">We find it.</span>
+              <span className="text-[#064E3B]">We find it.</span>
             </h1>
-            <p className="text-xl text-[#636e72] mb-8 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-xl text-[#78716C] mb-8 max-w-2xl mx-auto leading-relaxed">
               Meta says $100K. Shopify collected $78K. We show you where the $22K went — per campaign — in 48 hours.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4 mb-6">
-              <a href="#calculator" className="px-8 py-4 bg-[#00b894] text-white font-bold text-sm uppercase tracking-widest hover:bg-[#007a65] hover:scale-[1.03] hover:shadow-xl hover:shadow-[#00b894]/25 transition-all rounded-lg">
+              <a href="#calculator" className="px-8 py-4 bg-[#064E3B] text-white font-bold text-sm uppercase tracking-widest hover:bg-[#043927] hover:scale-[1.03] hover:shadow-xl hover:shadow-[#064E3B]/25 transition-all rounded-lg">
                 Run Free Scan →
               </a>
-              <a href={calendlyUrl} target="_blank" rel="noopener noreferrer" className="px-8 py-4 bg-transparent border-2 border-[#b2bec3] text-[#2d3436] font-bold text-sm uppercase tracking-widest hover:bg-stone-100 transition-all rounded-lg">
+              <a href={calendlyUrl} target="_blank" rel="noopener noreferrer" className="px-8 py-4 bg-transparent border-2 border-[#b2bec3] text-[#1C1917] font-bold text-sm uppercase tracking-widest hover:bg-stone-100 transition-all rounded-lg">
                 Book a Call
               </a>
             </div>
-            <p className="text-sm text-[#636e72]">
+            <p className="text-sm text-[#78716C]">
               🔒 Read-only access. Your data is never stored. If the gap is under 5% — full refund.
             </p>
           </div>
@@ -430,24 +430,24 @@ export default function Home() {
         {/* ═══ THE PROBLEM (3 cards) ═══ */}
         <section className="py-20 px-6 bg-white border-y border-stone-200">
           <div className="max-w-5xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-serif font-medium text-[#2d3436] text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-serif font-medium text-[#1C1917] text-center mb-12">
               The numbers don&apos;t match. Here&apos;s why.
             </h2>
             <div className="grid md:grid-cols-3 gap-6">
               <div className="bg-blue-50 border border-blue-200 p-8 rounded-lg hover:-translate-y-1 hover:shadow-md transition-all duration-200">
                 <div className="text-2xl mb-3">📘</div>
-                <h3 className="text-xl font-serif font-bold text-[#2d3436] mb-3">Meta says $100K</h3>
-                <p className="text-[#636e72] leading-relaxed">The pixel fires at checkout. Counts the full order value. Never looks back.</p>
+                <h3 className="text-xl font-serif font-bold text-[#1C1917] mb-3">Meta says $100K</h3>
+                <p className="text-[#78716C] leading-relaxed">The pixel fires at checkout. Counts the full order value. Never looks back.</p>
               </div>
               <div className="bg-amber-50 border border-amber-200 p-8 rounded-lg hover:-translate-y-1 hover:shadow-md transition-all duration-200">
                 <div className="text-2xl mb-3">🛒</div>
-                <h3 className="text-xl font-serif font-bold text-[#2d3436] mb-3">Shopify collected $78K</h3>
-                <p className="text-[#636e72] leading-relaxed">Refunds settled 3 weeks later. Discount codes ate 20%. Chargebacks hit. The real number dropped.</p>
+                <h3 className="text-xl font-serif font-bold text-[#1C1917] mb-3">Shopify collected $78K</h3>
+                <p className="text-[#78716C] leading-relaxed">Refunds settled 3 weeks later. Discount codes ate 20%. Chargebacks hit. The real number dropped.</p>
               </div>
               <div className="bg-red-50 border-2 border-red-300 p-8 rounded-lg hover:-translate-y-1 hover:shadow-md transition-all duration-200">
                 <div className="text-2xl mb-3">❓</div>
-                <h3 className="text-xl font-serif font-bold text-[#2d3436] mb-3">Where&apos;s the $22K?</h3>
-                <p className="text-[#636e72] leading-relaxed">It&apos;s phantom revenue — counted by ad platforms, never deposited in your bank. Most brands don&apos;t even know it exists.</p>
+                <h3 className="text-xl font-serif font-bold text-[#1C1917] mb-3">Where&apos;s the $22K?</h3>
+                <p className="text-[#78716C] leading-relaxed">It&apos;s phantom revenue — counted by ad platforms, never deposited in your bank. Most brands don&apos;t even know it exists.</p>
               </div>
             </div>
           </div>
@@ -456,30 +456,30 @@ export default function Home() {
         {/* ═══ HOW IT WORKS (3 steps) ═══ */}
         <section className="py-20 px-6 bg-[#FAFAF9]">
           <div className="max-w-5xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-serif font-medium text-[#2d3436] text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-serif font-medium text-[#1C1917] text-center mb-12">
               How it works
             </h2>
             <div className="grid md:grid-cols-3 gap-8">
               <div className="text-center hover:-translate-y-1 transition-all duration-200">
-                <div className="w-16 h-16 bg-[#00b894]/15 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl font-serif font-bold text-[#00b894]">1</span>
+                <div className="w-16 h-16 bg-[#064E3B]/15 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl font-serif font-bold text-[#064E3B]">1</span>
                 </div>
-                <h3 className="text-lg font-serif font-bold text-[#2d3436] mb-2">Connect <span className="text-[#636e72] text-sm font-sans">(2 minutes)</span></h3>
-                <p className="text-[#636e72]">Paste your Shopify API key and Meta access token. Read-only — we can&apos;t modify anything.</p>
+                <h3 className="text-lg font-serif font-bold text-[#1C1917] mb-2">Connect <span className="text-[#78716C] text-sm font-sans">(2 minutes)</span></h3>
+                <p className="text-[#78716C]">Paste your Shopify API key and Meta access token. Read-only — we can&apos;t modify anything.</p>
               </div>
               <div className="text-center hover:-translate-y-1 transition-all duration-200">
-                <div className="w-16 h-16 bg-[#00b894]/15 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl font-serif font-bold text-[#00b894]">2</span>
+                <div className="w-16 h-16 bg-[#064E3B]/15 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl font-serif font-bold text-[#064E3B]">2</span>
                 </div>
-                <h3 className="text-lg font-serif font-bold text-[#2d3436] mb-2">Reconcile <span className="text-[#636e72] text-sm font-sans">(10 seconds)</span></h3>
-                <p className="text-[#636e72]">We pull your actual Shopify revenue and compare it against what ad platforms reported. Per campaign.</p>
+                <h3 className="text-lg font-serif font-bold text-[#1C1917] mb-2">Reconcile <span className="text-[#78716C] text-sm font-sans">(10 seconds)</span></h3>
+                <p className="text-[#78716C]">We pull your actual Shopify revenue and compare it against what ad platforms reported. Per campaign.</p>
               </div>
               <div className="text-center hover:-translate-y-1 transition-all duration-200">
-                <div className="w-16 h-16 bg-[#00b894]/15 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl font-serif font-bold text-[#00b894]">3</span>
+                <div className="w-16 h-16 bg-[#064E3B]/15 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl font-serif font-bold text-[#064E3B]">3</span>
                 </div>
-                <h3 className="text-lg font-serif font-bold text-[#2d3436] mb-2">Act <span className="text-[#636e72] text-sm font-sans">(your next move)</span></h3>
-                <p className="text-[#636e72]">See which campaigns are truly profitable, which are phantom, and exactly where to reallocate budget.</p>
+                <h3 className="text-lg font-serif font-bold text-[#1C1917] mb-2">Act <span className="text-[#78716C] text-sm font-sans">(your next move)</span></h3>
+                <p className="text-[#78716C]">See which campaigns are truly profitable, which are phantom, and exactly where to reallocate budget.</p>
               </div>
             </div>
           </div>
@@ -489,11 +489,11 @@ export default function Home() {
         <section className="py-24 px-6 bg-white border-y border-stone-200">
           <div className="max-w-5xl mx-auto">
             <div className="text-center mb-16">
-              <p className="text-[10px] font-bold text-[#00b894] uppercase tracking-[0.2em] mb-3">Real results</p>
-              <h2 className="text-3xl md:text-4xl font-serif font-medium text-[#2d3436] mb-3">
+              <p className="text-[10px] font-bold text-[#064E3B] uppercase tracking-[0.2em] mb-3">Real results</p>
+              <h2 className="text-3xl md:text-4xl font-serif font-medium text-[#1C1917] mb-3">
                 See what Calyxra reveals
               </h2>
-              <p className="text-[#636e72] max-w-lg mx-auto">
+              <p className="text-[#78716C] max-w-lg mx-auto">
                 Here&apos;s what a typical reconciliation report looks like for a DTC brand spending $47K/mo on Meta ads.
               </p>
             </div>
@@ -521,7 +521,7 @@ export default function Home() {
                   </div>
                   <div className="flex gap-2">
                     <span className="px-3 py-1 rounded-md bg-white/5 text-white/50 text-xs font-medium">Demo Run</span>
-                    <span className="px-3 py-1 rounded-md bg-[#00b894] text-white text-xs font-bold">Run Reconciliation</span>
+                    <span className="px-3 py-1 rounded-md bg-[#064E3B] text-white text-xs font-bold">Run Reconciliation</span>
                   </div>
                 </div>
 
@@ -597,9 +597,9 @@ export default function Home() {
                       <div>
                         <div className="flex justify-between mb-1.5">
                           <span className="text-white/50 text-xs">Shopify Verified</span>
-                          <span className="text-[#00d2a0] font-bold text-sm">$118,340</span>
+                          <span className="text-[#065F46] font-bold text-sm">$118,340</span>
                         </div>
-                        <div className="h-8 rounded-lg bg-[#00b894] overflow-hidden" style={{ width: '83%' }}>
+                        <div className="h-8 rounded-lg bg-[#064E3B] overflow-hidden" style={{ width: '83%' }}>
                           <div className="h-full flex items-center justify-end pr-3">
                             <span className="text-white text-[10px] font-bold">ACTUAL ✓</span>
                           </div>
@@ -616,20 +616,20 @@ export default function Home() {
                 {/* Bottom action bar */}
                 <div className="flex items-center justify-between rounded-xl p-4" style={{ background: 'rgba(0,184,148,0.06)', border: '1px solid rgba(0,184,148,0.15)' }}>
                   <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-lg bg-[#00b894]/15 flex items-center justify-center">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00b894" strokeWidth="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                    <div className="w-8 h-8 rounded-lg bg-[#064E3B]/15 flex items-center justify-center">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#064E3B" strokeWidth="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
                     </div>
                     <div>
                       <p className="text-white/80 text-sm font-bold">Action Engine found 4 campaign optimizations</p>
                       <p className="text-white/40 text-xs">Estimated additional revenue: +$8,400/mo</p>
                     </div>
                   </div>
-                  <span className="px-4 py-2 rounded-lg bg-[#00b894] text-white text-xs font-bold">View Actions</span>
+                  <span className="px-4 py-2 rounded-lg bg-[#064E3B] text-white text-xs font-bold">View Actions</span>
                 </div>
               </div>
             </div>
 
-            <p className="text-center text-sm text-[#636e72] mt-8">
+            <p className="text-center text-sm text-[#78716C] mt-8">
               Based on anonymized sample data. Your audit will include full campaign-level breakdown + PDF report.
             </p>
           </div>
@@ -641,66 +641,66 @@ export default function Home() {
         {/* ═══ PRICING (2 cards) ═══ */}
         <section id="pricing" className="py-20 px-6 bg-[#FAFAF9]">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-serif font-medium text-[#2d3436] text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-serif font-medium text-[#1C1917] text-center mb-12">
               Pricing
             </h2>
             <div className="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">
               {/* Source-of-Truth Audit */}
               <div className="bg-white p-8 border border-stone-200 rounded-xl hover:-translate-y-1 hover:shadow-md transition-all duration-200">
-                <p className="text-[10px] font-bold text-[#636e72] uppercase tracking-widest mb-3">Source-of-Truth Audit</p>
+                <p className="text-[10px] font-bold text-[#78716C] uppercase tracking-widest mb-3">Source-of-Truth Audit</p>
                 <div className="flex items-baseline gap-1 mb-2">
-                  <span className="text-4xl font-serif font-medium text-[#2d3436]">$249</span>
-                  <span className="text-sm text-[#636e72]">one-time</span>
+                  <span className="text-4xl font-serif font-medium text-[#1C1917]">$249</span>
+                  <span className="text-sm text-[#78716C]">one-time</span>
                 </div>
                 <ul className="space-y-3 my-6">
-                  <li className="flex items-start gap-3 text-sm text-[#2d3436]"><span className="w-1.5 h-1.5 rounded-full bg-[#00b894] mt-2 flex-shrink-0"></span> Full Shopify + Meta reconciliation</li>
-                  <li className="flex items-start gap-3 text-sm text-[#2d3436]"><span className="w-1.5 h-1.5 rounded-full bg-[#00b894] mt-2 flex-shrink-0"></span> Exact phantom revenue breakdown</li>
-                  <li className="flex items-start gap-3 text-sm text-[#2d3436]"><span className="w-1.5 h-1.5 rounded-full bg-[#00b894] mt-2 flex-shrink-0"></span> PDF report + 3 recommendations</li>
-                  <li className="flex items-start gap-3 text-sm text-[#2d3436]"><span className="w-1.5 h-1.5 rounded-full bg-[#00b894] mt-2 flex-shrink-0"></span> 30-min walkthrough call</li>
+                  <li className="flex items-start gap-3 text-sm text-[#1C1917]"><span className="w-1.5 h-1.5 rounded-full bg-[#064E3B] mt-2 flex-shrink-0"></span> Full Shopify + Meta reconciliation</li>
+                  <li className="flex items-start gap-3 text-sm text-[#1C1917]"><span className="w-1.5 h-1.5 rounded-full bg-[#064E3B] mt-2 flex-shrink-0"></span> Exact phantom revenue breakdown</li>
+                  <li className="flex items-start gap-3 text-sm text-[#1C1917]"><span className="w-1.5 h-1.5 rounded-full bg-[#064E3B] mt-2 flex-shrink-0"></span> PDF report + 3 recommendations</li>
+                  <li className="flex items-start gap-3 text-sm text-[#1C1917]"><span className="w-1.5 h-1.5 rounded-full bg-[#064E3B] mt-2 flex-shrink-0"></span> 30-min walkthrough call</li>
                 </ul>
                 <a
                   href="https://cal.com/calyxra/15min"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block w-full py-3 bg-[#00b894] text-white font-bold text-sm uppercase tracking-widest hover:bg-[#007a65] transition-all rounded-lg text-center"
+                  className="block w-full py-3 bg-[#064E3B] text-white font-bold text-sm uppercase tracking-widest hover:bg-[#043927] transition-all rounded-lg text-center"
                 >
                   Book Audit Call — $249
                 </a>
-                <p className="text-xs text-[#636e72] text-center mt-2">15-min call &rarr; we run the audit &rarr; PDF delivered in 48h</p>
+                <p className="text-xs text-[#78716C] text-center mt-2">15-min call &rarr; we run the audit &rarr; PDF delivered in 48h</p>
               </div>
 
               {/* Monthly Reconciliation */}
-              <div className="bg-white p-8 border-2 border-[#00b894] rounded-xl relative shadow-xl shadow-[#00b894]/10 scale-[1.02] hover:-translate-y-1 hover:shadow-2xl hover:shadow-[#00b894]/15 transition-all duration-200">
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#00b894] text-white px-4 py-1 text-[10px] font-bold uppercase tracking-widest rounded-full">
+              <div className="bg-white p-8 border-2 border-[#064E3B] rounded-xl relative shadow-xl shadow-[#064E3B]/10 scale-[1.02] hover:-translate-y-1 hover:shadow-2xl hover:shadow-[#064E3B]/15 transition-all duration-200">
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#064E3B] text-white px-4 py-1 text-[10px] font-bold uppercase tracking-widest rounded-full">
                   Recommended
                 </div>
-                <p className="text-[10px] font-bold text-[#00b894] uppercase tracking-widest mb-3">Monthly Reconciliation</p>
+                <p className="text-[10px] font-bold text-[#064E3B] uppercase tracking-widest mb-3">Monthly Reconciliation</p>
                 <div className="flex items-baseline gap-1 mb-1">
-                  <span className="text-4xl font-serif font-medium text-[#2d3436]">$150</span>
-                  <span className="text-sm text-[#636e72]">/month</span>
+                  <span className="text-4xl font-serif font-medium text-[#1C1917]">$150</span>
+                  <span className="text-sm text-[#78716C]">/month</span>
                 </div>
-                <span className="text-[10px] font-bold text-[#00b894] bg-[#00b894]/10 px-2 py-1 rounded border border-[#00b894]/20">FIRST 5 AGENCIES ONLY</span>
-                <p className="text-xs text-[#636e72] mt-1 mb-4">Early access</p>
+                <span className="text-[10px] font-bold text-[#064E3B] bg-[#064E3B]/10 px-2 py-1 rounded border border-[#064E3B]/20">FIRST 5 AGENCIES ONLY</span>
+                <p className="text-xs text-[#78716C] mt-1 mb-4">Early access</p>
                 <ul className="space-y-3 mb-6">
-                  <li className="flex items-start gap-3 text-sm text-[#2d3436]"><span className="w-1.5 h-1.5 rounded-full bg-[#00b894] mt-2 flex-shrink-0"></span> Everything in audit</li>
-                  <li className="flex items-start gap-3 text-sm text-[#2d3436]"><span className="w-1.5 h-1.5 rounded-full bg-[#00b894] mt-2 flex-shrink-0"></span> Monthly monitoring + alerts</li>
-                  <li className="flex items-start gap-3 text-sm text-[#2d3436]"><span className="w-1.5 h-1.5 rounded-full bg-[#00b894] mt-2 flex-shrink-0"></span> Action Engine recommendations</li>
-                  <li className="flex items-start gap-3 text-sm text-[#2d3436]"><span className="w-1.5 h-1.5 rounded-full bg-[#00b894] mt-2 flex-shrink-0"></span> White-label PDF for clients</li>
+                  <li className="flex items-start gap-3 text-sm text-[#1C1917]"><span className="w-1.5 h-1.5 rounded-full bg-[#064E3B] mt-2 flex-shrink-0"></span> Everything in audit</li>
+                  <li className="flex items-start gap-3 text-sm text-[#1C1917]"><span className="w-1.5 h-1.5 rounded-full bg-[#064E3B] mt-2 flex-shrink-0"></span> Monthly monitoring + alerts</li>
+                  <li className="flex items-start gap-3 text-sm text-[#1C1917]"><span className="w-1.5 h-1.5 rounded-full bg-[#064E3B] mt-2 flex-shrink-0"></span> Action Engine recommendations</li>
+                  <li className="flex items-start gap-3 text-sm text-[#1C1917]"><span className="w-1.5 h-1.5 rounded-full bg-[#064E3B] mt-2 flex-shrink-0"></span> White-label PDF for clients</li>
                 </ul>
                 <a
                   href="https://cal.com/calyxra/15min"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block w-full py-3 bg-[#00b894] text-white font-bold text-sm uppercase tracking-widest hover:bg-[#007a65] transition-all rounded-lg shadow-lg text-center"
+                  className="block w-full py-3 bg-[#064E3B] text-white font-bold text-sm uppercase tracking-widest hover:bg-[#043927] transition-all rounded-lg shadow-lg text-center"
                 >
                   Start Free Trial
                 </a>
-                <p className="text-xs text-[#636e72] text-center mt-2">No credit card needed &middot; payment setup in progress</p>
+                <p className="text-xs text-[#78716C] text-center mt-2">No credit card needed &middot; payment setup in progress</p>
               </div>
             </div>
-            <p className="text-center text-sm text-[#636e72] mt-6">
+            <p className="text-center text-sm text-[#78716C] mt-6">
               Prefer email? Reach us at{' '}
-              <a href="mailto:team@calyxra.com?subject=I want to start with Calyxra" className="text-[#00b894] font-semibold hover:underline">team@calyxra.com</a>
+              <a href="mailto:team@calyxra.com?subject=I want to start with Calyxra" className="text-[#064E3B] font-semibold hover:underline">team@calyxra.com</a>
             </p>
           </div>
         </section>
@@ -708,30 +708,30 @@ export default function Home() {
         {/* ═══ ONGOING MONITORING TEASER ═══ */}
         <section className="py-20 px-6 bg-white border-y border-stone-200">
           <div className="max-w-5xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-serif font-medium text-[#2d3436] mb-3">
+            <h2 className="text-3xl md:text-4xl font-serif font-medium text-[#1C1917] mb-3">
               Don&apos;t just audit once. Monitor continuously.
             </h2>
-            <p className="text-[#636e72] max-w-2xl mx-auto mb-12">
+            <p className="text-[#78716C] max-w-2xl mx-auto mb-12">
               After your audit, keep tracking phantom revenue automatically. Get alerts when gaps spike, monthly reconciliation reports, and always know your true ROAS.
             </p>
             <div className="grid md:grid-cols-3 gap-8">
               <div className="bg-[#f8f9fa] p-8 rounded-xl border border-stone-200 hover:-translate-y-1 hover:shadow-md transition-all duration-200">
                 <div className="text-3xl mb-4">📊</div>
-                <h3 className="text-lg font-serif font-bold text-[#2d3436] mb-2">Monthly Reports</h3>
-                <p className="text-[#636e72] text-sm">Automated reconciliation delivered to your inbox every month</p>
+                <h3 className="text-lg font-serif font-bold text-[#1C1917] mb-2">Monthly Reports</h3>
+                <p className="text-[#78716C] text-sm">Automated reconciliation delivered to your inbox every month</p>
               </div>
               <div className="bg-[#f8f9fa] p-8 rounded-xl border border-stone-200 hover:-translate-y-1 hover:shadow-md transition-all duration-200">
                 <div className="text-3xl mb-4">⚡</div>
-                <h3 className="text-lg font-serif font-bold text-[#2d3436] mb-2">Gap Alerts</h3>
-                <p className="text-[#636e72] text-sm">Get notified when phantom revenue exceeds your threshold</p>
+                <h3 className="text-lg font-serif font-bold text-[#1C1917] mb-2">Gap Alerts</h3>
+                <p className="text-[#78716C] text-sm">Get notified when phantom revenue exceeds your threshold</p>
               </div>
               <div className="bg-[#f8f9fa] p-8 rounded-xl border border-stone-200 hover:-translate-y-1 hover:shadow-md transition-all duration-200">
                 <div className="text-3xl mb-4">📈</div>
-                <h3 className="text-lg font-serif font-bold text-[#2d3436] mb-2">True ROAS Tracking</h3>
-                <p className="text-[#636e72] text-sm">Always know your real return — not what Meta tells you</p>
+                <h3 className="text-lg font-serif font-bold text-[#1C1917] mb-2">True ROAS Tracking</h3>
+                <p className="text-[#78716C] text-sm">Always know your real return — not what Meta tells you</p>
               </div>
             </div>
-            <a href="mailto:team@calyxra.com?subject=Ongoing%20Monitoring" className="inline-block mt-10 px-8 py-4 bg-transparent border-2 border-[#00b894] text-[#00b894] font-bold text-sm uppercase tracking-widest hover:bg-[#00b894] hover:text-white transition-all rounded-lg">
+            <a href="mailto:team@calyxra.com?subject=Ongoing%20Monitoring" className="inline-block mt-10 px-8 py-4 bg-transparent border-2 border-[#064E3B] text-[#064E3B] font-bold text-sm uppercase tracking-widest hover:bg-[#064E3B] hover:text-white transition-all rounded-lg">
               Ask about ongoing monitoring →
             </a>
           </div>
@@ -745,21 +745,21 @@ export default function Home() {
         {/* ═══ WHO IT'S FOR (3 cards) ═══ */}
         <section className="py-20 px-6 bg-[#FAFAF9]">
           <div className="max-w-5xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-serif font-medium text-[#2d3436] text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-serif font-medium text-[#1C1917] text-center mb-12">
               Built for brands and agencies running Shopify + paid ads
             </h2>
             <div className="grid md:grid-cols-3 gap-6">
               <div className="bg-white p-8 rounded-xl border border-stone-200 hover:-translate-y-1 hover:shadow-md transition-all duration-200">
-                <h3 className="text-lg font-serif font-bold text-[#2d3436] mb-3">DTC Brand Owners</h3>
-                <p className="text-[#636e72] leading-relaxed">Spending $20K+/month on Meta or Google? If your reported ROAS is driving scaling decisions, you need to know if those numbers are real.</p>
+                <h3 className="text-lg font-serif font-bold text-[#1C1917] mb-3">DTC Brand Owners</h3>
+                <p className="text-[#78716C] leading-relaxed">Spending $20K+/month on Meta or Google? If your reported ROAS is driving scaling decisions, you need to know if those numbers are real.</p>
               </div>
               <div className="bg-white p-8 rounded-xl border border-stone-200 hover:-translate-y-1 hover:shadow-md transition-all duration-200">
-                <h3 className="text-lg font-serif font-bold text-[#2d3436] mb-3">Performance Agencies</h3>
-                <p className="text-[#636e72] leading-relaxed">Managing 3+ Shopify clients? Stop manually reconciling spreadsheets every month. Show clients the real numbers before they ask.</p>
+                <h3 className="text-lg font-serif font-bold text-[#1C1917] mb-3">Performance Agencies</h3>
+                <p className="text-[#78716C] leading-relaxed">Managing 3+ Shopify clients? Stop manually reconciling spreadsheets every month. Show clients the real numbers before they ask.</p>
               </div>
               <div className="bg-white p-8 rounded-xl border border-stone-200 hover:-translate-y-1 hover:shadow-md transition-all duration-200">
-                <h3 className="text-lg font-serif font-bold text-[#2d3436] mb-3">Media Buyers</h3>
-                <p className="text-[#636e72] leading-relaxed">Optimizing campaigns daily? You can&apos;t optimize what you can&apos;t measure. True ROAS ≠ reported ROAS.</p>
+                <h3 className="text-lg font-serif font-bold text-[#1C1917] mb-3">Media Buyers</h3>
+                <p className="text-[#78716C] leading-relaxed">Optimizing campaigns daily? You can&apos;t optimize what you can&apos;t measure. True ROAS ≠ reported ROAS.</p>
               </div>
             </div>
           </div>
@@ -768,10 +768,10 @@ export default function Home() {
         {/* ═══ ABOUT ═══ */}
         <section className="py-20 px-6 bg-white border-y border-stone-200">
           <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-serif font-medium text-[#2d3436] mb-6">
+            <h2 className="text-3xl md:text-4xl font-serif font-medium text-[#1C1917] mb-6">
               Built by operators, not consultants.
             </h2>
-            <p className="text-[#636e72] text-lg leading-relaxed">
+            <p className="text-[#78716C] text-lg leading-relaxed">
               We built Calyxra because we kept seeing the same problem: agencies and brands making scaling decisions based on ad platform numbers that didn&apos;t match reality. Calyxra automates what used to take hours of spreadsheet reconciliation — and gives you the truth in seconds.
             </p>
           </div>
@@ -780,18 +780,18 @@ export default function Home() {
         {/* ═══ FAQ (semantic HTML + JSON-LD) ═══ */}
         <section className="py-20 px-6 bg-[#FAFAF9]">
           <div className="max-w-3xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-serif font-medium text-[#2d3436] text-center mb-12">Questions</h2>
+            <h2 className="text-3xl md:text-4xl font-serif font-medium text-[#1C1917] text-center mb-12">Questions</h2>
             <div className="bg-white rounded-xl shadow-sm border border-stone-200">
               <div className="px-6">
                 {faqItems.map((item, i) => (
                   <details key={i} className="border-b border-stone-200 last:border-0 group">
                     <summary className="w-full py-5 flex items-center justify-between text-left cursor-pointer list-none [&::-webkit-details-marker]:hidden">
-                      <span className="font-semibold text-[#2d3436] pr-4 group-hover:text-[#00b894] transition-colors">{item.q}</span>
+                      <span className="font-semibold text-[#1C1917] pr-4 group-hover:text-[#064E3B] transition-colors">{item.q}</span>
                       <svg className="w-5 h-5 text-stone-400 flex-shrink-0 transition-transform duration-200 group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                       </svg>
                     </summary>
-                    <p className="pb-5 text-[#636e72] leading-relaxed">{item.a}</p>
+                    <p className="pb-5 text-[#78716C] leading-relaxed">{item.a}</p>
                   </details>
                 ))}
               </div>
@@ -800,12 +800,12 @@ export default function Home() {
         </section>
 
         {/* ═══ FINAL CTA ═══ */}
-        <section className="py-24 px-6 bg-[#007a65] text-white text-center">
+        <section className="py-24 px-6 bg-[#043927] text-white text-center">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-3xl md:text-5xl font-serif font-medium mb-4">Your actual revenue is lower than reported.</h2>
-            <h3 className="text-2xl md:text-3xl font-serif font-medium text-[#00d2a0] mb-10">Find out by how much.</h3>
+            <h3 className="text-2xl md:text-3xl font-serif font-medium text-[#065F46] mb-10">Find out by how much.</h3>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <a href="#calculator" className="px-8 py-5 bg-white text-[#007a65] font-bold text-sm uppercase tracking-widest hover:bg-[#f0f0f0] transition-all rounded-lg shadow-xl">
+              <a href="#calculator" className="px-8 py-5 bg-white text-[#043927] font-bold text-sm uppercase tracking-widest hover:bg-[#f0f0f0] transition-all rounded-lg shadow-xl">
                 Run Free Scan →
               </a>
               <a href={calendlyUrl} target="_blank" rel="noopener noreferrer" className="px-8 py-5 bg-transparent border-2 border-white/30 text-white font-bold text-sm uppercase tracking-widest hover:bg-white/10 transition-all rounded-lg">
