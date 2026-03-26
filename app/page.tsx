@@ -109,8 +109,6 @@ function FreeScanSection({ onSampleData }: { onSampleData: () => void }) {
   const [form, setForm] = useState({
     shopifyDomain: '', shopifyApiKey: '',
     metaAccessToken: '', metaAdAccountId: '',
-    googleDeveloperToken: '', googleCustomerId: '',
-    tiktokAccessToken: '', tiktokAdvertiserId: '',
     dateFrom: '', dateTo: '',
   });
   const [loading, setLoading] = useState(false);
@@ -139,10 +137,6 @@ function FreeScanSection({ onSampleData }: { onSampleData: () => void }) {
         shopifyApiKey: form.shopifyApiKey.trim(),
         metaAccessToken: form.metaAccessToken.trim() || undefined,
         metaAdAccountId: form.metaAdAccountId.trim() || undefined,
-        googleAdsDeveloperToken: form.googleDeveloperToken.trim() || undefined,
-        googleAdsCustomerId: form.googleCustomerId.trim() || undefined,
-        tiktokAccessToken: form.tiktokAccessToken.trim() || undefined,
-        tiktokAdvertiserId: form.tiktokAdvertiserId.trim() || undefined,
         dateFrom: form.dateFrom || undefined,
         dateTo: form.dateTo || undefined,
       };
@@ -248,41 +242,7 @@ function FreeScanSection({ onSampleData }: { onSampleData: () => void }) {
             </div>
           </div>
 
-          {/* Google + TikTok (collapsible) */}
-          <details className="group">
-            <summary className="cursor-pointer text-sm font-bold text-stone-500 hover:text-stone-300 transition-colors flex items-center gap-2">
-              <svg className="w-4 h-4 transition-transform duration-200 group-open:rotate-90" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
-              + Add Google Ads or TikTok Ads
-            </summary>
-            <div className="mt-4 space-y-4">
-              <div className="bg-pink-950/20 border border-pink-900/50 rounded-lg p-5">
-                <p className="text-sm font-bold text-pink-400 mb-4">🔍 GOOGLE ADS</p>
-                <div className="grid gap-3">
-                  <div>
-                    <label className="block text-xs font-medium text-stone-400 mb-1.5">Developer Token</label>
-                    <input className={inputClass} type="password" placeholder="ABcDeF..." value={form.googleDeveloperToken} onChange={e => set('googleDeveloperToken', e.target.value)} />
-                  </div>
-                  <div>
-                    <label className="block text-xs font-medium text-stone-400 mb-1.5">Customer ID</label>
-                    <input className={inputClass} placeholder="123-456-7890" value={form.googleCustomerId} onChange={e => set('googleCustomerId', e.target.value)} />
-                  </div>
-                </div>
-              </div>
-              <div className="bg-stone-800/50 border border-stone-700 rounded-lg p-5">
-                <p className="text-sm font-bold text-stone-300 mb-4">📱 TIKTOK ADS</p>
-                <div className="grid gap-3">
-                  <div>
-                    <label className="block text-xs font-medium text-stone-400 mb-1.5">Access Token</label>
-                    <input className={inputClass} type="password" placeholder="ttj_..." value={form.tiktokAccessToken} onChange={e => set('tiktokAccessToken', e.target.value)} />
-                  </div>
-                  <div>
-                    <label className="block text-xs font-medium text-stone-400 mb-1.5">Advertiser ID</label>
-                    <input className={inputClass} placeholder="7012345678" value={form.tiktokAdvertiserId} onChange={e => set('tiktokAdvertiserId', e.target.value)} />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </details>
+          {/* Google + TikTok — hidden until integrations are ready */}
 
           {/* Error */}
           {error && (
@@ -330,9 +290,9 @@ export default function Home() {
 
   function handleSampleData() {
     setSamplePrefill({ meta: '142800', shopify: '118340', adSpend: '47000' });
-    // Scroll to calculator section
+    // Scroll to the free scan registration form
     setTimeout(() => {
-      document.getElementById('gap-calculator')?.scrollIntoView({ behavior: 'smooth' });
+      document.getElementById('calculator')?.scrollIntoView({ behavior: 'smooth' });
     }, 100);
   }
 
@@ -359,12 +319,24 @@ export default function Home() {
 
   const faqItems = [
     {
+      q: "What does Calyxra actually do?",
+      a: "In simple terms: ad platforms like Meta tell you how much revenue your ads generated. But those numbers are often inflated — they don't account for refunds, chargebacks, discount codes, and other deductions. Calyxra connects to your Shopify store and your ad account, compares what was reported vs. what was actually collected, and shows you the real numbers. Think of it as a lie detector for your ad spend."
+    },
+    {
+      q: "Who is this for?",
+      a: "Calyxra is built for e-commerce brands and agencies running paid Meta ads on Shopify. If you spend $20K+ per month on ads and make decisions based on ROAS numbers, Calyxra shows you whether those numbers are actually real."
+    },
+    {
+      q: "Do I need technical knowledge to use it?",
+      a: "Not at all. You just paste two API keys (Shopify + your ad platform) and click 'Run'. No coding, no spreadsheets, no setup. The whole process takes under 2 minutes. You can also try it with sample data first to see how it works."
+    },
+    {
       q: "How is this different from Triple Whale?",
       a: "Triple Whale is an attribution platform — it tells you which ads drove conversions. Calyxra is a reconciliation tool — it tells you whether the revenue those ads generated actually landed in your bank. They're complementary, not competitors."
     },
     {
       q: "Can't I just check Shopify myself?",
-      a: "You can. But matching Shopify orders against Meta/Google campaign data, accounting for refunds, chargebacks, discount codes, and taxes across dozens of campaigns manually takes hours. We do it in 10 seconds."
+      a: "You can. But matching Shopify orders against Meta campaign data, accounting for refunds, chargebacks, discount codes, and taxes across dozens of campaigns manually takes hours. We do it in 10 seconds."
     },
     {
       q: "Is my data safe?",
@@ -372,7 +344,7 @@ export default function Home() {
     },
     {
       q: "What do I need to connect?",
-      a: "A Shopify Admin API access token and optionally a Meta Ads access token. Takes 2 minutes."
+      a: "A Shopify store connection (via OAuth — just click Connect) and a Meta Ads access token. Takes 2 minutes. More ad platforms coming soon."
     },
     {
       q: "What if my gap is small?",
@@ -751,7 +723,7 @@ export default function Home() {
             <div className="grid md:grid-cols-3 gap-6">
               <div className="bg-white p-8 rounded-xl border border-stone-200 hover:-translate-y-1 hover:shadow-md transition-all duration-200">
                 <h3 className="text-lg font-serif font-bold text-[#1C1917] mb-3">DTC Brand Owners</h3>
-                <p className="text-[#78716C] leading-relaxed">Spending $20K+/month on Meta or Google? If your reported ROAS is driving scaling decisions, you need to know if those numbers are real.</p>
+                <p className="text-[#78716C] leading-relaxed">Spending $20K+/month on Meta Ads? If your reported ROAS is driving scaling decisions, you need to know if those numbers are real.</p>
               </div>
               <div className="bg-white p-8 rounded-xl border border-stone-200 hover:-translate-y-1 hover:shadow-md transition-all duration-200">
                 <h3 className="text-lg font-serif font-bold text-[#1C1917] mb-3">Performance Agencies</h3>
