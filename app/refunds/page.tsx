@@ -14,14 +14,28 @@ export default function RefundsPage() {
       <article className="pt-36 pb-20 px-6">
         <div className="max-w-2xl mx-auto">
           <h1 className="text-3xl md:text-4xl font-serif font-bold text-stone-900 mb-2">Refund Policy</h1>
-          <p className="text-sm text-stone-400 mb-10">Last updated: March 19, 2026</p>
+          <p className="text-sm text-stone-400 mb-10">Last updated: March 26, 2026</p>
 
           <div className="space-y-10 text-stone-700 leading-relaxed">
-            {/* Guarantee */}
+            {/* 14-Day Refund Policy */}
+            <section className="bg-blue-50 border border-blue-200 rounded-xl p-6">
+              <h2 className="text-xl font-serif font-semibold text-blue-900 mb-2">14-Day Money-Back Guarantee</h2>
+              <p className="text-blue-800 font-medium">
+                Customers may cancel their subscription and request a full refund within 14 days of purchase, no questions asked.
+              </p>
+              <p className="text-blue-700 text-sm mt-2">
+                This applies to all paid plans. Simply email us within 14 days of your purchase date and we will issue a full refund.
+              </p>
+            </section>
+
+            {/* 5% Gap Guarantee */}
             <section className="bg-emerald-50 border border-emerald-200 rounded-xl p-6">
-              <h2 className="text-xl font-serif font-semibold text-emerald-900 mb-2">Our Guarantee</h2>
+              <h2 className="text-xl font-serif font-semibold text-emerald-900 mb-2">5% Gap Guarantee</h2>
               <p className="text-emerald-800 font-medium">
                 If your revenue gap is under 5%, you get a full refund. No questions asked.
+              </p>
+              <p className="text-emerald-700 text-sm mt-2">
+                This is a separate guarantee from the 14-day refund policy above. Even after 14 days, if your audit shows a gap under 5%, you are still entitled to a full refund.
               </p>
             </section>
 
@@ -41,10 +55,11 @@ export default function RefundsPage() {
             <section>
               <h2 className="text-xl font-serif font-semibold text-stone-900 mb-3">Monthly Reconciliation ($150/mo)</h2>
               <div className="space-y-2 text-sm">
+                <p>✅ Full refund within 14 days of purchase — no questions asked</p>
                 <p>✅ Cancel anytime — no lock-in</p>
                 <p>✅ Full refund if: first report not delivered within 7 days</p>
-                <p className="text-stone-400">❌ No refunds for partial months already used</p>
-                <p className="text-stone-400">❌ No refunds after cancellation confirmation</p>
+                <p className="text-stone-400">❌ No refunds for partial months already used (after 14-day window)</p>
+                <p className="text-stone-400">❌ No refunds after cancellation confirmation (after 14-day window)</p>
               </div>
             </section>
 

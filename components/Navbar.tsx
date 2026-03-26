@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useSession } from 'next-auth/react';
+import { useSession, signOut } from 'next-auth/react';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -10,21 +10,14 @@ export default function Navbar() {
   const { data: session } = useSession();
   const toolUrl = process.env.NEXT_PUBLIC_TOOL_URL || 'https://app.calyxra.com';
 
-  const handleCheckout = async () => {
-    try {
-      const res = await fetch('/api/checkout', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ plan: 'audit' }),
-      });
-      const data = await res.json();
-      if (data.url) {
-        window.location.href = data.url;
-      }
-    } catch (err) {
-      console.error('Checkout error:', err);
-    }
-  };
+  // Get user initials for avatar
+  const userName = session?.user?.name || '';
+  const initials = userName
+    .split(' ')
+    .map((w: string) => w[0])
+    .join('')
+    .toUpperCase()
+    .slice(0, 2);
 
   return (
     <nav className="fixed w-full z-50 bg-[#FAFAF9]/90 backdrop-blur-md border-b border-stone-200">
@@ -48,12 +41,29 @@ export default function Navbar() {
 
         <div className="hidden md:flex items-center gap-3">
           {session ? (
-            <a
-              href={toolUrl}
-              className="px-5 py-3 text-[#064E3B] text-xs font-bold uppercase tracking-wide hover:text-[#043927] transition-all"
-            >
-              Dashboard →
-            </a>
+            <>
+              {/* User greeting + avatar */}
+              <div className="flex items-center gap-2.5 mr-1">
+                <div className="w-8 h-8 rounded-full bg-[#064E3B] flex items-center justify-center text-white text-xs font-bold">
+                  {initials || '?'}
+                </div>
+                <span className="text-sm font-medium text-stone-700 max-w-[140px] truncate">
+                  {userName || session.user?.email}
+                </span>
+              </div>
+              <a
+                href={toolUrl}
+                className="px-5 py-3 text-[#064E3B] text-xs font-bold uppercase tracking-wide hover:text-[#043927] transition-all"
+              >
+                Dashboard →
+              </a>
+              <button
+                onClick={() => signOut()}
+                className="px-4 py-2 text-stone-500 text-xs font-bold uppercase tracking-wide hover:text-stone-700 transition-all"
+              >
+                Logout
+              </button>
+            </>
           ) : (
             <a
               href="/login"
@@ -94,13 +104,31 @@ export default function Navbar() {
         <div className="md:hidden absolute top-20 left-0 w-full bg-[#FAFAF9] border-b border-stone-200 p-6 flex flex-col gap-6 shadow-xl">
           <div className="flex flex-col gap-3">
             {session ? (
-              <a
-                href={toolUrl}
-                className="w-full py-3 bg-stone-100 text-stone-900 text-center text-xs font-bold uppercase tracking-wide"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Dashboard →
-              </a>
+              <>
+                {/* Mobile user info */}
+                <div className="flex items-center gap-3 pb-3 border-b border-stone-200">
+                  <div className="w-9 h-9 rounded-full bg-[#064E3B] flex items-center justify-center text-white text-xs font-bold">
+                    {initials || '?'}
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold text-stone-900 truncate">{userName}</p>
+                    <p className="text-xs text-stone-500 truncate">{session.user?.email}</p>
+                  </div>
+                </div>
+                <a
+                  href={toolUrl}
+                  className="w-full py-3 bg-stone-100 text-stone-900 text-center text-xs font-bold uppercase tracking-wide"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Dashboard →
+                </a>
+                <button
+                  onClick={() => { signOut(); setIsMobileMenuOpen(false); }}
+                  className="w-full py-3 bg-stone-100 text-stone-500 text-center text-xs font-bold uppercase tracking-wide"
+                >
+                  Logout
+                </button>
+              </>
             ) : (
               <a
                 href="/login"
