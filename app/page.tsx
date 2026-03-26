@@ -286,14 +286,8 @@ function FreeScanSection({ onSampleData }: { onSampleData: () => void }) {
 export default function Home() {
   const calendlyUrl = "https://cal.com/calyxra/15min";
   const [checkoutLoading, setCheckoutLoading] = useState<string | null>(null);
-  const [samplePrefill, setSamplePrefill] = useState<{ meta: string; shopify: string; adSpend: string } | null>(null);
-
   function handleSampleData() {
-    setSamplePrefill({ meta: '142800', shopify: '118340', adSpend: '47000' });
-    // Scroll to the free scan registration form
-    setTimeout(() => {
-      document.getElementById('calculator')?.scrollIntoView({ behavior: 'smooth' });
-    }, 100);
+    window.location.href = '/register';
   }
 
   async function handleCheckout(product: 'audit' | 'monthly') {
@@ -711,7 +705,7 @@ export default function Home() {
 
         {/* ═══ GAP CALCULATOR ═══ */}
         <div id="gap-calculator">
-          <GapCalculator prefill={samplePrefill} />
+          <GapCalculator prefill={null} />
         </div>
 
         {/* ═══ WHO IT'S FOR (3 cards) ═══ */}
