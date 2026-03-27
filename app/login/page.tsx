@@ -28,8 +28,8 @@ export default function LoginPage() {
       if (res?.error) {
         setError('Invalid email or password.');
       } else {
-        router.push('/');
-        router.refresh();
+        // Redirect to the SaaS dashboard after login
+        window.location.href = process.env.NEXT_PUBLIC_TOOL_URL || 'https://app.calyxra.com';
       }
     } catch {
       setError('Something went wrong. Try again.');

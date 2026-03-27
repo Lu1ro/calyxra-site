@@ -46,8 +46,8 @@ export default function RegisterPage() {
         // Registration succeeded but sign-in failed — redirect to login
         router.push('/login');
       } else {
-        router.push('/');
-        router.refresh();
+        // Redirect to the SaaS dashboard after registration
+        window.location.href = process.env.NEXT_PUBLIC_TOOL_URL || 'https://app.calyxra.com';
       }
     } catch {
       setError('Something went wrong. Try again.');
