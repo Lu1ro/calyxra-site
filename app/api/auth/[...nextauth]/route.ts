@@ -15,7 +15,10 @@ const handler = NextAuth({
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) return null;
+        if (!credentials?.email || !credentials?.password) {
+          console.error('[AUTH] Missing email or password');
+          return null;
+        }
 
         // Lazy import to avoid module-level init issues on Vercel
         const { prisma } = await import('@/lib/db');
@@ -24,11 +27,18 @@ const handler = NextAuth({
           where: { email: credentials.email },
         });
 
-        if (!agency) return null;
+        if (!agency) {
+          console.error('[AUTH] No account found for:', credentials.email);
+          return null;
+        }
 
         const isValid = await compare(credentials.password, agency.password);
-        if (!isValid) return null;
+        if (!isValid) {
+          console.error('[AUTH] Invalid password for:', credentials.email, '| hash starts:', agency.password.substring(0, 10));
+          return null;
+        }
 
+        console.log('[AUTH] Login success:', credentials.email);
         return {
           id: agency.id,
           name: agency.name,
