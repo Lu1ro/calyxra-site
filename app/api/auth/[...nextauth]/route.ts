@@ -7,6 +7,7 @@ export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
 
 const handler = NextAuth({
+  debug: true,
   providers: [
     CredentialsProvider({
       name: 'Credentials',

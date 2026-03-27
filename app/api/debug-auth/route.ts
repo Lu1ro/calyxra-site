@@ -1,65 +1,65 @@
 // Temporary diagnostic endpoint — DELETE after debugging
 import { NextResponse } from 'next/server';
+import { compare } from 'bcryptjs';
 
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
 
-export async function GET() {
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const email = searchParams.get('email');
+  const password = searchParams.get('password');
   const steps: Record<string, unknown> = {};
 
-  // Step 1: Can we import Prisma?
   try {
     const { prisma } = await import('@/lib/db');
     steps.prismaImport = 'OK';
 
-    // Step 2: Can we query the database?
-    try {
-      const count = await prisma.agency.count();
-      steps.dbConnection = 'OK';
-      steps.agencyCount = count;
-    } catch (dbErr) {
-      steps.dbConnection = 'FAIL';
-      steps.dbError = dbErr instanceof Error ? dbErr.message : String(dbErr);
-    }
+    const count = await prisma.agency.count();
+    steps.dbConnection = 'OK';
+    steps.agencyCount = count;
 
-    // Step 3: Can we find the specific user?
-    try {
+    // If email+password provided, test the full auth flow manually
+    if (email && password) {
       const agency = await prisma.agency.findUnique({
-        where: { email: 'strit05@ukr.net' },
+        where: { email },
         select: { id: true, name: true, email: true, password: true },
       });
-      if (agency) {
-        steps.userFound = true;
-        steps.userName = agency.name;
-        steps.passwordHashLength = agency.password.length;
-        steps.passwordHashPrefix = agency.password.substring(0, 7);
 
-        // Step 4: Test bcrypt
-        try {
-          const { compare } = await import('bcryptjs');
-          steps.bcryptImport = 'OK';
-          // Just verify bcrypt can process the hash format
-          steps.hashFormat = agency.password.startsWith('$2') ? 'valid bcrypt' : 'unknown';
-        } catch (bcryptErr) {
-          steps.bcryptImport = 'FAIL';
-          steps.bcryptError = bcryptErr instanceof Error ? bcryptErr.message : String(bcryptErr);
-        }
+      if (!agency) {
+        steps.authTest = 'USER_NOT_FOUND';
       } else {
-        steps.userFound = false;
+        steps.authTest = 'USER_FOUND';
+        steps.userName = agency.name;
+        const isValid = await compare(password, agency.password);
+        steps.passwordValid = isValid;
+        if (isValid) {
+          steps.wouldReturn = { id: agency.id, name: agency.name, email: agency.email };
+        }
       }
-    } catch (userErr) {
-      steps.userQuery = 'FAIL';
-      steps.userError = userErr instanceof Error ? userErr.message : String(userErr);
+    } else {
+      // List all agency emails for reference
+      const agencies = await prisma.agency.findMany({
+        select: { email: true, name: true },
+      });
+      steps.agencies = agencies;
     }
-  } catch (importErr) {
-    steps.prismaImport = 'FAIL';
-    steps.importError = importErr instanceof Error ? importErr.message : String(importErr);
+  } catch (err) {
+    steps.error = err instanceof Error ? err.message : String(err);
   }
 
-  // Step 5: Check env vars
   steps.hasDbUrl = !!process.env.DATABASE_URL;
   steps.hasNextAuthSecret = !!process.env.NEXTAUTH_SECRET;
   steps.nextAuthUrl = process.env.NEXTAUTH_URL || 'NOT SET';
+  steps.nextAuthVersion = 'checking...';
+
+  try {
+    // Check next-auth version
+    const nextAuth = await import('next-auth');
+    steps.nextAuthVersion = (nextAuth as Record<string, unknown>).version || 'unknown';
+  } catch {
+    steps.nextAuthVersion = 'import failed';
+  }
 
   return NextResponse.json(steps);
 }
