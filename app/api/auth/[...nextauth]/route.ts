@@ -15,35 +15,43 @@ const handler = NextAuth({
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) {
-          console.error('[AUTH] Missing email or password');
+        try {
+          if (!credentials?.email || !credentials?.password) {
+            console.error('[AUTH] Missing email or password');
+            return null;
+          }
+
+          console.log('[AUTH] Login attempt for:', credentials.email);
+
+          // Lazy import to avoid module-level init issues on Vercel
+          const { prisma } = await import('@/lib/db');
+
+          const agency = await prisma.agency.findUnique({
+            where: { email: credentials.email },
+          });
+
+          if (!agency) {
+            console.error('[AUTH] No account found for:', credentials.email);
+            return null;
+          }
+
+          console.log('[AUTH] Found account, checking password...');
+          const isValid = await compare(credentials.password, agency.password);
+          if (!isValid) {
+            console.error('[AUTH] Invalid password for:', credentials.email);
+            return null;
+          }
+
+          console.log('[AUTH] Login success:', credentials.email);
+          return {
+            id: agency.id,
+            name: agency.name,
+            email: agency.email,
+          };
+        } catch (err) {
+          console.error('[AUTH] Authorize error:', err instanceof Error ? err.message : err);
           return null;
         }
-
-        // Lazy import to avoid module-level init issues on Vercel
-        const { prisma } = await import('@/lib/db');
-
-        const agency = await prisma.agency.findUnique({
-          where: { email: credentials.email },
-        });
-
-        if (!agency) {
-          console.error('[AUTH] No account found for:', credentials.email);
-          return null;
-        }
-
-        const isValid = await compare(credentials.password, agency.password);
-        if (!isValid) {
-          console.error('[AUTH] Invalid password for:', credentials.email, '| hash starts:', agency.password.substring(0, 10));
-          return null;
-        }
-
-        console.log('[AUTH] Login success:', credentials.email);
-        return {
-          id: agency.id,
-          name: agency.name,
-          email: agency.email,
-        };
       },
     }),
   ],

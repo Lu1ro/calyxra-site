@@ -58,38 +58,38 @@ export default function LoginPage() {
             </span>
           </Link>
 
-          <h1 className="font-serif text-4xl text-white leading-tight mb-4">
+          <h1 className="font-serif text-5xl text-white leading-tight mb-6">
             Stop losing money to phantom revenue
           </h1>
-          <p className="text-base text-white/50 leading-relaxed mb-12">
+          <p className="text-lg text-white/55 leading-relaxed mb-14">
             Ad platforms overstate your revenue by 15–40%.
             Calyxra shows you the real numbers so you can make
             better decisions for your clients.
           </p>
 
           {/* Stats */}
-          <div className="flex gap-10 mb-12">
+          <div className="flex gap-10 mb-14">
             <div className="flex flex-col">
-              <span className="text-[28px] font-bold text-[#064E3B] tracking-tight">$2.4M+</span>
-              <span className="text-xs text-white/35 uppercase tracking-wider mt-1">Phantom Revenue Found</span>
+              <span className="text-[32px] font-bold text-[#064E3B] tracking-tight">$2.4M+</span>
+              <span className="text-sm text-white/40 uppercase tracking-wider mt-1">Phantom Revenue Found</span>
             </div>
             <div className="flex flex-col">
-              <span className="text-[28px] font-bold text-[#064E3B] tracking-tight">15–40%</span>
-              <span className="text-xs text-white/35 uppercase tracking-wider mt-1">Avg Revenue Gap</span>
+              <span className="text-[32px] font-bold text-[#064E3B] tracking-tight">15–40%</span>
+              <span className="text-sm text-white/40 uppercase tracking-wider mt-1">Avg Revenue Gap</span>
             </div>
             <div className="flex flex-col">
-              <span className="text-[28px] font-bold text-[#064E3B] tracking-tight">&lt;30s</span>
-              <span className="text-xs text-white/35 uppercase tracking-wider mt-1">Time to Results</span>
+              <span className="text-[32px] font-bold text-[#064E3B] tracking-tight">&lt;30s</span>
+              <span className="text-sm text-white/40 uppercase tracking-wider mt-1">Time to Results</span>
             </div>
           </div>
 
           {/* Quote */}
           <div className="py-5 px-6 rounded-r-lg border-l-[3px] border-[#064E3B]"
                style={{ background: 'rgba(255,255,255,0.04)' }}>
-            <p className="text-white/60 text-sm italic leading-relaxed mb-2">
+            <p className="text-white/60 text-base italic leading-relaxed mb-2">
               &ldquo;We found $82K in phantom revenue across 3 client stores in the first week.&rdquo;
             </p>
-            <cite className="text-white/35 text-xs not-italic">— Shopify Plus Agency, UK</cite>
+            <cite className="text-white/40 text-sm not-italic">— Shopify Plus Agency, UK</cite>
           </div>
         </div>
       </div>
