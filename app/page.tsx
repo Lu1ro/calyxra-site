@@ -460,7 +460,7 @@ export default function Home() {
                 See what Calyxra reveals
               </h2>
               <p className="text-[#78716C] max-w-lg mx-auto">
-                Here&apos;s what a typical reconciliation report looks like for a DTC brand spending $47K/mo on Meta ads.
+                Here&apos;s what a typical reconciliation report looks like for a DTC brand spending $51K/mo on ads.
               </p>
             </div>
 
@@ -474,7 +474,7 @@ export default function Home() {
                   <div className="w-3 h-3 rounded-full bg-green-500/70"></div>
                 </div>
                 <div className="flex-1 flex justify-center">
-                  <div className="bg-white/5 rounded-md px-4 py-1 text-xs text-stone-500 font-mono">app.calyxra.com/dashboard/stores/example</div>
+                  <div className="bg-white/5 rounded-md px-4 py-1 text-xs text-stone-500 font-mono">app.calyxra.com/dashboard/stores/smarttel</div>
                 </div>
               </div>
 
@@ -482,8 +482,8 @@ export default function Home() {
                 {/* Store header */}
                 <div className="flex items-center justify-between mb-6">
                   <div>
-                    <p className="text-white/40 text-xs font-mono uppercase tracking-wider mb-1">DTC Skincare Brand</p>
-                    <p className="text-white/20 text-xs font-mono">Report period: Feb 20 — Mar 22, 2026</p>
+                    <p className="text-white/40 text-xs font-mono uppercase tracking-wider mb-1">Smarttel</p>
+                    <p className="text-white/20 text-xs font-mono">Report period: Mar 04 — Apr 03, 2026</p>
                   </div>
                   <div className="flex gap-2">
                     <span className="px-3 py-1 rounded-md bg-white/5 text-white/50 text-xs font-medium">Demo Run</span>
@@ -494,11 +494,11 @@ export default function Home() {
                 {/* KPI Cards Row */}
                 <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-6">
                   {[
-                    { label: 'Phantom Revenue', value: '$24,460', sub: '17.1% overstated', color: '#ef4444', bg: 'rgba(239,68,68,0.08)', border: 'rgba(239,68,68,0.15)' },
-                    { label: 'True ROAS', value: '2.52×', sub: 'vs 3.04× reported', color: '#10b981', bg: 'rgba(16,185,129,0.08)', border: 'rgba(16,185,129,0.15)' },
-                    { label: 'Net Revenue', value: '$118,340', sub: 'Shopify verified', color: '#ffffff', bg: 'rgba(255,255,255,0.04)', border: 'rgba(255,255,255,0.08)' },
-                    { label: 'Gross Revenue', value: '$142,800', sub: 'Before deductions', color: '#ffffff', bg: 'rgba(255,255,255,0.04)', border: 'rgba(255,255,255,0.08)' },
-                    { label: 'Total Ad Spend', value: '$47,000', sub: 'Meta Ads', color: '#ffffff', bg: 'rgba(255,255,255,0.04)', border: 'rgba(255,255,255,0.08)' },
+                    { label: 'Phantom Revenue', value: '$50,920', sub: '22% overstated', color: '#ef4444', bg: 'rgba(239,68,68,0.08)', border: 'rgba(239,68,68,0.15)' },
+                    { label: 'True ROAS', value: '3.56×', sub: 'vs 4.56× reported', color: '#10b981', bg: 'rgba(16,185,129,0.08)', border: 'rgba(16,185,129,0.15)' },
+                    { label: 'Net Revenue', value: '$180,120', sub: 'Shopify verified', color: '#ffffff', bg: 'rgba(255,255,255,0.04)', border: 'rgba(255,255,255,0.08)' },
+                    { label: 'Gross Revenue', value: '$245,320', sub: 'Before deductions', color: '#ffffff', bg: 'rgba(255,255,255,0.04)', border: 'rgba(255,255,255,0.08)' },
+                    { label: 'Total Ad Spend', value: '$50,652', sub: 'Google + Meta', color: '#ffffff', bg: 'rgba(255,255,255,0.04)', border: 'rgba(255,255,255,0.08)' },
                   ].map((kpi, i) => (
                     <div key={i} className="rounded-xl p-4" style={{ background: kpi.bg, border: `1px solid ${kpi.border}` }}>
                       <p className="text-[10px] font-bold uppercase tracking-wider mb-2" style={{ color: `${kpi.color}99` }}>{kpi.label}</p>
@@ -515,8 +515,8 @@ export default function Home() {
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
                     </div>
                     <div>
-                      <p className="text-red-400 font-bold text-sm mb-1">Meta is overstating revenue by 17.1%</p>
-                      <p className="text-red-400/60 text-xs">$24,460 in phantom revenue this month — approximately $293K annualized</p>
+                      <p className="text-red-400 font-bold text-sm mb-1">Ad platforms are overstating revenue by 22%</p>
+                      <p className="text-red-400/60 text-xs">$50,920 in phantom revenue this month — approximately $611K annualized</p>
                     </div>
                   </div>
                 </div>
@@ -528,9 +528,9 @@ export default function Home() {
                     <p className="text-white/50 text-xs font-bold uppercase tracking-wider mb-4">Where Revenue Leaks</p>
                     <div className="space-y-3">
                       {[
-                        { label: 'Refunds not deducted', value: '$11,200', pct: 46, color: '#ef4444' },
-                        { label: 'Discount code gaps', value: '$8,740', pct: 36, color: '#f59e0b' },
-                        { label: 'Chargebacks', value: '$4,520', pct: 18, color: '#8b5cf6' },
+                        { label: 'Discounts not deducted', value: '$32,400', pct: 50, color: '#f59e0b' },
+                        { label: 'Refunds not deducted', value: '$28,800', pct: 44, color: '#ef4444' },
+                        { label: 'Chargebacks', value: '$4,000', pct: 6, color: '#8b5cf6' },
                       ].map((leak, i) => (
                         <div key={i}>
                           <div className="flex justify-between items-center mb-1.5">
@@ -551,8 +551,8 @@ export default function Home() {
                     <div className="space-y-4">
                       <div>
                         <div className="flex justify-between mb-1.5">
-                          <span className="text-white/50 text-xs">Meta Reports</span>
-                          <span className="text-white/70 font-bold text-sm">$142,800</span>
+                          <span className="text-white/50 text-xs">Platforms Report</span>
+                          <span className="text-white/70 font-bold text-sm">$231,040</span>
                         </div>
                         <div className="h-8 rounded-lg overflow-hidden" style={{ background: 'repeating-linear-gradient(45deg, rgba(239,68,68,0.15), rgba(239,68,68,0.15) 8px, rgba(239,68,68,0.08) 8px, rgba(239,68,68,0.08) 16px)' }}>
                           <div className="h-full flex items-center justify-end pr-3">
@@ -563,7 +563,7 @@ export default function Home() {
                       <div>
                         <div className="flex justify-between mb-1.5">
                           <span className="text-white/50 text-xs">Shopify Verified</span>
-                          <span className="text-[#065F46] font-bold text-sm">$118,340</span>
+                          <span className="text-[#065F46] font-bold text-sm">$180,120</span>
                         </div>
                         <div className="h-8 rounded-lg bg-[#064E3B] overflow-hidden" style={{ width: '83%' }}>
                           <div className="h-full flex items-center justify-end pr-3">
@@ -574,7 +574,7 @@ export default function Home() {
                     </div>
                     <div className="mt-4 pt-4 border-t border-white/5 flex justify-between">
                       <span className="text-white/40 text-sm">Annual phantom revenue</span>
-                      <span className="text-red-400 font-bold text-lg">~$293K</span>
+                      <span className="text-red-400 font-bold text-lg">~$611K</span>
                     </div>
                   </div>
                 </div>
@@ -586,8 +586,8 @@ export default function Home() {
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#064E3B" strokeWidth="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
                     </div>
                     <div>
-                      <p className="text-white/80 text-sm font-bold">Action Engine found 4 campaign optimizations</p>
-                      <p className="text-white/40 text-xs">Estimated additional revenue: +$8,400/mo</p>
+                      <p className="text-white/80 text-sm font-bold">Action Engine found 6 campaign optimizations</p>
+                      <p className="text-white/40 text-xs">Estimated additional revenue: +$12,600/mo</p>
                     </div>
                   </div>
                   <span className="px-4 py-2 rounded-lg bg-[#064E3B] text-white text-xs font-bold">View Actions</span>
@@ -596,7 +596,7 @@ export default function Home() {
             </div>
 
             <p className="text-center text-sm text-[#78716C] mt-8">
-              Based on anonymized sample data. Your audit will include full campaign-level breakdown + PDF report.
+              Based on real platform data. Your audit will include full campaign-level breakdown + PDF report.
             </p>
           </div>
         </section>
@@ -666,7 +666,7 @@ export default function Home() {
             </div>
             <p className="text-center text-sm text-[#78716C] mt-6">
               Prefer email? Reach us at{' '}
-              <a href="mailto:team@calyxra.com?subject=I want to start with Calyxra" className="text-[#064E3B] font-semibold hover:underline">team@calyxra.com</a>
+              <a href="mailto:admin@calyxra.com?subject=I want to start with Calyxra" className="text-[#064E3B] font-semibold hover:underline">admin@calyxra.com</a>
             </p>
           </div>
         </section>
@@ -697,7 +697,7 @@ export default function Home() {
                 <p className="text-[#78716C] text-sm">Always know your real return — not what Meta tells you</p>
               </div>
             </div>
-            <a href="mailto:team@calyxra.com?subject=Ongoing%20Monitoring" className="inline-block mt-10 px-8 py-4 bg-transparent border-2 border-[#064E3B] text-[#064E3B] font-bold text-sm uppercase tracking-widest hover:bg-[#064E3B] hover:text-white transition-all rounded-lg">
+            <a href="mailto:admin@calyxra.com?subject=Ongoing%20Monitoring" className="inline-block mt-10 px-8 py-4 bg-transparent border-2 border-[#064E3B] text-[#064E3B] font-bold text-sm uppercase tracking-widest hover:bg-[#064E3B] hover:text-white transition-all rounded-lg">
               Ask about ongoing monitoring →
             </a>
           </div>

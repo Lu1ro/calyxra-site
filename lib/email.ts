@@ -30,7 +30,7 @@ export function auditNotificationEmail(
 ): EmailPayload {
   const amount = (amountCents / 100).toFixed(2);
   return {
-    to: "team@calyxra.com",
+    to: "admin@calyxra.com",
     subject: `New Audit Purchase — ${customerEmail}`,
     html: `
       <div style="font-family:Inter,sans-serif;max-width:560px;margin:0 auto;padding:32px;background:#f9fafb;border-radius:12px">
@@ -78,7 +78,7 @@ export function auditConfirmationEmail(customerEmail: string): EmailPayload {
         </div>
         <p style="font-size:13px;color:#9ca3af;margin:0">
           Questions? Reply to this email or contact 
-          <a href="mailto:team@calyxra.com" style="color:${GREEN}">team@calyxra.com</a>
+          <a href="mailto:admin@calyxra.com" style="color:${GREEN}">admin@calyxra.com</a>
         </p>
       </div>
     `,
@@ -114,7 +114,7 @@ export function monthlyWelcomeEmail(
           Log In to Your Dashboard →
         </a>
         <p style="font-size:13px;color:#9ca3af;margin:0">
-          Questions? Contact <a href="mailto:team@calyxra.com" style="color:${GREEN}">team@calyxra.com</a>
+          Questions? Contact <a href="mailto:admin@calyxra.com" style="color:${GREEN}">admin@calyxra.com</a>
         </p>
       </div>
     `,

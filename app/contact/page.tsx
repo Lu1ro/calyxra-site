@@ -13,7 +13,7 @@ export default function ContactPage() {
           <div className="space-y-8 text-stone-700 leading-relaxed">
             <section className="bg-white border border-stone-200 rounded-lg p-6">
               <div className="space-y-3 text-sm">
-                <p><strong>Email:</strong> <a href="mailto:team@calyxra.com" className="text-emerald-700 hover:underline">team@calyxra.com</a></p>
+                <p><strong>Email:</strong> <a href="mailto:admin@calyxra.com" className="text-emerald-700 hover:underline">admin@calyxra.com</a></p>
                 <p><strong>Response time:</strong> within 24 hours</p>
                 <p><strong>Book a call:</strong> <a href="https://cal.com/calyxra/15min" target="_blank" rel="noopener noreferrer" className="text-emerald-700 hover:underline">cal.com/calyxra/15min</a></p>
               </div>

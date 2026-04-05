@@ -76,7 +76,7 @@ export default function SecurityPage() {
             <section>
               <p className="text-sm">
                 Questions about security?{' '}
-                <a href="mailto:team@calyxra.com" className="text-emerald-700 hover:underline">team@calyxra.com</a>
+                <a href="mailto:admin@calyxra.com" className="text-emerald-700 hover:underline">admin@calyxra.com</a>
               </p>
             </section>
           </div>

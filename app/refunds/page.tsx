@@ -67,7 +67,7 @@ export default function RefundsPage() {
             <section>
               <h2 className="text-xl font-serif font-semibold text-stone-900 mb-3">How to Request a Refund</h2>
               <div className="bg-stone-100 rounded-xl p-6 text-sm space-y-2">
-                <p><strong>Email:</strong> <a href="mailto:team@calyxra.com" className="text-emerald-700 hover:underline">team@calyxra.com</a></p>
+                <p><strong>Email:</strong> <a href="mailto:admin@calyxra.com" className="text-emerald-700 hover:underline">admin@calyxra.com</a></p>
                 <p><strong>Subject:</strong> &quot;Refund Request - [your email]&quot;</p>
                 <p><strong>Include:</strong> reason for refund</p>
                 <hr className="border-stone-200 my-3" />

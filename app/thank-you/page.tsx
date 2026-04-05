@@ -42,7 +42,7 @@ function ThankYouContent() {
                 </ol>
               </div>
               <p className="text-sm text-stone-400 mt-6">
-                Questions? <a href="mailto:team@calyxra.com" className="text-emerald-700 hover:underline">team@calyxra.com</a>
+                Questions? <a href="mailto:admin@calyxra.com" className="text-emerald-700 hover:underline">admin@calyxra.com</a>
               </p>
             </>
           ) : plan === 'monthly' ? (

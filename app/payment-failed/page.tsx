@@ -41,7 +41,7 @@ function PaymentFailedContent() {
               Try Again
             </a>
             <a
-              href="mailto:team@calyxra.com?subject=Payment%20Issue"
+              href="mailto:admin@calyxra.com?subject=Payment%20Issue"
               className="inline-flex items-center justify-center px-8 py-4 border border-stone-300 text-stone-700 font-bold text-sm uppercase tracking-widest hover:bg-stone-100 transition-all rounded"
             >
               Contact Support
@@ -59,7 +59,7 @@ function PaymentFailedContent() {
           </div>
 
           <p className="text-sm text-stone-400 mt-6">
-            Need help? <a href="mailto:team@calyxra.com" className="text-emerald-700 hover:underline">team@calyxra.com</a>
+            Need help? <a href="mailto:admin@calyxra.com" className="text-emerald-700 hover:underline">admin@calyxra.com</a>
           </p>
         </div>
       </section>

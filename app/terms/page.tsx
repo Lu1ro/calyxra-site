@@ -79,7 +79,7 @@ export default function TermsPage() {
                 <li>One-time payment</li>
                 <li>Delivered within 48 hours</li>
                 <li>Full refund if revenue gap is under 5%</li>
-                <li>Refund request: team@calyxra.com within 7 days</li>
+                <li>Refund request: admin@calyxra.com within 7 days</li>
               </ul>
 
               <h3 className="font-semibold text-stone-800 mt-4 mb-2">Monthly Reconciliation ($150/month)</h3>
@@ -97,7 +97,7 @@ export default function TermsPage() {
                 <li>Gap under 5%: full refund, no questions asked</li>
                 <li>Technical failure: full refund</li>
                 <li>Change of mind after delivery: no refund</li>
-                <li>All refund requests: <a href="mailto:team@calyxra.com" className="text-emerald-700 hover:underline">team@calyxra.com</a></li>
+                <li>All refund requests: <a href="mailto:admin@calyxra.com" className="text-emerald-700 hover:underline">admin@calyxra.com</a></li>
               </ul>
             </section>
 
@@ -136,7 +136,7 @@ export default function TermsPage() {
             <section>
               <h2 className="text-xl font-serif font-semibold text-stone-900 mb-3">10. Governing Law</h2>
               <p className="text-sm">These terms are governed by the laws of Ukraine. Disputes resolved through negotiation first, then Ukrainian courts if necessary.</p>
-              <p className="mt-3 text-sm">Contact: <a href="mailto:team@calyxra.com" className="text-emerald-700 hover:underline">team@calyxra.com</a></p>
+              <p className="mt-3 text-sm">Contact: <a href="mailto:admin@calyxra.com" className="text-emerald-700 hover:underline">admin@calyxra.com</a></p>
             </section>
           </div>
         </div>
