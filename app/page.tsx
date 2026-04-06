@@ -464,135 +464,14 @@ export default function Home() {
               </p>
             </div>
 
-            {/* Dashboard-style preview */}
-            <div className="bg-[#0f172a] rounded-2xl p-1 shadow-2xl shadow-black/20 border border-white/5">
-              {/* Browser bar */}
-              <div className="flex items-center gap-2 px-4 py-3 border-b border-white/5">
-                <div className="flex gap-1.5">
-                  <div className="w-3 h-3 rounded-full bg-red-500/70"></div>
-                  <div className="w-3 h-3 rounded-full bg-yellow-500/70"></div>
-                  <div className="w-3 h-3 rounded-full bg-green-500/70"></div>
-                </div>
-                <div className="flex-1 flex justify-center">
-                  <div className="bg-white/5 rounded-md px-4 py-1 text-xs text-stone-500 font-mono">app.calyxra.com/dashboard/stores/smarttel</div>
-                </div>
-              </div>
-
-              <div className="p-6 md:p-8">
-                {/* Store header */}
-                <div className="flex items-center justify-between mb-6">
-                  <div>
-                    <p className="text-white/40 text-xs font-mono uppercase tracking-wider mb-1">Smarttel</p>
-                    <p className="text-white/20 text-xs font-mono">Report period: Mar 04 — Apr 03, 2026</p>
-                  </div>
-                  <div className="flex gap-2">
-                    <span className="px-3 py-1 rounded-md bg-white/5 text-white/50 text-xs font-medium">Demo Run</span>
-                    <span className="px-3 py-1 rounded-md bg-[#064E3B] text-white text-xs font-bold">Run Reconciliation</span>
-                  </div>
-                </div>
-
-                {/* KPI Cards Row */}
-                <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-6">
-                  {[
-                    { label: 'Phantom Revenue', value: '$50,920', sub: '22% overstated', color: '#ef4444', bg: 'rgba(239,68,68,0.08)', border: 'rgba(239,68,68,0.15)' },
-                    { label: 'True ROAS', value: '3.56×', sub: 'vs 4.56× reported', color: '#10b981', bg: 'rgba(16,185,129,0.08)', border: 'rgba(16,185,129,0.15)' },
-                    { label: 'Net Revenue', value: '$180,120', sub: 'Shopify verified', color: '#ffffff', bg: 'rgba(255,255,255,0.04)', border: 'rgba(255,255,255,0.08)' },
-                    { label: 'Gross Revenue', value: '$245,320', sub: 'Before deductions', color: '#ffffff', bg: 'rgba(255,255,255,0.04)', border: 'rgba(255,255,255,0.08)' },
-                    { label: 'Total Ad Spend', value: '$50,652', sub: 'Google + Meta', color: '#ffffff', bg: 'rgba(255,255,255,0.04)', border: 'rgba(255,255,255,0.08)' },
-                  ].map((kpi, i) => (
-                    <div key={i} className="rounded-xl p-4" style={{ background: kpi.bg, border: `1px solid ${kpi.border}` }}>
-                      <p className="text-[10px] font-bold uppercase tracking-wider mb-2" style={{ color: `${kpi.color}99` }}>{kpi.label}</p>
-                      <p className="text-2xl font-bold tabular-nums" style={{ color: kpi.color }}>{kpi.value}</p>
-                      <p className="text-xs mt-1" style={{ color: `${kpi.color}60` }}>{kpi.sub}</p>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Revenue Leak Alert */}
-                <div className="rounded-xl p-5 mb-6" style={{ background: 'rgba(239,68,68,0.06)', border: '1px solid rgba(239,68,68,0.12)' }}>
-                  <div className="flex items-start gap-3">
-                    <div className="w-8 h-8 rounded-lg bg-red-500/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-                    </div>
-                    <div>
-                      <p className="text-red-400 font-bold text-sm mb-1">Ad platforms are overstating revenue by 22%</p>
-                      <p className="text-red-400/60 text-xs">$50,920 in phantom revenue this month — approximately $611K annualized</p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Two columns: Leak breakdown + Revenue comparison */}
-                <div className="grid md:grid-cols-2 gap-4 mb-6">
-                  {/* Where revenue leaks */}
-                  <div className="rounded-xl p-5" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}>
-                    <p className="text-white/50 text-xs font-bold uppercase tracking-wider mb-4">Where Revenue Leaks</p>
-                    <div className="space-y-3">
-                      {[
-                        { label: 'Discounts not deducted', value: '$32,400', pct: 50, color: '#f59e0b' },
-                        { label: 'Refunds not deducted', value: '$28,800', pct: 44, color: '#ef4444' },
-                        { label: 'Chargebacks', value: '$4,000', pct: 6, color: '#8b5cf6' },
-                      ].map((leak, i) => (
-                        <div key={i}>
-                          <div className="flex justify-between items-center mb-1.5">
-                            <span className="text-white/70 text-sm">{leak.label}</span>
-                            <span className="font-bold text-sm tabular-nums" style={{ color: leak.color }}>{leak.value}</span>
-                          </div>
-                          <div className="h-2 rounded-full bg-white/5 overflow-hidden">
-                            <div className="h-full rounded-full transition-all" style={{ width: `${leak.pct}%`, background: leak.color }} />
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Reported vs Actual */}
-                  <div className="rounded-xl p-5" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}>
-                    <p className="text-white/50 text-xs font-bold uppercase tracking-wider mb-4">Reported vs Actual</p>
-                    <div className="space-y-4">
-                      <div>
-                        <div className="flex justify-between mb-1.5">
-                          <span className="text-white/50 text-xs">Platforms Report</span>
-                          <span className="text-white/70 font-bold text-sm">$231,040</span>
-                        </div>
-                        <div className="h-8 rounded-lg overflow-hidden" style={{ background: 'repeating-linear-gradient(45deg, rgba(239,68,68,0.15), rgba(239,68,68,0.15) 8px, rgba(239,68,68,0.08) 8px, rgba(239,68,68,0.08) 16px)' }}>
-                          <div className="h-full flex items-center justify-end pr-3">
-                            <span className="text-red-400 text-[10px] font-bold">INFLATED</span>
-                          </div>
-                        </div>
-                      </div>
-                      <div>
-                        <div className="flex justify-between mb-1.5">
-                          <span className="text-white/50 text-xs">Shopify Verified</span>
-                          <span className="text-[#065F46] font-bold text-sm">$180,120</span>
-                        </div>
-                        <div className="h-8 rounded-lg bg-[#064E3B] overflow-hidden" style={{ width: '83%' }}>
-                          <div className="h-full flex items-center justify-end pr-3">
-                            <span className="text-white text-[10px] font-bold">ACTUAL ✓</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="mt-4 pt-4 border-t border-white/5 flex justify-between">
-                      <span className="text-white/40 text-sm">Annual phantom revenue</span>
-                      <span className="text-red-400 font-bold text-lg">~$611K</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Bottom action bar */}
-                <div className="flex items-center justify-between rounded-xl p-4" style={{ background: 'rgba(0,184,148,0.06)', border: '1px solid rgba(0,184,148,0.15)' }}>
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-lg bg-[#064E3B]/15 flex items-center justify-center">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#064E3B" strokeWidth="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-                    </div>
-                    <div>
-                      <p className="text-white/80 text-sm font-bold">Action Engine found 6 campaign optimizations</p>
-                      <p className="text-white/40 text-xs">Estimated additional revenue: +$12,600/mo</p>
-                    </div>
-                  </div>
-                  <span className="px-4 py-2 rounded-lg bg-[#064E3B] text-white text-xs font-bold">View Actions</span>
-                </div>
-              </div>
+            {/* Real platform screenshot */}
+            <div className="rounded-2xl shadow-2xl shadow-black/20 border border-stone-200 overflow-hidden">
+              <img
+                src="/dashboard-screenshot.png"
+                alt="Calyxra Dashboard — Revenue reconciliation showing $50,920 phantom revenue, 3.56x True ROAS, $180,120 net revenue"
+                className="w-full h-auto"
+                loading="lazy"
+              />
             </div>
 
             <p className="text-center text-sm text-[#78716C] mt-8">
