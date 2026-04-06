@@ -477,6 +477,13 @@ export default function Home() {
             <p className="text-center text-sm text-[#78716C] mt-8">
               Based on real platform data. Your audit will include full campaign-level breakdown + PDF report.
             </p>
+
+            <div className="flex justify-center mt-8">
+              <a href="https://app.calyxra.com/register" className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-[#064E3B] text-white font-bold text-lg hover:bg-[#053e30] transition-colors shadow-lg shadow-[#064E3B]/20">
+                Start Free — See Your Real Numbers
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </a>
+            </div>
           </div>
         </section>
 
