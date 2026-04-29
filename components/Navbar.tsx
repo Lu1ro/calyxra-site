@@ -1,86 +1,145 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const toolUrl = process.env.NEXT_PUBLIC_TOOL_URL || 'https://app.calyxra.com';
 
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
   return (
-    <nav className="fixed w-full z-50 bg-[#FAFAF9]/90 backdrop-blur-md border-b border-stone-200">
+    <nav
+      className={`fixed w-full z-50 transition-all duration-300 ${
+        scrolled
+          ? 'bg-[#FAFAF9]/85 backdrop-blur-xl border-b border-[#E7E5E4]'
+          : 'bg-transparent border-b border-transparent'
+      }`}
+    >
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-4 group cursor-pointer">
-          <div className="relative">
-            <Image
-              src="/logo.png"
-              alt="Calyxra Logo"
-              width={48}
-              height={48}
-              className="object-contain transition-transform duration-500 group-hover:scale-110 h-12 w-auto"
-            />
-            <div className="absolute -inset-2 bg-emerald-500/5 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity" />
-          </div>
-          <div className="text-2xl font-serif font-bold tracking-tight text-stone-900 flex items-center">
+        <Link href="/" className="flex items-center gap-3 group cursor-pointer">
+          <Image
+            src="/logo.png"
+            alt="Calyxra"
+            width={40}
+            height={40}
+            priority
+            className="object-contain h-9 w-auto transition-transform duration-300 group-hover:scale-[1.04]"
+          />
+          <span className="text-[22px] font-serif font-medium tracking-tight text-[#1C1917] leading-none">
             Calyxra<span className="text-[#064E3B]">.</span>
-          </div>
+          </span>
         </Link>
 
-        <div className="hidden md:flex items-center gap-3">
+        {/* Desktop nav */}
+        <div className="hidden md:flex items-center gap-1">
+          <Link
+            href="/#saas-pricing"
+            className="px-4 py-2.5 text-[#44403C] text-[13.5px] font-medium hover:text-[#1C1917] transition-colors"
+          >
+            Pricing
+          </Link>
+          <Link
+            href="/#calculator"
+            className="px-4 py-2.5 text-[#44403C] text-[13.5px] font-medium hover:text-[#1C1917] transition-colors"
+          >
+            Gap calculator
+          </Link>
+          <a
+            href="/case-studies"
+            className="px-4 py-2.5 text-[#44403C] text-[13.5px] font-medium hover:text-[#1C1917] transition-colors"
+          >
+            Case studies
+          </a>
+
+          <div className="w-px h-5 bg-[#E7E5E4] mx-2"></div>
+
           <a
             href={`${toolUrl}/login`}
-            className="px-5 py-3 text-stone-600 text-xs font-bold uppercase tracking-wide hover:text-stone-900 transition-all"
+            className="px-4 py-2.5 text-[#44403C] text-[13.5px] font-medium hover:text-[#1C1917] transition-colors"
           >
-            Sign In
+            Sign in
           </a>
           <a
             href="https://cal.com/calyxra/15min"
             target="_blank"
             rel="noopener noreferrer"
-            className="px-6 py-3 bg-[#064E3B] text-white text-xs font-bold uppercase tracking-wide hover:bg-[#043927] transition-all hover:shadow-lg hover:shadow-[#064E3B]/30 active:scale-95 rounded-lg"
+            className="ml-2 inline-flex items-center gap-1.5 px-5 py-2.5 bg-[#064E3B] text-white text-[13px] font-semibold hover:bg-[#043927] hover:shadow-[0_6px_20px_rgba(6,78,59,0.28)] active:scale-[0.98] transition-all rounded-lg"
           >
-            Book a Call
+            Book a call
+            <svg className="w-3.5 h-3.5" viewBox="0 0 20 20" fill="currentColor">
+              <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
+            </svg>
           </a>
         </div>
 
-        {/* Mobile Menu Button */}
+        {/* Mobile menu button */}
         <button
-          className="md:hidden p-2 text-stone-900"
+          className="md:hidden p-2 text-[#1C1917] -mr-2"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          aria-label="Toggle menu"
         >
           {isMobileMenuOpen ? (
-            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
           ) : (
-            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M4 7h16M4 12h16M4 17h16" />
             </svg>
           )}
         </button>
       </div>
 
-      {/* Mobile Menu Overlay */}
+      {/* Mobile menu */}
       {isMobileMenuOpen && (
-        <div className="md:hidden absolute top-20 left-0 w-full bg-[#FAFAF9] border-b border-stone-200 p-6 flex flex-col gap-6 shadow-xl">
-          <div className="flex flex-col gap-3">
+        <div className="md:hidden absolute top-20 left-0 w-full bg-[#FAFAF9] border-b border-[#E7E5E4] shadow-xl">
+          <div className="px-6 py-6 flex flex-col gap-1">
+            <Link
+              href="/#saas-pricing"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="px-4 py-3.5 text-[15px] font-medium text-[#1C1917] hover:bg-[#F5F5F4] transition-colors rounded-lg"
+            >
+              Pricing
+            </Link>
+            <Link
+              href="/#calculator"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="px-4 py-3.5 text-[15px] font-medium text-[#1C1917] hover:bg-[#F5F5F4] transition-colors rounded-lg"
+            >
+              Gap calculator
+            </Link>
+            <a
+              href="/case-studies"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="px-4 py-3.5 text-[15px] font-medium text-[#1C1917] hover:bg-[#F5F5F4] transition-colors rounded-lg"
+            >
+              Case studies
+            </a>
             <a
               href={`${toolUrl}/login`}
-              className="w-full py-3 bg-stone-100 text-stone-900 text-center text-xs font-bold uppercase tracking-wide"
               onClick={() => setIsMobileMenuOpen(false)}
+              className="px-4 py-3.5 text-[15px] font-medium text-[#44403C] hover:bg-[#F5F5F4] transition-colors rounded-lg"
             >
-              Sign In
+              Sign in
             </a>
             <a
               href="https://cal.com/calyxra/15min"
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="w-full py-3 bg-[#064E3B] text-white text-center text-xs font-bold uppercase tracking-wide rounded-lg block"
+              className="mt-3 w-full py-3.5 bg-[#064E3B] text-white text-center text-[13px] font-semibold uppercase tracking-[0.14em] rounded-lg"
             >
-              Book a Call
+              Book a call →
             </a>
           </div>
         </div>

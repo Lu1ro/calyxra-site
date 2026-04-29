@@ -5,12 +5,22 @@ import "./globals.css";
 import { Providers } from "./providers";
 
 export const metadata: Metadata = {
-  title: "Calyxra | Revenue Reconciliation for Shopify Brands",
+  title: "Calyxra — Revenue Reconciliation for Shopify Brands",
   description:
-    "Your ad platforms report phantom revenue. Calyxra shows you the gap between what Meta/Google claim and what Shopify actually collected. Free scan available.",
+    "Meta says $100K. Shopify collected $78K. Calyxra finds the missing $22K — campaign by campaign — in 48 hours. Concierge audits from $249. Full refund if your gap is below 5%.",
+  keywords: [
+    "revenue reconciliation",
+    "Shopify audit",
+    "phantom revenue",
+    "true ROAS",
+    "Meta ads reconciliation",
+    "Google ads reconciliation",
+    "DTC attribution audit",
+  ],
   openGraph: {
-    title: "Calyxra | Revenue Reconciliation for Shopify Brands",
-    description: "Your ad platforms report phantom revenue. Calyxra shows you the gap between what Meta/Google claim and what Shopify actually collected. Free scan available.",
+    title: "Calyxra — Revenue Reconciliation for Shopify Brands",
+    description:
+      "Your ad platforms are inflating your revenue. We find the gap — campaign by campaign — in 48 hours. Audits from $249.",
     url: "https://www.calyxra.com",
     siteName: "Calyxra",
     images: [
@@ -24,10 +34,21 @@ export const metadata: Metadata = {
     locale: "en_US",
     type: "website",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Calyxra — Revenue Reconciliation for Shopify Brands",
+    description:
+      "Meta says $100K. Shopify collected $78K. We find the missing $22K — in 48 hours. From $249.",
+    images: ["/logo.png"],
+  },
   icons: {
     icon: "/logo.png",
     shortcut: "/logo.png",
     apple: "/logo.png",
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 
@@ -38,7 +59,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className="bg-[#FAFAF9] text-stone-900 font-sans selection:bg-emerald-200 selection:text-emerald-900 overflow-x-hidden antialiased">
+      <body className="bg-[#FAFAF9] text-[#1C1917] font-sans selection:bg-[#064E3B]/20 overflow-x-hidden antialiased">
         <Providers>{children}</Providers>
       </body>
     </html>
