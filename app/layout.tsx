@@ -1,49 +1,52 @@
-// app/layout.tsx | Root layout with SessionProvider
-
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
-import { Providers } from "./providers";
+
+const siteUrl = "https://calyxra.com";
 
 export const metadata: Metadata = {
-  title: "Calyxra — Revenue Reconciliation for Shopify Brands",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "Calyxra — Independent Measurement for DTC Brands",
+    template: "%s — Calyxra",
+  },
   description:
-    "Meta says $100K. Shopify collected $78K. Calyxra finds the missing $22K — campaign by campaign — in 48 hours. Concierge audits from $249. Full refund if your gap is below 5%.",
+    "Calyxra reconciles commercial performance, audits attribution, and designs incrementality tests so DTC leaders can make clearer marketing investment decisions.",
   keywords: [
-    "revenue reconciliation",
-    "Shopify audit",
-    "phantom revenue",
-    "true ROAS",
-    "Meta ads reconciliation",
-    "Google ads reconciliation",
-    "DTC attribution audit",
+    "DTC measurement",
+    "marketing measurement audit",
+    "attribution audit",
+    "incrementality testing",
+    "contribution margin analysis",
+    "independent measurement office",
   ],
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
-    title: "Calyxra — Revenue Reconciliation for Shopify Brands",
-    description:
-      "Your ad platforms are inflating your revenue. We find the gap — campaign by campaign — in 48 hours. Audits from $249.",
-    url: "https://www.calyxra.com",
+    type: "website",
+    url: siteUrl,
     siteName: "Calyxra",
+    title: "Calyxra — Independent Measurement for DTC Brands",
+    description:
+      "Marketing has a number. Finance has another. We make the next decision clearer.",
     images: [
       {
-        url: "/logo.png",
+        url: "/og.png",
         width: 1200,
         height: 630,
-        alt: "Calyxra — Revenue Reconciliation for Shopify Brands",
+        alt: "Calyxra — independent measurement for DTC brands",
       },
     ],
-    locale: "en_US",
-    type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Calyxra — Revenue Reconciliation for Shopify Brands",
+    title: "Calyxra — Independent Measurement for DTC Brands",
     description:
-      "Meta says $100K. Shopify collected $78K. We find the missing $22K — in 48 hours. From $249.",
-    images: ["/logo.png"],
+      "Reconcile performance. Audit attribution. Design the next test.",
+    images: ["/og.png"],
   },
   icons: {
     icon: "/logo.png",
-    shortcut: "/logo.png",
     apple: "/logo.png",
   },
   robots: {
@@ -52,16 +55,15 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export const viewport: Viewport = {
+  themeColor: "#151713",
+  colorScheme: "light",
+};
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="scroll-smooth">
-      <body className="bg-[#FAFAF9] text-[#1C1917] font-sans selection:bg-[#064E3B]/20 overflow-x-hidden antialiased">
-        <Providers>{children}</Providers>
-      </body>
+    <html lang="en">
+      <body>{children}</body>
     </html>
   );
 }

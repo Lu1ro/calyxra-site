@@ -1,89 +1,105 @@
-import Navbar from '../../components/Navbar';
-import Footer from '../../components/Footer';
+import type { Metadata } from "next";
+import InteriorShell from "@/components/InteriorShell";
 
-export const metadata = {
-  title: 'Security | Calyxra',
-  description: 'How Calyxra protects your data — security practices and guarantees.',
+export const metadata: Metadata = {
+  title: "Data & Security",
+  description: "Calyxra's practical approach to engagement data and access.",
+  alternates: { canonical: "/security" },
 };
 
 export default function SecurityPage() {
   return (
-    <main className="min-h-screen bg-[#FAFAF9]">
-      <Navbar />
+    <InteriorShell
+      eyebrow="Data / Security"
+      title="Smallest practical access. Clearly agreed handling."
+      intro="Security starts by narrowing the question, the data required to answer it, and the people who need access."
+    >
+      <div className="site-frame legal-layout">
+        <aside className="legal-aside">
+          <p>Approach: engagement-specific</p>
+          <a href="#collection">Collection</a>
+          <a href="#access">Access</a>
+          <a href="#transfer">Transfer &amp; storage</a>
+          <a href="#lifecycle">Data lifecycle</a>
+          <a href="#report">Report a concern</a>
+        </aside>
 
-      <article className="pt-36 pb-20 px-6">
-        <div className="max-w-2xl mx-auto">
-          <h1 className="text-3xl md:text-4xl font-serif font-bold text-stone-900 mb-2">Security &amp; Privacy Guarantee</h1>
-          <p className="text-sm text-stone-400 mb-10">How we protect your data</p>
+        <article className="legal-content">
+          <section>
+            <h2>Our approach</h2>
+            <p>
+              Calyxra is a professional-services practice, not a self-service data
+              platform. Before engagement data is transferred, we agree what is
+              required, how it will be provided, who will use it, and what happens
+              when the work is complete.
+            </p>
+            <p>
+              Specific client requirements can be documented in the Scope of Work
+              or a separate data-processing or confidentiality agreement.
+            </p>
+          </section>
 
-          <div className="space-y-10 text-stone-700 leading-relaxed">
-            {/* Read-Only */}
-            <section>
-              <h2 className="text-xl font-serif font-semibold text-stone-900 mb-3">Read-Only Access Only</h2>
-              <p className="text-sm mb-2">We request the minimum permissions needed.</p>
-              <p className="text-sm">Your Shopify API token: <code className="bg-stone-100 px-1.5 py-0.5 rounded text-xs">read_orders</code>, <code className="bg-stone-100 px-1.5 py-0.5 rounded text-xs">read_analytics</code> only.</p>
-              <p className="text-sm mt-1 font-medium text-stone-800">We CANNOT modify your store, create orders, or change anything.</p>
-            </section>
+          <section id="collection">
+            <h2>Data minimisation</h2>
+            <ul>
+              <li>We begin with the business question and request only relevant evidence.</li>
+              <li>We prefer aggregated exports or read-only access where practical.</li>
+              <li>We avoid customer-identifying fields unless the agreed method genuinely needs them.</li>
+              <li>We document material source, metric, and transformation assumptions.</li>
+            </ul>
+          </section>
 
-            {/* Free Scan */}
-            <section>
-              <h2 className="text-xl font-serif font-semibold text-stone-900 mb-3">Free Scan — Zero Storage</h2>
-              <p className="text-sm mb-3">When you run a Free Scan:</p>
-              <div className="bg-stone-100 rounded-xl p-5 space-y-2 text-sm">
-                <p>→ Your credentials are sent over HTTPS</p>
-                <p>→ Processed entirely in server memory (RAM)</p>
-                <p>→ Report generated and returned to you</p>
-                <p>→ All credentials deleted immediately</p>
-                <p>→ Nothing written to database</p>
-                <p>→ Nothing logged</p>
-              </div>
-            </section>
+          <section id="access">
+            <h2>Access and working practices</h2>
+            <p>
+              Access is limited to people involved in the agreed work. Clients
+              should grant the narrowest practical permissions, keep ownership of
+              their accounts, and revoke access when it is no longer needed. We do
+              not ask clients to email passwords or share personal login accounts.
+            </p>
+            <p>
+              Where client-owned environments are available and suitable, analysis
+              can be performed there. Otherwise, the chosen transfer and workspace
+              are agreed during scoping.
+            </p>
+          </section>
 
-            {/* Encrypted Storage */}
-            <section>
-              <h2 className="text-xl font-serif font-semibold text-stone-900 mb-3">Encrypted Storage (Paid Accounts)</h2>
-              <p className="text-sm mb-3">For monthly subscribers who save connections:</p>
-              <div className="space-y-2 text-sm">
-                <p>→ AES-256-CBC encryption for all API tokens</p>
-                <p>→ Encryption key separate from database</p>
-                <p>→ Tokens never appear in logs</p>
-              </div>
-            </section>
+          <section id="transfer">
+            <h2>Transfer, storage, and service providers</h2>
+            <p>
+              The appropriate method depends on the sensitivity, size, and systems
+              involved. We agree the transfer channel and storage location before
+              receiving engagement data. We may use providers for hosting, email,
+              scheduling, secure transfer, or storage when necessary to deliver the
+              work, subject to access restrictions and applicable contract terms.
+            </p>
+          </section>
 
-            {/* Infrastructure */}
-            <section>
-              <h2 className="text-xl font-serif font-semibold text-stone-900 mb-3">Infrastructure Security</h2>
-              <div className="space-y-2 text-sm">
-                <p>→ <strong>Database:</strong> Neon PostgreSQL, EU Frankfurt (ISO 27001)</p>
-                <p>→ <strong>Hosting:</strong> Vercel (SOC 2 Type II certified)</p>
-                <p>→ <strong>All traffic:</strong> TLS 1.3 encrypted</p>
-                <p>→ No third-party analytics or tracking scripts</p>
-              </div>
-            </section>
+          <section id="lifecycle">
+            <h2>Retention, return, and deletion</h2>
+            <p>
+              The engagement agreement sets the working retention period and the
+              return or deletion process for client-provided data. We may retain
+              deliverables, contracts, invoices, and limited business records as
+              required for legal, accounting, security, or dispute-resolution
+              purposes. Deletion cannot remove copies a client retains in its own
+              systems or records another provider must retain by law.
+            </p>
+          </section>
 
-            {/* Never */}
-            <section className="bg-red-50 border border-red-200 rounded-xl p-6">
-              <h2 className="text-xl font-serif font-semibold text-red-900 mb-3">We Will Never:</h2>
-              <div className="space-y-2 text-sm text-red-800">
-                <p>❌ Sell your data</p>
-                <p>❌ Use your data for advertising</p>
-                <p>❌ Share your revenue data with competitors</p>
-                <p>❌ Modify anything in your Shopify store or ad accounts</p>
-              </div>
-            </section>
-
-            {/* Contact */}
-            <section>
-              <p className="text-sm">
-                Questions about security?{' '}
-                <a href="mailto:admin@calyxra.com" className="text-emerald-700 hover:underline">admin@calyxra.com</a>
-              </p>
-            </section>
-          </div>
-        </div>
-      </article>
-
-      <Footer />
-    </main>
+          <section id="report">
+            <h2>Report a security or data concern</h2>
+            <p>
+              Send relevant details to{" "}
+              <a href="mailto:admin@calyxra.com?subject=Security%20or%20data%20concern">
+                admin@calyxra.com
+              </a>. Please do not include sensitive client data in the initial
+              message. We will respond with an appropriate channel if more detail
+              is needed.
+            </p>
+          </section>
+        </article>
+      </div>
+    </InteriorShell>
   );
 }

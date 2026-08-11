@@ -1,778 +1,664 @@
-'use client';
+import Link from "next/link";
+import {
+  ArrowDownRight,
+  ArrowRight,
+  Check,
+  CircleDot,
+  MoveRight,
+  X,
+} from "lucide-react";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
-import { useState } from 'react';
-import Image from 'next/image';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
+const reviewUrl = "https://cal.com/calyxra/15min";
 
-/* ──────────────────────────────────────────────────────────────
-   Design tokens used throughout this page:
-   - Brand deep:   #064E3B  (primary CTAs, accent)
-   - Brand hover:  #043927
-   - Brand soft:   #065F46  (secondary text accent)
-   - Ink:          #1C1917  (primary text)
-   - Ink muted:    #44403C  (body text)
-   - Ink soft:     #78716C  (secondary / captions)
-   - Canvas:       #FAFAF9  (page bg)
-   - Panel:        #F5F5F4  (subtle panel bg)
-   - Rule:         #E7E5E4  (borders / dividers)
-   ────────────────────────────────────────────────────────────── */
+const evidenceLayers = [
+  {
+    number: "01",
+    title: "Financial performance",
+    question:
+      "What was sold, refunded, discounted, and retained after the agreed variable costs?",
+    tone: "layer-lime",
+  },
+  {
+    number: "02",
+    title: "Attribution",
+    question:
+      "Which touchpoints received credit under a specific model, window, and tracking setup?",
+    tone: "layer-coral",
+  },
+  {
+    number: "03",
+    title: "Incrementality",
+    question:
+      "What happened because of the marketing activity that would not otherwise have happened?",
+    tone: "layer-blue",
+  },
+  {
+    number: "04",
+    title: "Decision",
+    question:
+      "Given the evidence and its limits, should the team scale, cut, hold, or test next?",
+    tone: "layer-paper",
+  },
+];
 
-/* ─── Gap Calculator (math only, no API) ───────────────────── */
-function GapCalculator() {
-  const [metaRevenue, setMetaRevenue] = useState('');
-  const [shopifyRevenue, setShopifyRevenue] = useState('');
-  const [adSpend, setAdSpend] = useState('');
-  const [result, setResult] = useState<null | {
-    phantom: number; platformRoas: number; realRoas: number; gapPct: number;
-  }>(null);
+const capabilities = [
+  {
+    number: "01",
+    title: "Reconcile the commercial record",
+    text: "Align orders, refunds, discounts, product costs, payment fees, and media spend to one documented performance definition.",
+  },
+  {
+    number: "02",
+    title: "Audit the measurement",
+    text: "Review event definitions, tracking coverage, attribution windows, timezone and currency handling, taxonomy, and known blind spots.",
+  },
+  {
+    number: "03",
+    title: "Grade the evidence",
+    text: "Show where a metric is reliable, where it is directional, and where it cannot support the conclusion being drawn from it.",
+  },
+  {
+    number: "04",
+    title: "Design the next test",
+    text: "Turn unresolved questions into practical experiment plans using holdouts, geo tests, lift studies, or another suitable method.",
+  },
+  {
+    number: "05",
+    title: "Write the decision",
+    text: "Translate the findings into a Scale / Cut / Hold / Test recommendation, with assumptions, confidence, and the next evidence required.",
+  },
+];
 
-  const calculate = () => {
-    const meta = parseFloat(metaRevenue.replace(/[^0-9.]/g, ''));
-    const shopify = parseFloat(shopifyRevenue.replace(/[^0-9.]/g, ''));
-    const spend = parseFloat(adSpend.replace(/[^0-9.]/g, ''));
-    if (!meta || !shopify || !spend) return;
-    const phantom = meta - shopify;
-    const platformRoas = meta / spend;
-    const realRoas = shopify / spend;
-    const gapPct = (phantom / meta) * 100;
-    setResult({ phantom, platformRoas, realRoas, gapPct });
-  };
+const auditDeliverables = [
+  "Measurement map",
+  "Reconciled performance view",
+  "Attribution risk register",
+  "Channel confidence matrix",
+  "Incrementality readiness plan",
+  "Executive decision memo + live readout",
+];
 
-  const fmt = (n: number) => '$' + n.toLocaleString('en-US', { maximumFractionDigits: 0 });
-  const inputClass =
-    "w-full px-4 py-3.5 bg-white border border-[#E7E5E4] text-[#1C1917] text-[15px] rounded-lg focus:outline-none focus:ring-4 focus:ring-[#064E3B]/10 focus:border-[#064E3B] transition-all placeholder:text-stone-400";
+const deskItems = [
+  "Recurring commercial-performance reconciliation",
+  "Metric contract and change log",
+  "Data-quality and tracking issue reviews",
+  "Independent briefs before material budget decisions",
+  "Experiment backlog, design, and readouts",
+  "Cross-functional measurement sessions",
+];
 
+const process = [
+  {
+    number: "01",
+    title: "Frame the decision",
+    text: "We agree on the business question, scope, definitions, stakeholders, and what a useful answer would change.",
+  },
+  {
+    number: "02",
+    title: "Collect the evidence",
+    text: "We request the smallest practical set of exports or read-only access, then review existing reports, models, and test results.",
+  },
+  {
+    number: "03",
+    title: "Reconcile and challenge",
+    text: "We align the commercial record, test metric logic, identify attribution risks, and assess whether causal conclusions are justified.",
+  },
+  {
+    number: "04",
+    title: "Deliver the decision record",
+    text: "You receive the method, findings, confidence levels, recommendations, and a working session with the relevant team.",
+  },
+];
+
+const principles = [
+  [
+    "Definitions before conclusions",
+    "Every important metric is tied to its source, formula, grain, window, and owner.",
+  ],
+  [
+    "Different questions stay different",
+    "Financial performance is not attribution. Attribution is not incrementality.",
+  ],
+  [
+    "Uncertainty is reported",
+    "We separate reliable findings, directional signals, assumptions, and unanswered questions.",
+  ],
+  [
+    "Recommendations remain auditable",
+    "Each recommendation includes its evidence, limits, decision threshold, and next test.",
+  ],
+  [
+    "No incentive to defend media spend",
+    "Calyxra does not manage media or earn a percentage of advertising spend.",
+  ],
+];
+
+const faqs = [
+  {
+    q: "What is an Independent Measurement Office?",
+    a: "It is an external measurement function working between Growth, Finance, analytics, and agency partners. Calyxra establishes shared definitions, reconciles source data, evaluates what attribution can and cannot support, and turns unresolved questions into a practical testing plan.",
+  },
+  {
+    q: "Is Calyxra an attribution platform?",
+    a: "No. Attribution platforms can provide useful views of journeys and channel credit. We examine those outputs alongside commerce and financial records, document where definitions differ, and decide whether the evidence is suitable for the decision being made.",
+  },
+  {
+    q: "Do you calculate ‘true ROAS’?",
+    a: "We do not use ‘true ROAS’ as a blanket claim. We can calculate reconciled media-efficiency metrics under an agreed revenue or margin definition. That is still different from incremental return, which requires appropriate causal evidence.",
+  },
+  {
+    q: "Can you prove incrementality during an audit?",
+    a: "Only if suitable experimental evidence already exists. Otherwise, the audit shows what is currently known, identifies confounding factors, and produces a feasible test plan. A valid causal result needs an appropriate design and observation period.",
+  },
+  {
+    q: "What data do you need?",
+    a: "The exact list depends on the question. It may include orders and refunds, payment data, product and variable costs, media spend and campaign exports, analytics configurations, attribution settings, and prior experiment results. We request only what is relevant to the agreed scope.",
+  },
+  {
+    q: "Do you need direct access to our systems?",
+    a: "Not always. Many audits can begin with exports and walkthroughs. When direct access materially improves reliability, we request read-only permission and document the required scope before access is granted.",
+  },
+  {
+    q: "How long does an audit take?",
+    a: "Most initial audits are planned for 10 business days after the required data, access, and definitions are complete. More complex scopes may take longer; the delivery date is agreed before work starts.",
+  },
+  {
+    q: "Can you work with our existing agency or analytics team?",
+    a: "Yes. Calyxra is designed to add an independent measurement layer, not replace the people operating your channels or systems. We involve the relevant teams in definitions, evidence review, and the final readout.",
+  },
+];
+
+function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
-    <section id="calculator" className="py-28 px-6 bg-[#F5F5F4] border-y border-[#E7E5E4]">
-      <div className="max-w-2xl mx-auto">
-        <div className="text-center mb-10">
-          <p className="text-[11px] font-semibold text-[#064E3B] uppercase tracking-[0.18em] mb-3">Try it yourself</p>
-          <h2 className="text-[34px] md:text-[44px] font-serif font-medium text-[#1C1917] leading-[1.15] mb-3">
-            Estimate your phantom revenue in 30 seconds.
-          </h2>
-          <p className="text-[17px] text-[#78716C] max-w-lg mx-auto">
-            Enter three numbers from your last 30 days. We&apos;ll show your likely gap — then the audit proves it line by line.
-          </p>
-        </div>
-
-        <div className="bg-white border border-[#E7E5E4] rounded-2xl p-8 shadow-[0_1px_3px_rgba(0,0,0,0.04),0_1px_2px_rgba(0,0,0,0.06)]">
-          <div className="space-y-5">
-            <div>
-              <label className="block text-[13px] font-semibold text-[#1C1917] mb-2">Meta reported revenue (last 30 days)</label>
-              <input className={inputClass} placeholder="$142,800" value={metaRevenue} onChange={e => setMetaRevenue(e.target.value)} />
-            </div>
-            <div>
-              <label className="block text-[13px] font-semibold text-[#1C1917] mb-2">Shopify net revenue (last 30 days)</label>
-              <input className={inputClass} placeholder="$118,340" value={shopifyRevenue} onChange={e => setShopifyRevenue(e.target.value)} />
-            </div>
-            <div>
-              <label className="block text-[13px] font-semibold text-[#1C1917] mb-2">Monthly ad spend</label>
-              <input className={inputClass} placeholder="$47,000" value={adSpend} onChange={e => setAdSpend(e.target.value)} />
-            </div>
-            <button
-              onClick={calculate}
-              className="w-full py-4 bg-[#064E3B] text-white font-semibold text-[13px] uppercase tracking-[0.14em] hover:bg-[#043927] hover:shadow-[0_8px_24px_rgba(6,78,59,0.22)] active:scale-[0.99] transition-all rounded-lg"
-            >
-              Calculate gap
-            </button>
-          </div>
-
-          {result && (
-            <div className="mt-8 pt-8 border-t border-[#E7E5E4] space-y-3">
-              <div className="flex justify-between items-center py-2.5">
-                <span className="text-[14px] text-[#78716C]">Phantom revenue</span>
-                <span className="text-[20px] font-serif font-semibold text-red-600 tabular-nums">{fmt(result.phantom)}</span>
-              </div>
-              <div className="flex justify-between items-center py-2.5 border-t border-[#E7E5E4]">
-                <span className="text-[14px] text-[#78716C]">Platform ROAS</span>
-                <span className="text-[20px] font-serif font-semibold text-[#44403C] tabular-nums">{result.platformRoas.toFixed(2)}×</span>
-              </div>
-              <div className="flex justify-between items-center py-2.5 border-t border-[#E7E5E4]">
-                <span className="text-[14px] text-[#78716C]">Real ROAS</span>
-                <span className="text-[20px] font-serif font-semibold text-[#064E3B] tabular-nums">{result.realRoas.toFixed(2)}×</span>
-              </div>
-              <div className="flex justify-between items-center py-2.5 border-t border-[#E7E5E4]">
-                <span className="text-[14px] text-[#78716C]">Gap</span>
-                <span className="text-[20px] font-serif font-semibold text-red-600 tabular-nums">{result.gapPct.toFixed(1)}%</span>
-              </div>
-
-              <div className="mt-4 p-4 rounded-lg bg-red-50 border border-red-100">
-                <p className="text-[14px] text-red-800 leading-relaxed">
-                  You&apos;re likely reporting <strong>{result.gapPct.toFixed(0)}%</strong> more revenue than your bank actually received.
-                  The audit shows you <em>which campaigns</em> are responsible.
-                </p>
-              </div>
-
-              <a
-                href="https://cal.com/calyxra/15min"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-4 block text-center px-6 py-4 bg-[#064E3B] text-white font-semibold text-[13px] uppercase tracking-[0.14em] hover:bg-[#043927] transition-all rounded-lg"
-              >
-                Book the $249 audit →
-              </a>
-            </div>
-          )}
-        </div>
-      </div>
-    </section>
+    <p className="section-label">
+      <span aria-hidden="true">◆</span>
+      {children}
+    </p>
   );
 }
 
-/* ─── Main Page ─────────────────────────────────────────────── */
-export default function Home() {
-  const calendlyUrl = "https://cal.com/calyxra/15min";
-
-  const faqItems = [
-    {
-      q: "What exactly do I get for $249?",
-      a: "A full reconciliation of one Shopify store + one ad platform (Meta or Google), covering 30 days of data. You receive a branded PDF report showing phantom revenue per campaign, refund/chargeback/discount breakdowns, true ROAS vs reported ROAS, and 3 concrete recommendations. Plus a 30-minute walkthrough call where we go through the numbers with you. Delivered within 48 hours of you sending data.",
-    },
-    {
-      q: "What's different about the $499 Pro audit?",
-      a: "Pro covers 90 days (not 30), both Meta AND Google (not one), and adds channel-overlap analysis — which matters because Meta and Google both claim credit for the same conversions. Pro also includes campaign-level variance decomposition and 5 recommendations instead of 3. The walkthrough call is extended to 45 minutes.",
-    },
-    {
-      q: "How do you actually run the audit?",
-      a: "Short answer: a human runs it, not a bot. You send us exports (CSVs from Shopify, Meta, Google — we send a checklist). We run them through our reconciliation pipeline, validate the numbers, and write the report. We're honest about this: we're a concierge service right now, not self-serve software. Self-serve is on the roadmap but not what you're paying for today.",
-    },
-    {
-      q: "What if the gap is small?",
-      a: "If your gap is under 5%, we refund the audit in full, no questions asked. This isn't a loss-leader trick — we'd rather not cash a check we didn't earn. Most brands we've seen run 12-25% gaps on Meta alone.",
-    },
-    {
-      q: "Is my data safe?",
-      a: "You only send us exports — no API access, no OAuth, no permissions to touch your store or ad accounts. Data lives on our side only while we run the audit, then we delete it and send you the report. If you want a DPA or NDA before sending data, ask and we'll sign one.",
-    },
-    {
-      q: "How is this different from Triple Whale / Northbeam?",
-      a: "Attribution platforms tell you which ad drove a conversion. We tell you which reported conversions actually landed in your bank. Different problems. Triple Whale won't show you that Meta reported $22K more than Shopify collected — that's the gap we surface.",
-    },
-    {
-      q: "How do I pay?",
-      a: "We send an invoice after the intro call. Wire, Wise, or card — whichever is easier for you. No subscription, no lock-in, no auto-renewal. One audit, one invoice.",
-    },
-    {
-      q: "Can I do this monthly?",
-      a: "Recurring reconciliation is on the roadmap for Q3 2026. Right now we&apos;re deliberately focused on one-time audits while we build the automation layer. If you want to be on the waitlist for monthly, email admin@calyxra.com.",
-    },
-  ];
-
-  const faqJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": faqItems.map(item => ({
-      "@type": "Question",
-      "name": item.q,
-      "acceptedAnswer": { "@type": "Answer", "text": item.a },
-    })),
-  };
-
+function ExternalCta({
+  children,
+  dark = false,
+}: {
+  children: React.ReactNode;
+  dark?: boolean;
+}) {
   return (
-    <div className="min-h-screen bg-[#FAFAF9] text-[#1C1917] font-sans selection:bg-[#064E3B]/20 antialiased">
+    <a
+      href={reviewUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={dark ? "button button-dark" : "button button-light"}
+    >
+      {children}
+      <ArrowDownRight aria-hidden="true" size={18} strokeWidth={1.8} />
+    </a>
+  );
+}
+
+export default function Home() {
+  return (
+    <main>
       <Navbar />
 
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
-
-      <main className="pt-32">
-
-        {/* ═══════════════════════════════════════════════════
-            HERO
-        ═══════════════════════════════════════════════════ */}
-        <section className="px-6 pt-20 pb-32">
-          <div className="max-w-5xl mx-auto text-center">
-            {/* Micro-badge */}
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-white border border-[#E7E5E4] rounded-full text-[12px] font-medium text-[#44403C] mb-8 shadow-[0_1px_2px_rgba(0,0,0,0.04)]">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#064E3B]"></span>
-              Revenue reconciliation for Shopify brands
-            </div>
-
-            <h1 className="text-[44px] md:text-[64px] lg:text-[76px] font-serif font-medium text-[#1C1917] mb-8 leading-[1.04] tracking-[-0.02em]">
-              Your ad platforms are<br className="hidden md:block" />
-              <span className="italic text-[#064E3B]">inflating</span> your revenue.
+      <section className="hero-shell">
+        <div className="hero-grid-noise" aria-hidden="true" />
+        <div className="site-frame hero-inner">
+          <div className="hero-copy">
+            <p className="hero-kicker">
+              <span>Independent measurement</span>
+              <span>DTC + omnichannel</span>
+            </p>
+            <h1>
+              Marketing has a number.
+              <br />
+              Finance has another.
+              <span>We make the next decision clearer.</span>
             </h1>
-
-            <p className="text-[19px] md:text-[21px] text-[#44403C] mb-10 max-w-2xl mx-auto leading-[1.55]">
-              Meta says $100K. Shopify collected $78K. We show you exactly where the missing <span className="tabular-nums font-semibold text-[#1C1917]">$22,000</span> went — campaign by campaign — in 48 hours.
+            <p className="hero-deck">
+              Calyxra is an independent measurement office for DTC brands. We
+              reconcile commercial performance, audit attribution, and design
+              incrementality tests—so your team knows what to scale, cut, hold,
+              or test next.
             </p>
-
-            <div className="flex flex-col sm:flex-row justify-center items-center gap-3 mb-8">
-              <a
-                href={calendlyUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 px-7 py-4 bg-[#064E3B] text-white font-semibold text-[13px] uppercase tracking-[0.14em] hover:bg-[#043927] hover:shadow-[0_10px_30px_rgba(6,78,59,0.24)] active:scale-[0.98] transition-all rounded-lg min-w-[220px]"
-              >
-                Book an audit — $249
-              </a>
-              <a
-                href="#calculator"
-                className="inline-flex items-center justify-center gap-2 px-7 py-4 bg-white border border-[#E7E5E4] text-[#1C1917] font-semibold text-[13px] uppercase tracking-[0.14em] hover:border-[#1C1917] hover:bg-white transition-all rounded-lg min-w-[220px]"
-              >
-                Estimate the gap →
-              </a>
+            <div className="hero-actions">
+              <ExternalCta>Book a measurement review</ExternalCta>
+              <Link href="#engagements" className="text-link text-link-light">
+                See what we deliver
+                <MoveRight aria-hidden="true" size={18} />
+              </Link>
             </div>
-
-            <div className="flex flex-wrap justify-center items-center gap-x-6 gap-y-2 text-[13px] text-[#78716C]">
-              <span className="inline-flex items-center gap-1.5">
-                <svg className="w-3.5 h-3.5 text-[#064E3B]" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>
-                48-hour delivery
-              </span>
-              <span className="inline-flex items-center gap-1.5">
-                <svg className="w-3.5 h-3.5 text-[#064E3B]" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>
-                Full refund if gap &lt; 5%
-              </span>
-              <span className="inline-flex items-center gap-1.5">
-                <svg className="w-3.5 h-3.5 text-[#064E3B]" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>
-                No API access required
-              </span>
-            </div>
+            <p className="hero-note">
+              Independent from media spend. Built to work with your existing
+              stack.
+            </p>
           </div>
-        </section>
 
-        {/* ═══════════════════════════════════════════════════
-            THE PROBLEM — 3 cards, editorial tone
-        ═══════════════════════════════════════════════════ */}
-        <section className="py-28 px-6 bg-white border-y border-[#E7E5E4]">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-16 max-w-2xl mx-auto">
-              <p className="text-[11px] font-semibold text-[#064E3B] uppercase tracking-[0.18em] mb-3">The problem</p>
-              <h2 className="text-[34px] md:text-[44px] font-serif font-medium text-[#1C1917] leading-[1.15] mb-4">
-                The numbers don&apos;t match. Here&apos;s why.
+          <div className="decision-board-wrap" aria-label="Illustrative decision brief">
+            <div className="decision-board">
+              <div className="board-topline">
+                <span>Decision brief</span>
+                <span>No. 007</span>
+              </div>
+              <div className="board-question">
+                <span>Question</span>
+                <p>Should paid search receive the next budget increase?</p>
+              </div>
+              <div className="board-signal-grid">
+                <div>
+                  <span className="signal-dot signal-green" />
+                  <small>Financial record</small>
+                  <strong>Reconciled</strong>
+                </div>
+                <div>
+                  <span className="signal-dot signal-orange" />
+                  <small>Attribution confidence</small>
+                  <strong>Mixed</strong>
+                </div>
+                <div>
+                  <span className="signal-dot signal-orange" />
+                  <small>Incrementality</small>
+                  <strong>Needs testing</strong>
+                </div>
+                <div className="board-action">
+                  <small>Recommended action</small>
+                  <strong>HOLD + TEST</strong>
+                </div>
+              </div>
+              <div className="board-footer">
+                <span>Evidence ≠ certainty</span>
+                <span>Illustrative output</span>
+              </div>
+            </div>
+            <div className="board-tab board-tab-one">Growth</div>
+            <div className="board-tab board-tab-two">Finance</div>
+            <div className="board-stamp">Decision ready</div>
+          </div>
+        </div>
+
+        <div className="hero-rail" aria-label="Systems we work across">
+          <span>Evidence can live in</span>
+          <span>Shopify</span>
+          <span>Meta</span>
+          <span>Google</span>
+          <span>GA4</span>
+          <span>Klaviyo</span>
+          <span>Attribution tools</span>
+          <span>Finance models</span>
+        </div>
+      </section>
+
+      <section className="problem-section section-pad" id="what-we-measure">
+        <div className="site-frame">
+          <div className="section-heading-grid">
+            <SectionLabel>The operating problem</SectionLabel>
+            <div>
+              <h2>
+                Your systems are not broken because their numbers differ.
+                <em>They were built to answer different questions.</em>
               </h2>
-              <p className="text-[17px] text-[#78716C] leading-relaxed">
-                Three systems reporting three different truths. Nobody reconciles them — so brands scale on numbers that aren&apos;t real.
+              <p className="section-lead">
+                Shopify records orders. Payment processors settle transactions.
+                Ad platforms assign credit. Finance calculates margin. None of
+                those views, by itself, answers whether more budget should go
+                into a channel.
               </p>
             </div>
+          </div>
 
-            <div className="grid md:grid-cols-3 gap-5">
-              {/* Card 1 */}
-              <div className="bg-white border border-[#E7E5E4] rounded-2xl p-8 hover:border-[#D6D3D1] hover:shadow-[0_8px_24px_rgba(0,0,0,0.04)] transition-all duration-300">
-                <div className="w-10 h-10 rounded-lg bg-blue-50 border border-blue-100 flex items-center justify-center mb-5">
-                  <span className="text-[15px] font-semibold text-blue-700">01</span>
+          <div className="evidence-layers">
+            {evidenceLayers.map((layer) => (
+              <article className={`evidence-card ${layer.tone}`} key={layer.title}>
+                <span className="card-number">{layer.number}</span>
+                <h3>{layer.title}</h3>
+                <p>{layer.question}</p>
+                <ArrowDownRight aria-hidden="true" size={24} strokeWidth={1.5} />
+              </article>
+            ))}
+          </div>
+          <p className="layer-conclusion">
+            Calyxra keeps these questions separate before bringing them together
+            for the decision at hand.
+          </p>
+        </div>
+      </section>
+
+      <section className="capabilities-section section-pad">
+        <div className="site-frame">
+          <div className="section-heading-grid section-heading-light">
+            <SectionLabel>What we do</SectionLabel>
+            <div>
+              <h2>We do the work between the dashboards.</h2>
+              <p className="section-lead">
+                Calyxra does not replace your finance team, analytics stack, or
+                media agency. We make their outputs comparable, document the
+                assumptions, and translate the available evidence into decisions.
+              </p>
+            </div>
+          </div>
+
+          <div className="capability-list">
+            {capabilities.map((item) => (
+              <article key={item.number}>
+                <span>{item.number}</span>
+                <h3>{item.title}</h3>
+                <p>{item.text}</p>
+                <CircleDot aria-hidden="true" size={20} strokeWidth={1.5} />
+              </article>
+            ))}
+          </div>
+
+          <div className="statement-banner">
+            <span>The output is not “one perfect number.”</span>
+            <strong>It is a defensible decision record.</strong>
+          </div>
+        </div>
+      </section>
+
+      <section className="engagements-section section-pad" id="engagements">
+        <div className="site-frame">
+          <div className="section-heading-grid">
+            <SectionLabel>Ways to work together</SectionLabel>
+            <div>
+              <h2>Start with one consequential decision.</h2>
+              <p className="section-lead">
+                Every engagement begins with the question your team is trying to
+                answer—not a software migration or a pre-selected model.
+              </p>
+            </div>
+          </div>
+
+          <div className="engagement-grid">
+            <article className="audit-card" id="audit">
+              <div className="engagement-card-top">
+                <p>01 / First engagement</p>
+                <span>Fixed scope</span>
+              </div>
+              <h3>The DTC Measurement Audit</h3>
+              <p className="engagement-intro">
+                A focused review of one important growth decision and the
+                numbers behind it. A typical scope covers one storefront, core
+                paid channels, and an agreed analysis period.
+              </p>
+
+              <div className="audit-meta">
+                <div>
+                  <span>From</span>
+                  <strong>$3,000</strong>
+                  <small>final fixed fee confirmed in scope</small>
                 </div>
-                <p className="text-[11px] font-semibold text-blue-700 uppercase tracking-[0.12em] mb-2">Meta says</p>
-                <h3 className="text-[28px] font-serif font-medium text-[#1C1917] mb-3 tabular-nums">$100,000</h3>
-                <p className="text-[15px] text-[#44403C] leading-[1.6]">
-                  The pixel fires at checkout. Counts full order value. Never looks back to check if the order survived.
+                <div>
+                  <span>Timing</span>
+                  <strong>10 business days</strong>
+                  <small>after complete data, access, and definitions</small>
+                </div>
+              </div>
+
+              <p className="deliverables-label">Typical deliverables</p>
+              <ul className="deliverables-grid">
+                {auditDeliverables.map((item) => (
+                  <li key={item}>
+                    <Check aria-hidden="true" size={17} strokeWidth={2} />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+
+              <div className="truth-callout">
+                If the available data cannot support an answer, that is a
+                finding—not a gap we fill with an estimate.
+              </div>
+              <ExternalCta dark>Scope an audit</ExternalCta>
+            </article>
+
+            <div className="engagement-side-stack">
+              <article className="desk-card">
+                <div className="engagement-card-top">
+                  <p>02 / Ongoing</p>
+                  <span>Monthly</span>
+                </div>
+                <h3>Fractional Measurement Desk</h3>
+                <p>
+                  Your independent measurement function across Growth, Finance,
+                  and agency partners—without building another full-time
+                  department.
                 </p>
-              </div>
-
-              {/* Card 2 */}
-              <div className="bg-white border border-[#E7E5E4] rounded-2xl p-8 hover:border-[#D6D3D1] hover:shadow-[0_8px_24px_rgba(0,0,0,0.04)] transition-all duration-300">
-                <div className="w-10 h-10 rounded-lg bg-amber-50 border border-amber-100 flex items-center justify-center mb-5">
-                  <span className="text-[15px] font-semibold text-amber-700">02</span>
+                <ul>
+                  {deskItems.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+                <div className="side-card-price">
+                  <span>Starting at</span>
+                  <strong>$4,500 / month</strong>
                 </div>
-                <p className="text-[11px] font-semibold text-amber-700 uppercase tracking-[0.12em] mb-2">Shopify collected</p>
-                <h3 className="text-[28px] font-serif font-medium text-[#1C1917] mb-3 tabular-nums">$78,000</h3>
-                <p className="text-[15px] text-[#44403C] leading-[1.6]">
-                  Refunds settled weeks later. Discount codes ate 20%. Chargebacks hit. The real number dropped quietly.
+              </article>
+
+              <article className="lab-card">
+                <div className="engagement-card-top">
+                  <p>03 / When ready</p>
+                  <span>Custom scope</span>
+                </div>
+                <h3>Experiment &amp; Budget Lab</h3>
+                <p>
+                  Design and readout support for the highest-value unresolved
+                  question—once the data and test conditions can support it.
                 </p>
-              </div>
-
-              {/* Card 3 — accent */}
-              <div className="bg-[#FEF2F2] border border-red-200 rounded-2xl p-8 hover:shadow-[0_8px_24px_rgba(220,38,38,0.08)] transition-all duration-300">
-                <div className="w-10 h-10 rounded-lg bg-white border border-red-200 flex items-center justify-center mb-5">
-                  <span className="text-[15px] font-semibold text-red-600">03</span>
-                </div>
-                <p className="text-[11px] font-semibold text-red-600 uppercase tracking-[0.12em] mb-2">Where&apos;s the</p>
-                <h3 className="text-[28px] font-serif font-medium text-red-700 mb-3 tabular-nums">$22,000?</h3>
-                <p className="text-[15px] text-red-900/80 leading-[1.6]">
-                  Phantom revenue — counted by ad platforms, never deposited in your bank. Nobody tells you it exists.
-                </p>
-              </div>
+                <Link href="#how-it-works" className="text-link">
+                  See our working method
+                  <ArrowRight aria-hidden="true" size={18} />
+                </Link>
+              </article>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* ═══════════════════════════════════════════════════
-            WHAT YOU GET — Case study / preview
-        ═══════════════════════════════════════════════════ */}
-        <section className="py-28 px-6">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-14 max-w-2xl mx-auto">
-              <p className="text-[11px] font-semibold text-[#064E3B] uppercase tracking-[0.18em] mb-3">What you receive</p>
-              <h2 className="text-[34px] md:text-[44px] font-serif font-medium text-[#1C1917] leading-[1.15] mb-4">
-                A report that tells you exactly where the money went.
-              </h2>
-              <p className="text-[17px] text-[#78716C] leading-relaxed">
-                Not a dashboard to interpret. A document with answers — per campaign, per day, in plain English.
-              </p>
-            </div>
-
-            {/* Dashboard preview with chrome */}
-            <div className="relative mx-auto max-w-5xl">
-              <div className="absolute -inset-4 bg-gradient-to-b from-[#064E3B]/5 to-transparent rounded-3xl blur-2xl -z-10"></div>
-              <div className="rounded-2xl overflow-hidden border border-[#E7E5E4] shadow-[0_24px_60px_rgba(0,0,0,0.12),0_8px_24px_rgba(0,0,0,0.06)]">
-                {/* Browser chrome */}
-                <div className="bg-[#F5F5F4] border-b border-[#E7E5E4] px-5 py-3 flex items-center gap-2">
-                  <div className="flex gap-1.5">
-                    <div className="w-3 h-3 rounded-full bg-red-400/80"></div>
-                    <div className="w-3 h-3 rounded-full bg-amber-400/80"></div>
-                    <div className="w-3 h-3 rounded-full bg-emerald-400/80"></div>
-                  </div>
-                  <div className="flex-1 text-center">
-                    <span className="text-[12px] text-[#78716C] font-mono">Calyxra — Revenue Leak Audit (sample)</span>
-                  </div>
-                </div>
-                <Image
-                  src="/dashboard-screenshot.png"
-                  alt="Sample Calyxra audit — phantom revenue $50,920, true ROAS 3.56×, net revenue $180,120"
-                  width={1600}
-                  height={1000}
-                  className="w-full h-auto block"
-                  priority={false}
-                />
-              </div>
-            </div>
-
-            {/* Three deliverable pills */}
-            <div className="mt-14 grid md:grid-cols-3 gap-4 max-w-4xl mx-auto">
-              <div className="text-center px-4">
-                <div className="text-[42px] font-serif font-medium text-[#064E3B] tabular-nums mb-1">48h</div>
-                <p className="text-[14px] text-[#78716C]">From data to PDF report</p>
-              </div>
-              <div className="text-center px-4 md:border-x md:border-[#E7E5E4]">
-                <div className="text-[42px] font-serif font-medium text-[#064E3B] tabular-nums mb-1">15-25%</div>
-                <p className="text-[14px] text-[#78716C]">Typical gap we surface on Meta</p>
-              </div>
-              <div className="text-center px-4">
-                <div className="text-[42px] font-serif font-medium text-[#064E3B] tabular-nums mb-1">&lt;5%</div>
-                <p className="text-[14px] text-[#78716C]">Gap threshold for full refund</p>
-              </div>
+      <section className="decision-section section-pad">
+        <div className="site-frame decision-section-grid">
+          <div className="decision-copy">
+            <SectionLabel>Anatomy of a decision</SectionLabel>
+            <h2>Every recommendation shows the evidence behind it.</h2>
+            <p>
+              No black-box score and no decorative dashboard. The decision memo
+              makes the question, supporting evidence, uncertainty, and next
+              action visible to every stakeholder.
+            </p>
+            <div className="decision-key">
+              <span><i className="key-reliable" /> Reliable</span>
+              <span><i className="key-directional" /> Directional</span>
+              <span><i className="key-open" /> Unresolved</span>
             </div>
           </div>
-        </section>
 
-        {/* ═══════════════════════════════════════════════════
-            HOW IT WORKS — Editorial 3-step
-        ═══════════════════════════════════════════════════ */}
-        <section className="py-28 px-6 bg-white border-y border-[#E7E5E4]">
-          <div className="max-w-5xl mx-auto">
-            <div className="text-center mb-16 max-w-2xl mx-auto">
-              <p className="text-[11px] font-semibold text-[#064E3B] uppercase tracking-[0.18em] mb-3">How it works</p>
-              <h2 className="text-[34px] md:text-[44px] font-serif font-medium text-[#1C1917] leading-[1.15] mb-4">
-                Three steps. Forty-eight hours. No setup.
-              </h2>
-              <p className="text-[17px] text-[#78716C] leading-relaxed">
-                You don&apos;t need to install anything, grant access, or learn a dashboard. We handle the full pipeline.
+          <article className="memo-card">
+            <div className="memo-header">
+              <span>Calyxra / Decision brief</span>
+              <span>Illustrative only</span>
+            </div>
+            <div className="memo-question">
+              <small>Decision question</small>
+              <h3>Should branded search spend increase?</h3>
+            </div>
+            <div className="memo-row">
+              <div>
+                <small>Financial performance</small>
+                <p>Positive contribution margin under the agreed definition.</p>
+              </div>
+              <span className="memo-status status-reliable">Reliable</span>
+            </div>
+            <div className="memo-row">
+              <div>
+                <small>Attribution signal</small>
+                <p>Strong platform-reported efficiency.</p>
+              </div>
+              <span className="memo-status status-directional">Directional</span>
+            </div>
+            <div className="memo-row">
+              <div>
+                <small>Evidence risk</small>
+                <p>Meaningful overlap with direct and organic demand.</p>
+              </div>
+              <span className="memo-status status-open">Open</span>
+            </div>
+            <div className="memo-decision">
+              <div>
+                <small>Recommendation</small>
+                <strong>HOLD</strong>
+              </div>
+              <p>
+                Assess whether a valid holdout design is feasible before
+                increasing budget.
               </p>
             </div>
+            <p className="memo-caption">
+              Illustrative format. Not client data or a performance claim.
+            </p>
+          </article>
+        </div>
+      </section>
 
-            <div className="grid md:grid-cols-3 gap-10 md:gap-6">
-              {[
-                {
-                  step: "01",
-                  title: "Book a 15-min call",
-                  body: "We confirm scope, ask which platforms you run, and send you a short checklist of CSV exports (about 5 minutes of work on your side).",
-                },
-                {
-                  step: "02",
-                  title: "You send the exports",
-                  body: "Standard Shopify + Meta + Google exports. No API access. No OAuth. Data stays on our side only while we run the audit, then gets deleted.",
-                },
-                {
-                  step: "03",
-                  title: "PDF + walkthrough",
-                  body: "Branded report delivered within 48 hours, followed by a 30-minute walkthrough call where we go through campaign-level findings together.",
-                },
-              ].map((item, i) => (
-                <div key={i} className="relative">
-                  <div className="flex items-baseline gap-3 mb-4">
-                    <span className="text-[13px] font-mono font-semibold text-[#064E3B] tracking-widest">{item.step}</span>
-                    <div className="flex-1 h-px bg-[#E7E5E4]"></div>
-                  </div>
-                  <h3 className="text-[22px] font-serif font-medium text-[#1C1917] mb-3 leading-[1.25]">{item.title}</h3>
-                  <p className="text-[15px] text-[#44403C] leading-[1.65]">{item.body}</p>
-                </div>
-              ))}
+      <section className="fit-section section-pad">
+        <div className="site-frame">
+          <div className="section-heading-grid section-heading-light">
+            <SectionLabel>Who we work with</SectionLabel>
+            <div>
+              <h2>Built for teams with consequential measurement questions.</h2>
+              <p className="section-lead">
+                Calyxra is most useful when disagreement in the numbers is
+                delaying or weakening a real investment decision.
+              </p>
             </div>
           </div>
-        </section>
+          <div className="fit-grid">
+            <article className="fit-yes">
+              <div className="fit-heading">
+                <Check aria-hidden="true" size={24} />
+                <h3>A good fit when</h3>
+              </div>
+              <ul>
+                <li>Growth and Finance use different performance numbers.</li>
+                <li>You make material budget decisions across several channels.</li>
+                <li>You have reporting tools but lack agreement on what their outputs mean.</li>
+                <li>You want an independent view alongside your team or agency.</li>
+                <li>You are willing to test conclusions that remain uncertain.</li>
+              </ul>
+            </article>
+            <article className="fit-no">
+              <div className="fit-heading">
+                <X aria-hidden="true" size={24} />
+                <h3>Probably not a fit when</h3>
+              </div>
+              <ul>
+                <li>You need day-to-day media buying or creative production.</li>
+                <li>You want a guaranteed causal result without a valid test.</li>
+                <li>You only want a prettier dashboard on unresolved definitions.</li>
+                <li>You need the analysis to defend a predetermined conclusion.</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
 
-        {/* ═══════════════════════════════════════════════════
-            GAP CALCULATOR
-        ═══════════════════════════════════════════════════ */}
-        <GapCalculator />
-
-        {/* ═══════════════════════════════════════════════════
-            SAAS PRICING — THREE TIERS
-        ═══════════════════════════════════════════════════ */}
-        <section id="saas-pricing" className="py-28 px-6 bg-[#F5F5F4] border-y border-[#E7E5E4]">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-16 max-w-2xl mx-auto">
-              <p className="text-[11px] font-semibold text-[#064E3B] uppercase tracking-[0.18em] mb-3">SaaS plans</p>
-              <h2 className="text-[34px] md:text-[44px] font-serif font-medium text-[#1C1917] leading-[1.15] mb-4">
-                Simple pricing. Real numbers.
-              </h2>
-              <p className="text-[17px] text-[#78716C] leading-relaxed">
-                No contracts. No pixels. Cancel anytime.
-              </p>
+      <section className="process-section section-pad" id="how-it-works">
+        <div className="site-frame">
+          <div className="section-heading-grid">
+            <SectionLabel>How it works</SectionLabel>
+            <div>
+              <h2>Start with the decision. Then inspect the numbers.</h2>
             </div>
+          </div>
+          <div className="process-track">
+            {process.map((step) => (
+              <article key={step.number}>
+                <span>{step.number}</span>
+                <h3>{step.title}</h3>
+                <p>{step.text}</p>
+              </article>
+            ))}
+          </div>
+          <div className="process-cta">
+            <p>One live question is enough to start.</p>
+            <ExternalCta dark>Book a measurement review</ExternalCta>
+          </div>
+        </div>
+      </section>
 
-            <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto items-stretch">
-              {/* FREE */}
-              <div className="bg-white border border-[#E7E5E4] rounded-2xl p-8 hover:border-[#D6D3D1] hover:shadow-[0_8px_24px_rgba(0,0,0,0.04)] transition-all duration-300 flex flex-col">
-                <div className="mb-6">
-                  <p className="text-[11px] font-semibold text-[#78716C] uppercase tracking-[0.14em] mb-2">Free</p>
-                  <div className="flex items-baseline gap-1">
-                    <span className="text-[48px] font-serif font-medium text-[#1C1917] leading-none tabular-nums">$0</span>
-                    <span className="text-[14px] text-[#78716C] ml-2">/mo</span>
-                  </div>
-                  <p className="text-[13px] text-[#78716C] mt-2">1 store, forever free</p>
-                </div>
-
-                <div className="h-px bg-[#E7E5E4] mb-6"></div>
-
-                <ul className="space-y-3.5 mb-8 flex-1">
-                  {[
-                    'Phantom revenue detection',
-                    'True ROAS (aggregate)',
-                    'Gap breakdown (refunds, discounts)',
-                    'Shopify + Meta connection',
-                    'Revenue leak alert',
-                  ].map((item, i) => (
-                    <li key={i} className="flex items-start gap-3">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#94A3B8] flex-shrink-0 mt-[9px]"></span>
-                      <span className="text-[14.5px] text-[#1C1917] leading-[1.55]">{item}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                <a
-                  href="https://app.calyxra.com/register"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block w-full py-3.5 bg-white border-2 border-[#064E3B] text-[#064E3B] font-semibold text-[13px] uppercase tracking-[0.14em] hover:bg-[#064E3B] hover:text-white transition-all rounded-lg text-center"
-                >
-                  Get Started Free →
-                </a>
-              </div>
-
-              {/* PAID — MOST POPULAR */}
-              <div className="relative bg-white border-2 border-[#064E3B] rounded-2xl p-8 shadow-[0_24px_60px_rgba(6,78,59,0.12)] flex flex-col">
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                  <span className="inline-block bg-[#064E3B] text-white px-4 py-1 text-[10px] font-bold uppercase tracking-[0.14em] rounded-full whitespace-nowrap">
-                    Most Popular
-                  </span>
-                </div>
-
-                <div className="mb-6">
-                  <p className="text-[11px] font-semibold text-[#064E3B] uppercase tracking-[0.14em] mb-2">Paid</p>
-                  <div className="flex items-baseline gap-1">
-                    <span className="text-[48px] font-serif font-medium text-[#1C1917] leading-none tabular-nums">$150</span>
-                    <span className="text-[14px] text-[#78716C] ml-2">/mo</span>
-                  </div>
-                  <p className="text-[13px] text-[#78716C] mt-2">$120/mo billed annually</p>
-                </div>
-
-                <div className="h-px bg-[#E7E5E4] mb-6"></div>
-
-                <ul className="space-y-3.5 mb-8 flex-1">
-                  {[
-                    'Everything in Free',
-                    'Up to 3 stores',
-                    'Per-campaign True ROAS breakdown',
-                    'AI budget optimizer (pause/scale/reduce)',
-                    'Google Ads connection',
-                    'Revenue waterfall & trend charts',
-                    'LTV-based ROAS & cohort analysis',
-                    'PDF report export',
-                    'Real-time alerts',
-                  ].map((item, i) => (
-                    <li key={i} className="flex items-start gap-3">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#064E3B] flex-shrink-0 mt-[9px]"></span>
-                      <span className="text-[14.5px] text-[#1C1917] leading-[1.55]">{item}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                <a
-                  href="https://app.calyxra.com/register"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block w-full py-3.5 bg-[#064E3B] text-white font-semibold text-[13px] uppercase tracking-[0.14em] hover:bg-[#043927] hover:shadow-[0_10px_30px_rgba(6,78,59,0.24)] transition-all rounded-lg text-center"
-                >
-                  Start 14-Day Free Trial →
-                </a>
-              </div>
-
-              {/* AGENCY */}
-              <div className="bg-white border border-[#E7E5E4] rounded-2xl p-8 hover:border-[#D6D3D1] hover:shadow-[0_8px_24px_rgba(0,0,0,0.04)] transition-all duration-300 flex flex-col">
-                <div className="mb-6">
-                  <p className="text-[11px] font-semibold text-[#818CF8] uppercase tracking-[0.14em] mb-2">Agency</p>
-                  <div className="flex items-baseline gap-1">
-                    <span className="text-[48px] font-serif font-medium text-[#1C1917] leading-none tabular-nums">$399</span>
-                    <span className="text-[14px] text-[#78716C] ml-2">/mo</span>
-                  </div>
-                  <p className="text-[13px] text-[#78716C] mt-2">$319/mo billed annually</p>
-                </div>
-
-                <div className="h-px bg-[#E7E5E4] mb-6"></div>
-
-                <ul className="space-y-3.5 mb-8 flex-1">
-                  {[
-                    'Everything in Paid',
-                    'Up to 50 stores',
-                    'Multi-store portfolio dashboard',
-                    'White-label PDF reports',
-                    'Cross-store benchmarking',
-                    'Aggregated portfolio KPIs',
-                    'Custom branding (logo, colors)',
-                    'Direct founder support (Slack)',
-                  ].map((item, i) => (
-                    <li key={i} className="flex items-start gap-3">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#818CF8] flex-shrink-0 mt-[9px]"></span>
-                      <span className="text-[14.5px] text-[#1C1917] leading-[1.55]">{item}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                <a
-                  href="mailto:admin@calyxra.com?subject=Agency plan inquiry"
-                  className="block w-full py-3.5 bg-white border-2 border-[#818CF8] text-[#818CF8] font-semibold text-[13px] uppercase tracking-[0.14em] hover:bg-[#818CF8] hover:text-white transition-all rounded-lg text-center"
-                >
-                  Contact Sales →
-                </a>
-              </div>
-            </div>
-
-            <p className="text-center text-[13px] text-[#78716C] mt-10">
-              Prefer a one-time deep-dive instead of monthly software?{' '}
-              <a href="#pricing" className="text-[#064E3B] font-semibold hover:underline">
-                See concierge audit pricing ↓
-              </a>
+      <section className="principles-section section-pad">
+        <div className="site-frame principles-grid">
+          <div className="principles-heading">
+            <SectionLabel>Working principles</SectionLabel>
+            <h2>Independent by design. Explicit about uncertainty.</h2>
+            <p>
+              Measurement is useful when teams can inspect it, challenge it, and
+              still understand why a decision was made.
             </p>
           </div>
-        </section>
-
-        {/* ═══════════════════════════════════════════════════
-            PRICING — TWO TIERS
-        ═══════════════════════════════════════════════════ */}
-        <section id="pricing" className="py-28 px-6">
-          <div className="max-w-5xl mx-auto">
-            <div className="text-center mb-16 max-w-2xl mx-auto">
-              <p className="text-[11px] font-semibold text-[#064E3B] uppercase tracking-[0.18em] mb-3">Pricing</p>
-              <h2 className="text-[34px] md:text-[44px] font-serif font-medium text-[#1C1917] leading-[1.15] mb-4">
-                Two audit tiers. One invoice. No subscriptions.
-              </h2>
-              <p className="text-[17px] text-[#78716C] leading-relaxed">
-                Pick the depth that fits the account. Both delivered manually, both refunded if the gap is below 5%.
-              </p>
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-              {/* Basic — $249 */}
-              <div className="bg-white border border-[#E7E5E4] rounded-2xl p-8 md:p-10 hover:border-[#D6D3D1] hover:shadow-[0_8px_24px_rgba(0,0,0,0.04)] transition-all duration-300">
-                <div className="mb-6">
-                  <p className="text-[11px] font-semibold text-[#78716C] uppercase tracking-[0.14em] mb-2">Revenue Audit</p>
-                  <div className="flex items-baseline gap-1">
-                    <span className="text-[48px] font-serif font-medium text-[#1C1917] leading-none tabular-nums">$249</span>
-                    <span className="text-[14px] text-[#78716C] ml-2">one-time</span>
-                  </div>
-                  <p className="text-[13px] text-[#78716C] mt-2">For brands validating one platform</p>
+          <div className="principles-list">
+            {principles.map(([title, text], index) => (
+              <article key={title}>
+                <span>0{index + 1}</span>
+                <div>
+                  <h3>{title}</h3>
+                  <p>{text}</p>
                 </div>
-
-                <div className="h-px bg-[#E7E5E4] mb-6"></div>
-
-                <ul className="space-y-3.5 mb-8">
-                  {[
-                    "1 Shopify store × 1 ad platform (Meta or Google)",
-                    "30 days of data reconciled",
-                    "Campaign-level phantom revenue breakdown",
-                    "Refund, chargeback & discount analysis",
-                    "Branded PDF report + 3 recommendations",
-                    "30-minute walkthrough call",
-                  ].map((item, i) => (
-                    <li key={i} className="flex items-start gap-3">
-                      <svg className="w-4 h-4 text-[#064E3B] flex-shrink-0 mt-1" viewBox="0 0 20 20" fill="currentColor">
-                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                      </svg>
-                      <span className="text-[14.5px] text-[#1C1917] leading-[1.55]">{item}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                <a
-                  href={calendlyUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block w-full py-3.5 bg-white border-2 border-[#1C1917] text-[#1C1917] font-semibold text-[13px] uppercase tracking-[0.14em] hover:bg-[#1C1917] hover:text-white transition-all rounded-lg text-center"
-                >
-                  Book audit — $249
-                </a>
-                <p className="text-[12px] text-[#78716C] text-center mt-3">PDF delivered within 48 hours</p>
-              </div>
-
-              {/* Pro — $499 */}
-              <div className="relative bg-[#0B3B2E] text-white rounded-2xl p-8 md:p-10 shadow-[0_24px_60px_rgba(6,78,59,0.25)]">
-                <div className="absolute -top-3 left-8">
-                  <span className="inline-block bg-white text-[#064E3B] px-3 py-1 text-[10px] font-bold uppercase tracking-[0.14em] rounded-full border border-[#D6D3D1]">
-                    Recommended
-                  </span>
-                </div>
-
-                <div className="mb-6">
-                  <p className="text-[11px] font-semibold text-[#6EE7B7] uppercase tracking-[0.14em] mb-2">Pro Audit</p>
-                  <div className="flex items-baseline gap-1">
-                    <span className="text-[48px] font-serif font-medium text-white leading-none tabular-nums">$499</span>
-                    <span className="text-[14px] text-white/60 ml-2">one-time</span>
-                  </div>
-                  <p className="text-[13px] text-white/60 mt-2">For agencies & scaling DTC brands</p>
-                </div>
-
-                <div className="h-px bg-white/10 mb-6"></div>
-
-                <ul className="space-y-3.5 mb-8">
-                  {[
-                    "1 Shopify store × Meta AND Google",
-                    "90 days of data reconciled",
-                    "Channel-overlap analysis (Meta vs Google double-counting)",
-                    "Campaign-level variance decomposition",
-                    "Branded PDF + 5 recommendations + projected annual impact",
-                    "45-minute walkthrough call",
-                  ].map((item, i) => (
-                    <li key={i} className="flex items-start gap-3">
-                      <svg className="w-4 h-4 text-[#6EE7B7] flex-shrink-0 mt-1" viewBox="0 0 20 20" fill="currentColor">
-                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                      </svg>
-                      <span className="text-[14.5px] text-white/95 leading-[1.55]">{item}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                <a
-                  href={calendlyUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block w-full py-3.5 bg-white text-[#064E3B] font-semibold text-[13px] uppercase tracking-[0.14em] hover:bg-[#F5F5F4] transition-all rounded-lg text-center"
-                >
-                  Book pro audit — $499
-                </a>
-                <p className="text-[12px] text-white/60 text-center mt-3">PDF delivered within 48 hours</p>
-              </div>
-            </div>
-
-            {/* Pricing footnote */}
-            <div className="mt-10 text-center">
-              <p className="text-[14px] text-[#78716C]">
-                Gap under 5% = full refund. Agency referrals welcome at{' '}
-                <a href="mailto:admin@calyxra.com?subject=Partnership" className="text-[#064E3B] font-semibold hover:underline">
-                  admin@calyxra.com
-                </a>
-                .
-              </p>
-            </div>
+              </article>
+            ))}
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* ═══════════════════════════════════════════════════
-            WHO IT'S FOR
-        ═══════════════════════════════════════════════════ */}
-        <section className="py-28 px-6 bg-white border-y border-[#E7E5E4]">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-16 max-w-2xl mx-auto">
-              <p className="text-[11px] font-semibold text-[#064E3B] uppercase tracking-[0.18em] mb-3">Built for</p>
-              <h2 className="text-[34px] md:text-[44px] font-serif font-medium text-[#1C1917] leading-[1.15] mb-4">
-                Teams scaling on Shopify + paid ads.
-              </h2>
-              <p className="text-[17px] text-[#78716C] leading-relaxed">
-                If you make budget decisions on ROAS numbers, you need to know those numbers are real.
-              </p>
-            </div>
-
-            <div className="grid md:grid-cols-3 gap-5">
-              {[
-                {
-                  title: "DTC founders & CFOs",
-                  body: "Spending $20K+/month on Meta. Scaling decisions hinge on ROAS. One audit tells you if you're profitable or just optimistic.",
-                },
-                {
-                  title: "Performance agencies",
-                  body: "Managing 3+ Shopify clients. Month-end reconciliation eats hours. Show clients the real numbers before they ask.",
-                },
-                {
-                  title: "Media buyers",
-                  body: "Optimizing campaigns daily. True ROAS ≠ reported ROAS. Find which campaigns are actually profitable and which are phantom.",
-                },
-              ].map((item, i) => (
-                <div key={i} className="bg-[#FAFAF9] border border-[#E7E5E4] rounded-2xl p-8 hover:border-[#D6D3D1] hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(0,0,0,0.04)] transition-all duration-300">
-                  <h3 className="text-[19px] font-serif font-medium text-[#1C1917] mb-3 leading-[1.3]">{item.title}</h3>
-                  <p className="text-[15px] text-[#44403C] leading-[1.65]">{item.body}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ═══════════════════════════════════════════════════
-            FAQ
-        ═══════════════════════════════════════════════════ */}
-        <section className="py-28 px-6">
-          <div className="max-w-3xl mx-auto">
-            <div className="text-center mb-14">
-              <p className="text-[11px] font-semibold text-[#064E3B] uppercase tracking-[0.18em] mb-3">Questions</p>
-              <h2 className="text-[34px] md:text-[44px] font-serif font-medium text-[#1C1917] leading-[1.15]">
-                Everything you&apos;d reasonably ask.
-              </h2>
-            </div>
-
-            <div className="bg-white rounded-2xl border border-[#E7E5E4] overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,0.04)]">
-              {faqItems.map((item, i) => (
-                <details key={i} className="border-b border-[#E7E5E4] last:border-0 group">
-                  <summary className="w-full px-7 py-5 flex items-center justify-between text-left cursor-pointer list-none [&::-webkit-details-marker]:hidden hover:bg-[#FAFAF9] transition-colors">
-                    <span className="text-[15.5px] font-semibold text-[#1C1917] pr-4 leading-[1.4]">{item.q}</span>
-                    <svg className="w-5 h-5 text-[#78716C] flex-shrink-0 transition-transform duration-200 group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                    </svg>
-                  </summary>
-                  <div className="px-7 pb-6 -mt-1">
-                    <p className="text-[15px] text-[#44403C] leading-[1.7]">{item.a}</p>
-                  </div>
-                </details>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ═══════════════════════════════════════════════════
-            FINAL CTA — quiet, confident
-        ═══════════════════════════════════════════════════ */}
-        <section className="py-28 px-6 bg-[#0B3B2E] text-white">
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-[36px] md:text-[52px] font-serif font-medium leading-[1.1] mb-6 tracking-[-0.02em]">
-              Stop scaling on numbers<br />
-              <span className="italic text-[#6EE7B7]">that aren&apos;t real.</span>
-            </h2>
-            <p className="text-[18px] text-white/70 mb-10 max-w-xl mx-auto leading-relaxed">
-              One audit. 48 hours. Full refund if your gap is below 5%. No subscriptions, no contracts.
-            </p>
-            <div className="flex flex-col sm:flex-row justify-center items-center gap-3">
-              <a
-                href={calendlyUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center px-8 py-4 bg-white text-[#064E3B] font-semibold text-[13px] uppercase tracking-[0.14em] hover:bg-[#F5F5F4] transition-all rounded-lg min-w-[220px]"
-              >
-                Book an audit — $249
-              </a>
-              <a
-                href="#pricing"
-                className="inline-flex items-center justify-center px-8 py-4 bg-transparent border border-white/30 text-white font-semibold text-[13px] uppercase tracking-[0.14em] hover:bg-white/5 hover:border-white/60 transition-all rounded-lg min-w-[220px]"
-              >
-                Compare tiers →
-              </a>
-            </div>
-            <p className="mt-8 text-[12px] text-white/40 uppercase tracking-[0.16em]">
-              Built by operators · Delivered manually · No dashboards to learn
+      <section className="faq-section section-pad" id="faq">
+        <div className="site-frame faq-grid">
+          <div className="faq-heading">
+            <SectionLabel>FAQ</SectionLabel>
+            <h2>Questions before the first question.</h2>
+            <p>
+              Need a detail that is not covered here? Write to{" "}
+              <a href="mailto:admin@calyxra.com">admin@calyxra.com</a>.
             </p>
           </div>
-        </section>
+          <div className="faq-list">
+            {faqs.map((faq, index) => (
+              <details key={faq.q} open={index === 0}>
+                <summary>
+                  <span>{faq.q}</span>
+                  <span className="faq-toggle" aria-hidden="true">+</span>
+                </summary>
+                <p>{faq.a}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
 
-      </main>
+      <section className="final-cta">
+        <div className="site-frame final-cta-inner">
+          <p className="final-index">C / 01</p>
+          <div>
+            <SectionLabel>Start here</SectionLabel>
+            <h2>Bring us the reports that disagree.</h2>
+            <p>
+              On a short introductory call, we will identify the decision at
+              stake, the systems involved, and whether a Measurement Audit is the
+              right next step.
+            </p>
+          </div>
+          <div className="final-actions">
+            <ExternalCta>Book a measurement review</ExternalCta>
+            <a href="mailto:admin@calyxra.com" className="text-link text-link-light">
+              Email Calyxra
+              <ArrowRight aria-hidden="true" size={18} />
+            </a>
+            <small>No polished deck required. Bring one live question.</small>
+          </div>
+        </div>
+      </section>
 
       <Footer />
-    </div>
+    </main>
   );
 }
