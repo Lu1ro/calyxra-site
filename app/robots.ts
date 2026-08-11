@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: "/api/",
     },
-    sitemap: "https://calyxra.com/sitemap.xml",
+    sitemap: "https://www.calyxra.com/sitemap.xml",
   };
 }
