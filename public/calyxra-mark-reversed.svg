@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="Calyxra compact reversed Decision Register">
+  <g fill="#FFFEF8">
+    <path d="M28 50h134v20H28zM58 118h104v20H58zM42 186h120v20H42z"/>
+    <path d="M162 32h20v192h-20zM182 122h17v12h-17z"/>
+  </g>
+  <path d="M199 111h34v34h-34z" fill="#FF6846"/>
+</svg>

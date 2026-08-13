@@ -563,6 +563,46 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="founder-section section-pad">
+        <div className="site-frame founder-grid">
+          <SectionLabel>Founder-led measurement</SectionLabel>
+          <div className="founder-copy">
+            <h2>The people writing the recommendation join the conversation.</h2>
+            <p>
+              Calyxra is a founder-led practice. Lukian Kononchuk works across
+              data engineering, ecommerce analytics, measurement, and decision
+              support—so the handoff from source data to executive readout stays
+              accountable.
+            </p>
+            <p>
+              For specialist questions, Calyxra works alongside the client’s
+              Finance, Growth, analytics, and agency teams rather than replacing
+              them.
+            </p>
+            <div className="founder-links">
+              <a
+                href="https://www.linkedin.com/in/lukian-kononchuk-b66128364/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-link"
+              >
+                Meet Lukian on LinkedIn
+                <ArrowRight aria-hidden="true" size={18} />
+              </a>
+              <a
+                href="https://www.linkedin.com/company/calyxra/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-link"
+              >
+                Follow Calyxra
+                <ArrowRight aria-hidden="true" size={18} />
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section className="process-section section-pad" id="how-it-works">
         <div className="site-frame">
           <div className="section-heading-grid">

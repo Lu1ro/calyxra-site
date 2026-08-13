@@ -14,7 +14,7 @@ export default function NotFound() {
             Error / 404
           </p>
           <h1>This report is no longer in the stack.</h1>
-          <p>The page may belong to Calyxra’s previous software product.</p>
+          <p>The page may have moved or no longer exists.</p>
         </div>
       </header>
       <div className="site-frame" style={{ paddingBlock: "70px 100px" }}>

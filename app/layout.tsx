@@ -45,14 +45,11 @@ export const metadata: Metadata = {
       "Reconcile performance. Audit attribution. Design the next test.",
     images: ["/og.png"],
   },
-  icons: {
-    icon: "/logo.png",
-    apple: "/logo.png",
-  },
   robots: {
     index: true,
     follow: true,
   },
+  applicationName: "Calyxra",
 };
 
 export const viewport: Viewport = {
@@ -61,9 +58,38 @@ export const viewport: Viewport = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    name: "Calyxra",
+    url: siteUrl,
+    logo: `${siteUrl}/logo.png`,
+    description:
+      "Independent measurement for DTC brands across commercial performance, attribution, and incrementality decisions.",
+    email: "admin@calyxra.com",
+    sameAs: [
+      "https://www.linkedin.com/company/calyxra/",
+      "https://www.linkedin.com/in/lukian-kononchuk-b66128364/",
+    ],
+    areaServed: "Worldwide",
+    serviceType: [
+      "DTC measurement audit",
+      "Marketing attribution audit",
+      "Incrementality test design",
+    ],
+  };
+
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        {children}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(organizationSchema).replace(/</g, "\\u003c"),
+          }}
+        />
+      </body>
     </html>
   );
 }

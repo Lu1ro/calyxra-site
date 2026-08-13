@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowUpRight, Menu, X } from "lucide-react";
 
 const links = [
@@ -18,6 +19,14 @@ export default function Navbar() {
     <header className="nav-shell">
       <div className="site-frame nav-inner">
         <Link href="/" className="brand-mark" aria-label="Calyxra home">
+          <Image
+            src="/calyxra-mark-reversed.svg"
+            alt=""
+            width={30}
+            height={30}
+            className="brand-mark-image"
+            aria-hidden="true"
+          />
           <strong>Calyxra<i>.</i></strong>
         </Link>
 
@@ -43,6 +52,7 @@ export default function Navbar() {
           className="mobile-toggle"
           aria-label={open ? "Close navigation" : "Open navigation"}
           aria-expanded={open}
+          aria-controls="mobile-navigation"
           onClick={() => setOpen((current) => !current)}
         >
           {open ? <X size={22} /> : <Menu size={22} />}
@@ -50,7 +60,11 @@ export default function Navbar() {
       </div>
 
       {open && (
-        <nav className="mobile-nav" aria-label="Mobile navigation">
+        <nav
+          id="mobile-navigation"
+          className="mobile-nav"
+          aria-label="Mobile navigation"
+        >
           {links.map((link) => (
             <Link key={link.href} href={link.href} onClick={() => setOpen(false)}>
               {link.label}

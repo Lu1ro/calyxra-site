@@ -1,36 +1,30 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Calyxra marketing site
 
-## Getting Started
+Public website for Calyxra, an independent measurement office for DTC brands.
 
-First, run the development server:
+## Commands
 
 ```bash
+npm ci
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run lint
+npm run build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The site uses the Next.js App Router and is deployed through the linked Vercel
+project `calyxra-site`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Public routes
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `/` — positioning, engagements, method, fit, and FAQ.
+- `/contact` — measurement-review booking and direct contact.
+- `/privacy`, `/terms`, `/security` — public policies.
 
-## Learn More
+## Brand assets
 
-To learn more about Next.js, take a look at the following resources:
+The approved Editorial Register logo system lives in the workspace `brand`
+folder. The site uses the compact mark for navigation, favicons, and social
+identity.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Do not reintroduce the retired SaaS, free-scan, authentication, checkout,
+payment, or dashboard routes into this marketing repository.

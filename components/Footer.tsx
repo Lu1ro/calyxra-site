@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Footer() {
   return (
@@ -6,6 +7,14 @@ export default function Footer() {
       <div className="site-frame footer-main">
         <div className="footer-brand">
           <Link href="/" className="brand-mark" aria-label="Calyxra home">
+            <Image
+              src="/calyxra-mark-reversed.svg"
+              alt=""
+              width={30}
+              height={30}
+              className="brand-mark-image"
+              aria-hidden="true"
+            />
             <strong>Calyxra<i>.</i></strong>
           </Link>
           <p>
@@ -28,6 +37,13 @@ export default function Footer() {
             Book a review
           </a>
           <a href="mailto:admin@calyxra.com">Email Calyxra</a>
+          <a
+            href="https://www.linkedin.com/company/calyxra/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            LinkedIn
+          </a>
           <Link href="/contact">Contact details</Link>
         </div>
 

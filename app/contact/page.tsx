@@ -53,6 +53,25 @@ export default function ContactPage() {
             <Mail aria-hidden="true" size={18} />
           </a>
 
+          <p className="contact-social">
+            Founder-led measurement: connect with{" "}
+            <a
+              href="https://www.linkedin.com/in/lukian-kononchuk-b66128364/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Lukian Kononchuk
+            </a>{" "}
+            or follow{" "}
+            <a
+              href="https://www.linkedin.com/company/calyxra/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Calyxra on LinkedIn
+            </a>.
+          </p>
+
           <div className="operator-details">
             <p>Operator: FOP Kononchuk Oleksandr Yaroslavovych</p>
             <p>Tax ID: 3078714279</p>
