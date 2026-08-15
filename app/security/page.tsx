@@ -11,8 +11,8 @@ export default function SecurityPage() {
   return (
     <InteriorShell
       eyebrow="Data / Security"
-      title="Smallest practical access. Clearly agreed handling."
-      intro="Security starts by narrowing the question, the data required to answer it, and the people who need access."
+      title="Smallest practical access. Approved changes. Verifiable handling."
+      intro="Security starts by narrowing the incident, the evidence required, the systems that may change, and the people authorised to approve them."
     >
       <div className="site-frame legal-layout">
         <aside className="legal-aside">
@@ -29,8 +29,9 @@ export default function SecurityPage() {
             <h2>Our approach</h2>
             <p>
               Calyxra is a professional-services practice, not a self-service data
-              platform. Before engagement data is transferred, we agree what is
-              required, how it will be provided, who will use it, and what happens
+              platform. Before engagement data is transferred or a configuration
+              is changed, we agree what is required, how access will be provided,
+              who can approve the change, how it will be verified, and what happens
               when the work is complete.
             </p>
             <p>
@@ -56,6 +57,12 @@ export default function SecurityPage() {
               should grant the narrowest practical permissions, keep ownership of
               their accounts, and revoke access when it is no longer needed. We do
               not ask clients to email passwords or share personal login accounts.
+            </p>
+            <p>
+              Write access is requested only when an approved in-scope correction
+              requires it. The client may instead perform the change from a written
+              specification. Material changes, responsible owners, and verification
+              results are recorded in the engagement change log.
             </p>
             <p>
               Where client-owned environments are available and suitable, analysis

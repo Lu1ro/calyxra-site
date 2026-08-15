@@ -18,23 +18,23 @@ export default function Footer() {
             <strong>Calyxra<i>.</i></strong>
           </Link>
           <p>
-            An independent measurement office for DTC brands. We reconcile
-            commercial performance, audit attribution, and design the next test.
+            Measurement incident response for Shopify-led DTC teams. We find
+            the cause, fix bounded issues, and verify the result.
           </p>
         </div>
 
         <div className="footer-column">
           <h3>Explore</h3>
-          <Link href="/#what-we-measure">What we do</Link>
-          <Link href="/#engagements">Engagements</Link>
+          <Link href="/#problems">Problems we resolve</Link>
+          <Link href="/#resolution">How resolution works</Link>
+          <Link href="/#sprint">Recovery Sprint</Link>
           <Link href="/#how-it-works">How it works</Link>
-          <Link href="/#faq">FAQ</Link>
         </div>
 
         <div className="footer-column">
           <h3>Contact</h3>
           <a href="https://cal.com/calyxra/15min" target="_blank" rel="noopener noreferrer">
-            Book a review
+            Book a problem review
           </a>
           <a href="mailto:admin@calyxra.com">Email Calyxra</a>
           <a
@@ -57,7 +57,7 @@ export default function Footer() {
 
       <div className="site-frame footer-bottom">
         <span>© {new Date().getFullYear()} Calyxra</span>
-        <span>Independent from media-spend incentives</span>
+        <span>Cause → fix → verification</span>
       </div>
     </footer>
   );

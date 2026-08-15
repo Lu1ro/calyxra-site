@@ -12,11 +12,11 @@ export default function TermsPage() {
     <InteriorShell
       eyebrow="Legal / Terms"
       title="Terms of service"
-      intro="These terms cover use of the Calyxra website. Paid analytical work is also governed by the written scope of work agreed with each client."
+      intro="These terms cover use of the Calyxra website. Paid measurement, configuration, and implementation-support work is also governed by the written scope agreed with each client."
     >
       <div className="site-frame legal-layout">
         <aside className="legal-aside">
-          <p>Effective: 11 August 2026</p>
+          <p>Effective: 16 August 2026</p>
           <a href="#services">Services</a>
           <a href="#client">Client responsibilities</a>
           <a href="#fees">Fees &amp; cancellation</a>
@@ -39,18 +39,26 @@ export default function TermsPage() {
           </section>
 
           <section id="services">
-            <h2>2. Analytical and advisory services</h2>
+            <h2>2. Measurement and bounded implementation services</h2>
             <p>
               Calyxra provides independent marketing-measurement, reconciliation,
-              attribution review, experiment design, and related advisory work.
-              The exact question, sources, period, deliverables, dependencies,
-              timeline, and fees are defined in the Scope of Work.
+              incident investigation, attribution review, approved configuration
+              corrections, verification, experiment design, and related advisory
+              work. The exact incident, systems, period, changes, permissions,
+              deliverables, dependencies, acceptance criteria, timeline, and fees
+              are defined in the Scope of Work.
             </p>
             <p>
               A published example, description, starting price, or typical
               timeline is illustrative and does not replace the agreed scope.
               Timing begins only after the prerequisites listed in the Scope of
               Work are complete.
+            </p>
+            <p>
+              Custom theme, checkout, server-side, warehouse, connector, or other
+              software engineering is included only when expressly listed. It may
+              otherwise be quoted separately, completed by the client or another
+              provider, or excluded from the engagement.
             </p>
           </section>
 
@@ -61,6 +69,8 @@ export default function TermsPage() {
               <li>Provide accurate, complete, and timely information and access.</li>
               <li>Have the authority and lawful basis to share the supplied data.</li>
               <li>Identify relevant definitions, accounting choices, known gaps, and prior changes.</li>
+              <li>Approve proposed changes and identify the authorised system owner.</li>
+              <li>Maintain appropriate backups, recovery options, and control of production accounts.</li>
               <li>Review interim questions and deliverables within the agreed timeframe.</li>
               <li>Maintain independent control of operational, financial, and media decisions.</li>
             </ul>
@@ -88,7 +98,7 @@ export default function TermsPage() {
           </section>
 
           <section id="outputs">
-            <h2>5. Findings, experiments, and business decisions</h2>
+            <h2>5. Findings, changes, experiments, and business decisions</h2>
             <p>
               Measurement outputs depend on the supplied data, agreed definitions,
               available evidence, and stated assumptions. Attribution estimates do
@@ -97,10 +107,18 @@ export default function TermsPage() {
               and implementation quality.
             </p>
             <p>
-              Our deliverables are analytical and advisory, not legal, tax,
-              accounting, investment, or guaranteed financial advice. The client
-              remains responsible for reviewing and acting on recommendations. We
-              do not guarantee a revenue, profit, advertising, or experiment result.
+              Approved changes are verified against the acceptance criteria in the
+              Scope of Work. Third-party platforms, APIs, consent tools, themes,
+              integrations, and client-managed environments can change outside our
+              control. Verification therefore applies to the stated test and period,
+              not to the permanent operation of a third-party system.
+            </p>
+            <p>
+              Our work is not legal, tax, accounting, investment, or guaranteed
+              financial advice. The client remains responsible for production
+              operations, business decisions, and changes outside the agreed scope.
+              We do not guarantee a revenue, profit, advertising, savings, or
+              experiment result.
             </p>
           </section>
 

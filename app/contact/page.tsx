@@ -4,7 +4,7 @@ import InteriorShell from "@/components/InteriorShell";
 
 export const metadata: Metadata = {
   title: "Contact",
-  description: "Bring Calyxra one live marketing measurement question.",
+  description: "Bring Calyxra one live DTC measurement incident.",
   alternates: { canonical: "/contact" },
 };
 
@@ -12,20 +12,20 @@ export default function ContactPage() {
   return (
     <InteriorShell
       eyebrow="Contact"
-      title="One live question is enough to start."
-      intro="Tell us which reports disagree, which decision is waiting, and who needs confidence in the answer."
+      title="Tell us what changed."
+      intro="Which number stopped making sense, when did it change, and which operating or budget decision is now blocked?"
     >
       <div className="site-frame contact-grid">
         <article className="contact-card">
           <p className="section-label">
             <span aria-hidden="true">◆</span>
-            Measurement review
+            Problem review
           </p>
-          <h2>Use 15 minutes to frame the decision.</h2>
+          <h2>Use 15 minutes to frame the incident.</h2>
           <p>
-            We will identify the business question, the systems involved, and
-            whether a Measurement Audit is the right next step. No polished deck
-            or data transfer is required for the introductory call.
+            We will identify the symptom, the systems involved, the decision at
+            risk, and whether a Measurement Recovery Sprint is the right next
+            step. No polished deck or data transfer is required for the call.
           </p>
           <a
             href="https://cal.com/calyxra/15min"
@@ -33,7 +33,7 @@ export default function ContactPage() {
             rel="noopener noreferrer"
             className="button button-dark"
           >
-            Book a measurement review
+            Book a problem review
             <ArrowDownRight aria-hidden="true" size={18} />
           </a>
         </article>
@@ -45,8 +45,8 @@ export default function ContactPage() {
           </p>
           <h2>Prefer email?</h2>
           <p>
-            Send a short note with the decision you are considering, the main
-            channels involved, and the reporting systems already in use.
+            Send a short note with what changed, when it changed, the reports or
+            systems that disagree, and the decision your team is waiting to make.
           </p>
           <a href="mailto:admin@calyxra.com" className="button button-dark">
             admin@calyxra.com

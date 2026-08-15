@@ -16,7 +16,7 @@ export default function PrivacyPage() {
     >
       <div className="site-frame legal-layout">
         <aside className="legal-aside">
-          <p>Effective: 11 August 2026</p>
+          <p>Effective: 16 August 2026</p>
           <a href="#website-data">Website data</a>
           <a href="#engagement-data">Engagement data</a>
           <a href="#handling">Handling &amp; retention</a>
@@ -31,7 +31,8 @@ export default function PrivacyPage() {
               Calyxra is operated by FOP Kononchuk Oleksandr Yaroslavovych,
               Tax ID 3078714279, Zolota 12, Dubno, Rivne Oblast, Ukraine
               (“Calyxra”, “we”, or “us”). This policy applies to calyxra.com and
-              information handled in connection with our analytical and advisory
+              information handled in connection with our measurement,
+              configuration, implementation-support, verification, and advisory
               services.
             </p>
           </section>
@@ -58,7 +59,8 @@ export default function PrivacyPage() {
               The exact data is agreed in the scope of work. Depending on the
               question, it may include commerce exports, refunds, payment and cost
               data, media-spend and campaign exports, analytics configurations,
-              attribution settings, and previous experiment results.
+              attribution settings, consent and event configurations, change logs,
+              and previous experiment results.
             </p>
             <p>
               We ask clients not to provide data that is unnecessary for the
@@ -66,13 +68,20 @@ export default function PrivacyPage() {
               data, or read-only access, and we avoid direct customer identifiers
               unless they are genuinely required for the agreed method.
             </p>
+            <p>
+              If an approved correction requires write access, the affected
+              system, permission, change, approver, and verification method are
+              agreed in advance. A client may choose to have its own authorised
+              operator make the change while Calyxra supplies the specification
+              and verification.
+            </p>
           </section>
 
           <section>
             <h2>4. Why we use information</h2>
             <ul>
               <li>To respond to enquiries and arrange introductory calls.</li>
-              <li>To scope, contract, and deliver requested measurement work.</li>
+              <li>To scope, contract, deliver, and verify requested measurement work.</li>
               <li>To communicate findings, invoices, and engagement updates.</li>
               <li>To maintain security, diagnose service issues, and meet legal obligations.</li>
             </ul>

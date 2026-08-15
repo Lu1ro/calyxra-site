@@ -5,6 +5,7 @@ import { fileURLToPath } from "node:url";
 const projectRoot = dirname(fileURLToPath(import.meta.url));
 
 const nextConfig: NextConfig = {
+  agentRules: false,
   outputFileTracingRoot: projectRoot,
   turbopack: {
     root: projectRoot,
@@ -27,13 +28,13 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
-      { source: "/pricing", destination: "/#engagements", permanent: true },
-      { source: "/case-studies", destination: "/#what-we-measure", permanent: true },
-      { source: "/deliverables", destination: "/#audit", permanent: true },
-      { source: "/dashboards", destination: "/#what-we-measure", permanent: true },
-      { source: "/dashboard-demo", destination: "/#what-we-measure", permanent: true },
-      { source: "/demo", destination: "/#what-we-measure", permanent: true },
-      { source: "/report", destination: "/#what-we-measure", permanent: true },
+      { source: "/pricing", destination: "/#sprint", permanent: true },
+      { source: "/case-studies", destination: "/#verification", permanent: true },
+      { source: "/deliverables", destination: "/#recovery-sprint", permanent: true },
+      { source: "/dashboards", destination: "/#problems", permanent: true },
+      { source: "/dashboard-demo", destination: "/#problems", permanent: true },
+      { source: "/demo", destination: "/#resolution", permanent: true },
+      { source: "/report", destination: "/#verification", permanent: true },
       { source: "/refunds", destination: "/terms#fees", permanent: true },
       { source: "/data-deletion", destination: "/privacy#your-rights", permanent: true },
     ];

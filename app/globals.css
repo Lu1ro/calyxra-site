@@ -1,16 +1,16 @@
 @import "tailwindcss";
 
 :root {
-  --ink: #151713;
-  --ink-soft: #272b25;
-  --paper: #f2efe6;
-  --paper-light: #fbf9f2;
-  --line: #252822;
-  --muted: #6e7068;
-  --lime: #c8f04a;
-  --coral: #ff6846;
-  --blue: #8db8ff;
-  --white: #fffef8;
+  --ink: #1a1f1b;
+  --ink-soft: #2b312b;
+  --paper: #f1efe8;
+  --paper-light: #faf8f1;
+  --line: #30362f;
+  --muted: #6b7168;
+  --lime: #a9b991;
+  --coral: #c98169;
+  --blue: #98adb0;
+  --white: #fffdf7;
   --display: Georgia, "Times New Roman", serif;
   --sans: Arial, Helvetica, sans-serif;
   --mono: "Courier New", Courier, monospace;
@@ -383,7 +383,7 @@ summary {
 .hero-copy h1 {
   margin: 0;
   font-family: var(--display);
-  font-size: clamp(54px, 6.6vw, 94px);
+  font-size: clamp(52px, 6vw, 86px);
   font-weight: 400;
   letter-spacing: -0.058em;
   line-height: 0.91;
@@ -848,6 +848,14 @@ summary {
   font-size: 32px;
   font-weight: 400;
   letter-spacing: -0.04em;
+}
+
+.scope-boundary-note {
+  margin: 16px 0 0;
+  max-width: 700px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.55;
 }
 
 .deliverables-label {

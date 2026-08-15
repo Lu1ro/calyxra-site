@@ -1,6 +1,7 @@
 # Calyxra marketing site
 
-Public website for Calyxra, an independent measurement office for DTC brands.
+Public website for Calyxra, a measurement-incident response practice for
+Shopify-led DTC brands.
 
 ## Commands
 
@@ -16,8 +17,8 @@ project `calyxra-site`.
 
 ## Public routes
 
-- `/` — positioning, engagements, method, fit, and FAQ.
-- `/contact` — measurement-review booking and direct contact.
+- `/` — problems, resolution method, Recovery Sprint, fit, and FAQ.
+- `/contact` — problem-review booking and direct contact.
 - `/privacy`, `/terms`, `/security` — public policies.
 
 ## Brand assets

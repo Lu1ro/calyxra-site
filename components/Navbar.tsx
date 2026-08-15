@@ -6,10 +6,10 @@ import Image from "next/image";
 import { ArrowUpRight, Menu, X } from "lucide-react";
 
 const links = [
-  { href: "/#what-we-measure", label: "What we measure" },
-  { href: "/#engagements", label: "Engagements" },
+  { href: "/#problems", label: "Problems" },
+  { href: "/#resolution", label: "Resolution" },
+  { href: "/#sprint", label: "Recovery sprint" },
   { href: "/#how-it-works", label: "How it works" },
-  { href: "/#faq", label: "FAQ" },
 ];
 
 export default function Navbar() {
@@ -42,7 +42,7 @@ export default function Navbar() {
             rel="noopener noreferrer"
             className="nav-cta"
           >
-            Book a review
+            Bring an incident
             <ArrowUpRight aria-hidden="true" size={14} strokeWidth={2} />
           </a>
         </nav>
@@ -77,7 +77,7 @@ export default function Navbar() {
             className="nav-cta"
             onClick={() => setOpen(false)}
           >
-            Book a measurement review
+            Bring an incident
             <ArrowUpRight aria-hidden="true" size={14} />
           </a>
         </nav>

@@ -6,18 +6,18 @@ const siteUrl = "https://www.calyxra.com";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Calyxra — Independent Measurement for DTC Brands",
+    default: "Calyxra — Measurement Recovery for DTC Brands",
     template: "%s — Calyxra",
   },
   description:
-    "Calyxra reconciles commercial performance, audits attribution, and designs incrementality tests so DTC leaders can make clearer marketing investment decisions.",
+    "Calyxra resolves live measurement incidents for Shopify-led DTC teams: find the cause, fix bounded issues, verify the result, and unblock the next decision.",
   keywords: [
-    "DTC measurement",
-    "marketing measurement audit",
-    "attribution audit",
-    "incrementality testing",
-    "contribution margin analysis",
-    "independent measurement office",
+    "DTC measurement recovery",
+    "Shopify tracking audit",
+    "marketing data reconciliation",
+    "attribution troubleshooting",
+    "conversion tracking repair",
+    "measurement incident response",
   ],
   alternates: {
     canonical: "/",
@@ -26,23 +26,23 @@ export const metadata: Metadata = {
     type: "website",
     url: siteUrl,
     siteName: "Calyxra",
-    title: "Calyxra — Independent Measurement for DTC Brands",
+    title: "Calyxra — Measurement Recovery for DTC Brands",
     description:
-      "Marketing has a number. Finance has another. We make the next decision clearer.",
+      "Find the cause. Fix the measurement problem. Verify the result.",
     images: [
       {
         url: "/og.png",
         width: 1200,
         height: 630,
-        alt: "Calyxra — independent measurement for DTC brands",
+        alt: "Calyxra — measurement recovery for DTC brands",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Calyxra — Independent Measurement for DTC Brands",
+    title: "Calyxra — Measurement Recovery for DTC Brands",
     description:
-      "Reconcile performance. Audit attribution. Design the next test.",
+      "Find the cause. Fix the measurement problem. Verify the result.",
     images: ["/og.png"],
   },
   robots: {
@@ -65,7 +65,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     url: siteUrl,
     logo: `${siteUrl}/logo.png`,
     description:
-      "Independent measurement for DTC brands across commercial performance, attribution, and incrementality decisions.",
+      "Measurement incident response for Shopify-led DTC teams, from root cause through bounded fixes and post-fix verification.",
     email: "admin@calyxra.com",
     sameAs: [
       "https://www.linkedin.com/company/calyxra/",
@@ -73,9 +73,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     ],
     areaServed: "Worldwide",
     serviceType: [
-      "DTC measurement audit",
-      "Marketing attribution audit",
-      "Incrementality test design",
+      "DTC measurement recovery",
+      "Shopify tracking troubleshooting",
+      "Marketing data reconciliation",
+      "Attribution issue resolution",
     ],
   };
 
