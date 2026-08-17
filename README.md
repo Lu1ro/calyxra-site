@@ -17,7 +17,8 @@ project `calyxra-site`.
 
 ## Public routes
 
-- `/` — problems, resolution method, Recovery Sprint, fit, and FAQ.
+- `/` — problems, resolution method, Recovery Sprint, incident files, fit, and FAQ.
+- `/cases` — illustrative measurement-incident resolution files.
 - `/contact` — problem-review booking and direct contact.
 - `/privacy`, `/terms`, `/security` — public policies.
 

@@ -8,8 +8,8 @@ import { ArrowUpRight, Menu, X } from "lucide-react";
 const links = [
   { href: "/#problems", label: "Problems" },
   { href: "/#resolution", label: "Resolution" },
-  { href: "/#sprint", label: "Recovery sprint" },
-  { href: "/#how-it-works", label: "How it works" },
+  { href: "/#sprint", label: "Sprint" },
+  { href: "/cases", label: "Case files" },
 ];
 
 export default function Navbar() {

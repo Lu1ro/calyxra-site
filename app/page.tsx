@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { caseFiles } from "@/data/cases";
 
 const reviewUrl = "https://cal.com/calyxra/15min";
 
@@ -166,7 +167,7 @@ const faqs = [
   },
   {
     q: "Do you guarantee savings or revenue growth?",
-    a: "No. We guarantee the agreed investigative work, transparent documentation, and verification against the stated acceptance criteria. We do not guarantee a revenue, profit, media-performance, or percentage-gap outcome.",
+    a: "No. We commit to the investigative work, documentation, and acceptance checks defined in the written scope. We do not guarantee a revenue, profit, media-performance, or percentage-gap outcome.",
   },
   {
     q: "Can you work with our agency or analytics team?",
@@ -478,7 +479,7 @@ export default function Home() {
         <div className="site-frame decision-section-grid">
           <div className="decision-copy">
             <SectionLabel>What “closed” looks like</SectionLabel>
-            <h2>Every fix leaves an evidence trail.</h2>
+            <h2>Each in-scope change leaves an evidence trail.</h2>
             <p>
               No vague “looks better now” handoff. The incident record shows the
               symptom, evidence, cause, change, verification result, remaining
@@ -535,6 +536,66 @@ export default function Home() {
               Illustrative workflow. Not client data, a case study, or a performance claim.
             </p>
           </article>
+        </div>
+      </section>
+
+      <section className="case-preview-section section-pad" id="cases">
+        <div className="site-frame">
+          <div className="section-heading-grid">
+            <SectionLabel>Illustrative incident files</SectionLabel>
+            <div>
+              <h2>Not polished success stories. A worked path from symptom to closure.</h2>
+              <p className="section-lead">
+                Three worked scenarios show the evidence we would inspect, the
+                change boundary we would agree, and the test that must pass
+                before a measurement incident can be called resolved.
+              </p>
+            </div>
+          </div>
+
+          <div className="case-preview-disclosure">
+            <strong>Composite scenarios · synthetic data</strong>
+            <p>
+              These are not client case studies, testimonials, or realised
+              performance results. They demonstrate Calyxra&apos;s working method.
+            </p>
+          </div>
+
+          <div className="case-preview-grid">
+            {caseFiles.map((caseFile) => (
+              <article
+                className={`case-preview-card case-preview-${caseFile.tone}`}
+                key={caseFile.slug}
+              >
+                <div className="case-preview-topline">
+                  <span>File / {caseFile.number}</span>
+                  <span>Synthetic scenario</span>
+                </div>
+                <h3>{caseFile.title}</h3>
+                <p>{caseFile.summary}</p>
+                <div className="case-preview-state">
+                  <span>Illustrative closure state</span>
+                  <strong>{caseFile.status}</strong>
+                </div>
+                <Link href={`/cases#${caseFile.slug}`} className="text-link">
+                  Read the resolution path
+                  <ArrowRight aria-hidden="true" size={17} />
+                </Link>
+              </article>
+            ))}
+          </div>
+
+          <div className="case-preview-footer">
+            <p>
+              No invented revenue recovery. No forced “true ROAS.” Each file
+              ends with an operating decision and an explicit limit on what the
+              evidence does not prove.
+            </p>
+            <Link href="/cases" className="button button-dark">
+              Open all incident files
+              <MoveRight aria-hidden="true" size={18} />
+            </Link>
+          </div>
         </div>
       </section>
 

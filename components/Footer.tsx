@@ -28,6 +28,7 @@ export default function Footer() {
           <Link href="/#problems">Problems we resolve</Link>
           <Link href="/#resolution">How resolution works</Link>
           <Link href="/#sprint">Recovery Sprint</Link>
+          <Link href="/cases">Illustrative incident files</Link>
           <Link href="/#how-it-works">How it works</Link>
         </div>
 
