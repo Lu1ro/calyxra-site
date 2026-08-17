@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import "./globals.css";
+import "./site.css";
 
 const siteUrl = "https://www.calyxra.com";
 

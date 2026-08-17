@@ -7,6 +7,11 @@ export type CaseFile = {
   status: string;
   title: string;
   summary: string;
+  acceptanceState: string;
+  causeSummary: string;
+  fixSummary: string;
+  proofSummary: string;
+  decisionUnlocked: string;
   incidentQuestion: string;
   decisionAtRisk: string;
   systems: string[];
@@ -27,6 +32,15 @@ export const caseFiles: CaseFile[] = [
     title: "A checkout release made paid social look stronger overnight.",
     summary:
       "Reported Meta purchases moved immediately after a release. Shopify completed orders did not.",
+    acceptanceState: "One logical purchase",
+    causeSummary:
+      "Browser and server purchase paths used different event IDs, so one order could become two reported purchases.",
+    fixSummary:
+      "Give both eligible event paths one deterministic order key and retire the obsolete duplicate trigger.",
+    proofSummary:
+      "A test order now produces one logical purchase with matching value, currency, and order reference.",
+    decisionUnlocked:
+      "Observe a clean post-fix window before deciding whether paid-social spend should change.",
     incidentQuestion:
       "Did campaign performance improve, or did the new implementation count the same purchase twice?",
     decisionAtRisk:
@@ -72,6 +86,15 @@ export const caseFiles: CaseFile[] = [
     title: "Growth said “scale.” Finance said “hold.” Both reports were consistent.",
     summary:
       "Platform ROAS, an attribution tool, and Finance were using different definitions of revenue.",
+    acceptanceState: "Metric roles agreed",
+    causeSummary:
+      "Three internally consistent reports answered three different questions, but no metric had a documented decision right.",
+    fixSummary:
+      "Reconcile the eligible orders, label each metric’s role, and assign one Finance-grade budget guardrail.",
+    proofSummary:
+      "Sources, formulas, timing, refund lag, purpose, and owner are approved in one metric contract.",
+    decisionUnlocked:
+      "Growth can pace channels without reopening the Finance definition at every budget meeting.",
     incidentQuestion: "Which number should control next week’s media budget?",
     decisionAtRisk:
       "Whether contribution economics support more spend while channel dashboards report efficient growth.",
@@ -116,6 +139,15 @@ export const caseFiles: CaseFile[] = [
     title: "New-customer CAC improved because customer history had been cut short.",
     summary:
       "A reporting migration made returning buyers look new. Acquisition performance improved only in the dashboard.",
+    acceptanceState: "Classification corrected",
+    causeSummary:
+      "The migrated model searched only the recent extract, so buyers with older orders were incorrectly marked as new.",
+    fixSummary:
+      "Rebuild first-order classification from the complete available history and version the customer definition.",
+    proofSummary:
+      "No sampled customer remains ‘new’ when an earlier eligible order exists, and each order is classified once.",
+    decisionUnlocked:
+      "Reset the new-customer CAC guardrail before allocating more prospecting budget.",
     incidentQuestion:
       "Can the team trust new-customer CAC before moving more budget into prospecting?",
     decisionAtRisk:
