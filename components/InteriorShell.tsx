@@ -6,11 +6,13 @@ export default function InteriorShell({
   eyebrow,
   title,
   intro,
+  actions,
   children,
 }: {
   eyebrow: string;
   title: string;
   intro: string;
+  actions?: ReactNode;
   children: ReactNode;
 }) {
   return (
@@ -24,6 +26,7 @@ export default function InteriorShell({
           </p>
           <h1>{title}</h1>
           <p>{intro}</p>
+          {actions ? <div className="interior-hero-actions">{actions}</div> : null}
         </div>
       </header>
       {children}

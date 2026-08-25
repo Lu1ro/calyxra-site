@@ -10,6 +10,7 @@ const links = [
   { href: "/#resolution", label: "Resolution" },
   { href: "/#sprint", label: "Sprint" },
   { href: "/cases", label: "Case files" },
+  { href: "/partners", label: "For agencies" },
 ];
 
 export default function Navbar() {
