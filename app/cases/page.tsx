@@ -8,14 +8,14 @@ const reviewUrl = "https://cal.com/calyxra/15min";
 export const metadata: Metadata = {
   title: "Illustrative Measurement Resolution Cases",
   description:
-    "Three worked DTC measurement failures showing the signal, bounded correction, and acceptance test that closes each incident.",
+    "Five worked DTC measurement failures showing the company context, signal, bounded correction, and acceptance test that closes each incident.",
   alternates: { canonical: "/cases" },
   openGraph: {
     type: "website",
     siteName: "Calyxra",
     title: "Illustrative Measurement Resolution Cases — Calyxra",
     description:
-      "Three measurement failures. Three bounded fixes you can verify.",
+      "Five illustrative measurement failures. Five bounded fixes you can verify.",
     url: "/cases",
     images: ["/og.png"],
   },
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Illustrative Measurement Resolution Cases — Calyxra",
     description:
-      "Follow each measurement incident from signal to correction and proof.",
+      "Follow five illustrative measurement incidents from company context to correction and proof.",
     images: ["/og.png"],
   },
 };
@@ -176,23 +176,126 @@ function HistoryArtifact() {
   );
 }
 
+function CurrencyArtifact() {
+  const currencyRows = [
+    ["Order revenue", "Native GBP", "Base USD"],
+    ["Refund", "Native EUR", "Base USD"],
+    ["Payment fee", "Native USD", "Base USD"],
+  ];
+
+  return (
+    <div className="case-artifact artifact-currency" aria-label="Illustrative currency-lineage correction">
+      <div className="artifact-header">
+        <span>Illustrative currency-lineage docket</span>
+        <span>Unit integrity</span>
+      </div>
+      <div className="currency-compare">
+        <section>
+          <p className="artifact-stage-label">Before / unit context lost</p>
+          <div className="currency-raw-grid">
+            <div><small>Order revenue</small><strong>GBP</strong></div>
+            <div><small>Refund</small><strong>EUR</strong></div>
+            <div><small>Payment fee</small><strong>USD</strong></div>
+          </div>
+          <MoveRight aria-hidden="true" size={24} />
+          <div className="currency-fail">
+            <small>Decision model</small>
+            <strong>Units mixed</strong>
+            <span>Invalid</span>
+          </div>
+        </section>
+        <section>
+          <p className="artifact-stage-label">After / governed lineage</p>
+          <div className="currency-lineage">
+            {currencyRows.map(([source, native, base]) => (
+              <div key={source}>
+                <span>{source}</span>
+                <strong>{native}</strong>
+                <MoveRight aria-hidden="true" size={16} />
+                <em>Approved FX</em>
+                <MoveRight aria-hidden="true" size={16} />
+                <b>{base}</b>
+              </div>
+            ))}
+          </div>
+          <div className="currency-pass">
+            <span>One conversion</span>
+            <strong>Comparable base values</strong>
+          </div>
+        </section>
+      </div>
+      <p className="artifact-caption">
+        Symbolic values show unit lineage only. They are not exchange-rate, profit, or market-performance claims.
+      </p>
+    </div>
+  );
+}
+
+function SubscriptionArtifact() {
+  return (
+    <div className="case-artifact artifact-subscription" aria-label="Illustrative subscription lifecycle correction">
+      <div className="artifact-header">
+        <span>Illustrative subscription event tape</span>
+        <span>Order lifecycle</span>
+      </div>
+      <div className="subscription-compare">
+        <section>
+          <p className="artifact-stage-label">Before / lineage broken</p>
+          <div className="subscription-tape subscription-tape-broken">
+            <div><small>Initial order</small><strong>S-014</strong></div>
+            <span aria-hidden="true">···</span>
+            <div><small>Renewal</small><strong>Parent ?</strong></div>
+            <span aria-hidden="true">···</span>
+            <div><small>Renewal</small><strong>Parent ?</strong></div>
+          </div>
+          <div className="subscription-wrong">
+            <span>Fallback branch</span>
+            <strong>All → acquisition</strong>
+          </div>
+        </section>
+        <section>
+          <p className="artifact-stage-label">After / lineage restored</p>
+          <div className="subscription-tape subscription-tape-pass">
+            <div><small>Initial order</small><strong>S-014</strong><em>Acquisition</em></div>
+            <span aria-hidden="true">→</span>
+            <div><small>Renewal</small><strong>S-014</strong><em>Retention</em></div>
+            <span aria-hidden="true">→</span>
+            <div><small>Renewal</small><strong>S-014</strong><em>Retention</em></div>
+          </div>
+          <div className="subscription-pass">
+            <span>Lifecycle rule</span>
+            <strong>1 order = 1 state</strong>
+          </div>
+        </section>
+      </div>
+      <p className="artifact-caption">
+        The taxonomy separates acquisition from retention; it does not prove advertising causality or forecast LTV.
+      </p>
+    </div>
+  );
+}
+
 function CaseArtifact({ slug }: { slug: string }) {
   if (slug === "checkout-release") return <DedupArtifact />;
   if (slug === "growth-finance") return <MetricContractArtifact />;
-  return <HistoryArtifact />;
+  if (slug === "customer-definition") return <HistoryArtifact />;
+  if (slug === "multi-currency-rollout") return <CurrencyArtifact />;
+  return <SubscriptionArtifact />;
 }
 
 export default function CasesPage() {
   return (
     <InteriorShell
       eyebrow="Illustrative resolution files"
-      title="Three measurement failures. Three fixes you can verify."
+      title="Five measurement failures. Five fixes you can verify."
       intro="Each file follows the signal to the broken layer, the bounded correction, and the acceptance test that closes it."
     >
       <section className="case-disclosure-wrap">
         <div className="site-frame case-disclosure">
-          <strong>Constructed from recurring incident patterns</strong>
-          <p>No client names, data, testimonials, realised results, or benchmarks.</p>
+          <strong>Worked examples, not customer case studies</strong>
+          <p>
+            Company profiles, systems, and data are composites built from recurring measurement patterns. They do not describe named Calyxra clients, completed engagements, testimonials, benchmarks, or realised results.
+          </p>
         </div>
       </section>
 
@@ -215,6 +318,7 @@ export default function CasesPage() {
                 <span>File / {caseFile.number}</span>
                 <ArrowDownRight aria-hidden="true" size={20} />
               </div>
+              <span className="case-overview-company">{caseFile.company.profile}</span>
               <p>{caseFile.summary}</p>
               <h3>{caseFile.incidentQuestion}</h3>
               <div className="case-overview-state">
@@ -238,7 +342,7 @@ export default function CasesPage() {
               <header className="case-story-head">
                 <div className="case-story-id">
                   <span>Incident file / {caseFile.number}</span>
-                  <strong>Illustrative pattern</strong>
+                  <strong>Composite company · not a client</strong>
                 </div>
                 <div className="case-story-title">
                   <p>{caseFile.summary}</p>
@@ -249,6 +353,29 @@ export default function CasesPage() {
                   <strong>{caseFile.acceptanceState}</strong>
                 </div>
               </header>
+
+              <div className="case-company-profile">
+                <div className="case-company-label">
+                  <span>Representative company profile</span>
+                  <strong>Constructed for this worked example</strong>
+                </div>
+                <div>
+                  <span>Business</span>
+                  <strong>{caseFile.company.profile}</strong>
+                </div>
+                <div>
+                  <span>Market / model</span>
+                  <strong>{caseFile.company.market}</strong>
+                </div>
+                <div>
+                  <span>Relevant stack</span>
+                  <strong>{caseFile.company.stack}</strong>
+                </div>
+                <div>
+                  <span>Decision owner</span>
+                  <strong>{caseFile.company.owner}</strong>
+                </div>
+              </div>
 
               <div className="case-story-question">
                 <span>Decision blocked</span>
@@ -316,7 +443,7 @@ export default function CasesPage() {
               </details>
 
               <footer className="case-story-footer">
-                <span>Worked scenario · not a benchmark or expected outcome</span>
+                <span>Composite scenario · representative stack · no realised client result</span>
                 <a
                   href={reviewUrl}
                   target="_blank"

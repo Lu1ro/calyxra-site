@@ -562,7 +562,7 @@ export default function Home() {
           </div>
 
           <div className="case-preview-grid">
-            {caseFiles.map((caseFile) => (
+            {caseFiles.slice(0, 3).map((caseFile) => (
               <article
                 className={`case-preview-card case-preview-${caseFile.tone}`}
                 key={caseFile.slug}

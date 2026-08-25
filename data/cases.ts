@@ -1,9 +1,17 @@
 export type CaseTone = "sage" | "coral" | "blue";
 
+export type CompanyProfile = {
+  profile: string;
+  market: string;
+  stack: string;
+  owner: string;
+};
+
 export type CaseFile = {
   slug: string;
   number: string;
   tone: CaseTone;
+  company: CompanyProfile;
   status: string;
   title: string;
   summary: string;
@@ -28,6 +36,12 @@ export const caseFiles: CaseFile[] = [
     slug: "checkout-release",
     number: "01",
     tone: "sage",
+    company: {
+      profile: "Paid-social-led beauty brand",
+      market: "United States · DTC",
+      stack: "Shopify Plus · Meta CAPI · consent platform",
+      owner: "VP Growth + Ecommerce lead",
+    },
     status: "Fixed + verified",
     title: "A checkout release made paid social look stronger overnight.",
     summary:
@@ -82,6 +96,12 @@ export const caseFiles: CaseFile[] = [
     slug: "growth-finance",
     number: "02",
     tone: "coral",
+    company: {
+      profile: "Omnichannel home-goods brand",
+      market: "United Kingdom · DTC + retail",
+      stack: "Shopify · Meta / Google · attribution platform · Finance",
+      owner: "CFO + Head of Growth",
+    },
     status: "Metric contract agreed",
     title: "Growth said “scale.” Finance said “hold.” Both reports were consistent.",
     summary:
@@ -135,6 +155,12 @@ export const caseFiles: CaseFile[] = [
     slug: "customer-definition",
     number: "03",
     tone: "blue",
+    company: {
+      profile: "Repeat-purchase apparel brand",
+      market: "European Union · DTC",
+      stack: "Shopify · warehouse · acquisition dashboard",
+      owner: "Acquisition lead + Data lead",
+    },
     status: "Corrected + monitor",
     title: "New-customer CAC improved because customer history had been cut short.",
     summary:
@@ -184,5 +210,125 @@ export const caseFiles: CaseFile[] = [
       "The team can reset its new-customer CAC guardrail and judge prospecting against one durable customer definition rather than a migration artifact.",
     boundary:
       "This bounded correction does not build a household identity graph or prove the causal value of advertising. Broader identity engineering remains a separate scope.",
+  },
+  {
+    slug: "multi-currency-rollout",
+    number: "04",
+    tone: "sage",
+    company: {
+      profile: "Multi-market apparel brand",
+      market: "United States · United Kingdom · European Union",
+      stack: "Shopify Markets · Payments · Meta / Google · Finance",
+      owner: "CFO + International Growth lead",
+    },
+    status: "Currency path verified",
+    title: "A new market looked profitable because the model mixed currencies.",
+    summary:
+      "Orders were real. The reporting layer dropped their currency context before the budget view.",
+    acceptanceState: "One governed base value",
+    causeSummary:
+      "Native amounts reached the reporting model without a reliable ISO currency or one approved conversion policy.",
+    fixSummary:
+      "Preserve native amount and currency, derive the base value once, and block aggregation when unit lineage is missing.",
+    proofSummary:
+      "Test orders retain native and base values through every reporting layer with one explainable conversion.",
+    decisionUnlocked:
+      "Compare markets on one governed contribution view before reallocating media or inventory.",
+    incidentQuestion:
+      "Should the team scale the new markets, or correct the currency path first?",
+    decisionAtRisk:
+      "Whether international media and inventory should increase after an apparently profitable launch.",
+    systems: [
+      "Shopify Markets orders",
+      "Payment settlement and payout exports",
+      "Meta and Google conversion payloads",
+      "Warehouse model and Finance rate table",
+    ],
+    evidence: [
+      "Market-launch timeline and supported currencies",
+      "Test orders in each active market",
+      "Raw amount and ISO currency payloads",
+      "Connector schema, FX source, timestamp, and dashboard logic",
+    ],
+    rootCause:
+      "In this scenario, a connector preserved monetary amounts but not dependable currency lineage. GBP, EUR, and USD records therefore entered one decision model as directly comparable values.",
+    correction: [
+      "Preserve native amount and ISO currency on every monetary record.",
+      "Create a separate base amount using one approved FX source and date policy.",
+      "Convert exactly once and expose missing or unsupported currency codes.",
+      "Link refunds and fees to the originating order and market.",
+      "Document the difference between operating and realised-settlement views.",
+    ],
+    acceptance: [
+      "ISO currency is present for every eligible monetary record.",
+      "Native values tie to the corresponding Shopify source records.",
+      "Each base value has one reproducible FX source, date, and calculation.",
+      "Mixed-currency fields cannot be aggregated without conversion.",
+      "Remaining settlement variance is tied to named timing or rate items.",
+    ],
+    handoff:
+      "Growth and Finance can compare markets using one currency-safe contribution view with documented settlement differences.",
+    boundary:
+      "Currency reconciliation does not prove market incrementality, profitability, or the correct hedging policy. Tax, treasury, and ERP redesign remain outside this scope.",
+  },
+  {
+    slug: "subscription-lineage",
+    number: "05",
+    tone: "coral",
+    company: {
+      profile: "Subscription wellness brand",
+      market: "United States · DTC + subscription",
+      stack: "Shopify · Recharge / Skio · Klaviyo · warehouse",
+      owner: "Growth lead + Retention lead",
+    },
+    status: "Lifecycle reconciled",
+    title: "A subscription migration made renewals look like acquisition revenue.",
+    summary:
+      "Paid-channel revenue rose while first orders did not. Existing renewals had entered the acquisition branch.",
+    acceptanceState: "One lifecycle state",
+    causeSummary:
+      "The migration replaced the stable subscription key, so renewals lost their parent lineage and defaulted to new acquisition.",
+    fixSummary:
+      "Restore subscription lineage and route every eligible order through a mutually exclusive lifecycle taxonomy.",
+    proofSummary:
+      "Initial, renewal, reactivation, refund, and cancellation records tie to source and each order receives one state.",
+    decisionUnlocked:
+      "Reset CAC, payback, and retention reporting before increasing prospecting spend.",
+    incidentQuestion:
+      "Did prospecting improve, or were renewals reassigned to paid acquisition?",
+    decisionAtRisk:
+      "Whether prospecting budget should increase after attributed acquisition revenue rises post-migration.",
+    systems: [
+      "Subscription platform records",
+      "Shopify Orders and Customers",
+      "Klaviyo lifecycle events",
+      "Warehouse transformation and acquisition dashboard",
+    ],
+    evidence: [
+      "Migration mapping and affected window",
+      "Subscription, charge, order, and customer keys",
+      "Initial, renewal, reactivation, refund, and cancellation samples",
+      "Order tags and downstream classification logic",
+    ],
+    rootCause:
+      "In this scenario, the migration replaced the stable subscription identifier. Renewal orders lost their parent relationship and followed the dashboard's fallback branch for new acquisition.",
+    correction: [
+      "Restore one durable lineage key from subscription to charge and Shopify order.",
+      "Define initial, renewal, reactivation, refund, and cancellation states.",
+      "Backfill the agreed affected window using the versioned taxonomy.",
+      "Allow acquisition only for the first eligible order.",
+      "Expose unmapped records rather than silently defaulting them to new.",
+    ],
+    acceptance: [
+      "Parent subscription lineage persists through each eligible recurring order.",
+      "Lifecycle categories are exhaustive and mutually exclusive.",
+      "A pre-existing subscriber is never marked new solely because of migration.",
+      "Renewal totals reconcile to the subscription source.",
+      "The corrected dashboard runs in parallel without unexplained classification drift.",
+    ],
+    handoff:
+      "Acquisition and retention teams regain separate, governed order populations for CAC, payback, and lifecycle reporting.",
+    boundary:
+      "Lifecycle repair does not prove advertising caused the subscription or predict lifetime value. Broader identity and forecasting work remains separate.",
   },
 ];
